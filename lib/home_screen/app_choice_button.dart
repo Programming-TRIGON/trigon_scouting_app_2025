@@ -37,23 +37,10 @@ class AppChoiceButton extends StatelessWidget {
           ).textTheme.titleLarge?.copyWith(color: Colors.white),
         ),
         onPressed: () {
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-          SystemChrome.setPreferredOrientations([
-            DeviceOrientation.landscapeLeft,
-            DeviceOrientation.landscapeRight,
-          ]);
           Navigator.push(
             context,
             MaterialDesignFactory.createModernRoute(targetScreen),
-          ).then((v) {
-            SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-            SystemChrome.setPreferredOrientations([
-              DeviceOrientation.portraitUp,
-              DeviceOrientation.portraitDown,
-              DeviceOrientation.landscapeLeft,
-              DeviceOrientation.landscapeRight,
-            ]);
-          });
+          );
         },
       ),
     );

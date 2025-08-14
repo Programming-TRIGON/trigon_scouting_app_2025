@@ -7,9 +7,10 @@ class DiscardChangesDialogWidget extends StatelessWidget {
 
   Future<bool> showOnScreen(BuildContext context) async {
     return await showDialog<bool>(
-        context: context,
-        builder: (context) => this
-    ) ?? false;
+          context: context,
+          builder: (context) => this,
+        ) ??
+        false;
   }
 
   @override
@@ -23,7 +24,11 @@ class DiscardChangesDialogWidget extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () => Navigator.of(context).pushReplacement(MaterialDesignFactory.createModernRoute(ScoutingHomeScreen())),
+          onPressed: () => Navigator.of(context).pushReplacement(
+            MaterialDesignFactory.createModernRoute(
+                ScoutingHomeScreen()
+            ),
+          ),
           child: const Text('Discard'),
         ),
       ],
