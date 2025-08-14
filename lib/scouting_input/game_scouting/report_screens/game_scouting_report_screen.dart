@@ -21,7 +21,7 @@ class GameScoutingReportScreen extends StatelessWidget {
         if (didPop) return;
 
         final shouldPop = await onPopInvoked(context);
-        if (shouldPop) {
+        if (shouldPop && context.mounted) {
           Navigator.of(context).pop();
         }
       },

@@ -77,8 +77,8 @@ class NavigationButtonWidget extends StatelessWidget {
           notAbleToMoveToPageCallback,
         );
       },
-      splashColor: Colors.indigo.withOpacity(0.3),
-      highlightColor: Colors.indigo.withOpacity(0.1),
+      splashColor: Colors.indigo.withValues(alpha: 0.3),
+      highlightColor: Colors.indigo.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(15),
       child: Container(
         width: width,

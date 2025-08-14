@@ -54,14 +54,16 @@ class LoginProvider extends ChangeNotifier {
     );
 
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Invalid password or email, or not connected to the Internet.',
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Invalid password or email, or not connected to the Internet.',
+            ),
+            backgroundColor: Colors.redAccent,
           ),
-          backgroundColor: Colors.redAccent,
-        ),
-      );
+        );
+      }
       return;
     }
 

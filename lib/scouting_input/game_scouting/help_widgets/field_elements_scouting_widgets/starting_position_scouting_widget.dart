@@ -66,8 +66,8 @@ class StartingPositionScoutingWidget extends StatelessWidget {
     final Color textColor = isSelected ? Colors.white : baseBorderColor;
 
     return InkWell(
-      splashColor: isSelected ? Colors.green.withOpacity(0.5) : baseBorderColor.withOpacity(0.3),
-      highlightColor: isSelected ? Colors.green.withOpacity(0.2) : baseBorderColor.withOpacity(0.1),
+      splashColor: isSelected ? Colors.green.withValues(alpha: 0.5) : baseBorderColor.withValues(alpha: 0.3),
+      highlightColor: isSelected ? Colors.green.withValues(alpha: 0.2) : baseBorderColor.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(10),
       onTap: () {
         HapticFeedback.lightImpact();

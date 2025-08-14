@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopRightWarning extends StatefulWidget {
@@ -13,8 +12,12 @@ class TopRightWarning extends StatefulWidget {
     this.isError = true,
   });
 
-  static void showOnScreen(BuildContext context, String message,
-      {bool isError = true, Duration duration = const Duration(seconds: 2)}) {
+  static void showOnScreen(
+    BuildContext context,
+    String message, {
+    bool isError = true,
+    Duration duration = const Duration(seconds: 2),
+  }) {
     final key = GlobalKey<_TopRightWarningState>();
     final overlay = OverlayEntry(
       builder: (context) => TopRightWarning(
@@ -48,9 +51,10 @@ class _TopRightWarningState extends State<TopRightWarning>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    animation = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(parent: controller, curve: Curves.easeOut),
-    );
+    animation = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
   }
 
   void hideOverlay(OverlayEntry overlay) {
@@ -68,11 +72,13 @@ class _TopRightWarningState extends State<TopRightWarning>
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor =
-    widget.isError ? Colors.red.shade400 : Colors.green.shade400;
+    final backgroundColor = widget.isError
+        ? Colors.red.shade400
+        : Colors.green.shade400;
     final iconColor = Colors.white;
-    final icon =
-    widget.isError ? Icons.warning_amber : Icons.check_circle_outline;
+    final icon = widget.isError
+        ? Icons.warning_amber
+        : Icons.check_circle_outline;
 
     return Positioned(
       top: MediaQuery.of(context).padding.top + 10.0,
@@ -88,7 +94,7 @@ class _TopRightWarningState extends State<TopRightWarning>
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 6,
                   offset: const Offset(0, 3),
                 ),

@@ -82,7 +82,7 @@ class BoolToggleRow extends StatelessWidget {
         ),
         elevation: selected ? 2 : 0, // Add elevation when selected for more "pop"
         // ignore: deprecated_member_use
-        shadowColor: selected ? fillColor.withOpacity(0.5) : Colors.transparent,
+        shadowColor: selected ? fillColor.withValues(alpha: 0.5) : Colors.transparent,
       ),
       child: Center(
         child: Icon(icon, color: selected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).textTheme.bodyLarge!.color),

@@ -21,7 +21,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
       final shouldPop = await DiscardChangesDialogWidget().showOnScreen(
         context,
       );
-      if (shouldPop) {
+      if (shouldPop && context.mounted) {
         Navigator.pop(context);
       }
       return;
@@ -29,10 +29,13 @@ class GameScoutingReportProvider extends ChangeNotifier {
 
     if (targetPage == GameScoutingPage.submit) {
       await submit();
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Scouting form submitted successfully!'), backgroundColor: Colors.green),
-      );
+      if (context.mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Scouting form submitted successfully!'),
+              backgroundColor: Colors.green),
+        );
+      }
       return;
     }
 
