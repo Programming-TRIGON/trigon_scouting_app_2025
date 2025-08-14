@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/top_right_warning.dart';
+
+class NavigationButtonsWidget extends StatelessWidget {
+  final GameScoutingPage currentPage;
+  final double width;
+
+  const NavigationButtonsWidget({
+    super.key,
+    required this.currentPage,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final previousPage = currentPage.getPrevious();
+    final nextPage = currentPage.getNext();
+
+    return FittedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            currentPage.capitalizedName(),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              NavigationButtonWidget(
+                width: width,
+                targetPage: previousPage,
+                text: "← ${previousPage.capitalizedName()}",
+              ),
+              SizedBox(width: 5),
+              NavigationButtonWidget(
+                width: width,
+                targetPage: nextPage,
+                text: "${nextPage.capitalizedName()} →",
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NavigationButtonWidget extends StatelessWidget {
+  final double width;
+  final GameScoutingPage targetPage;
+  final String text;
+  final Function(BuildContext, String) notAbleToMoveToPageCallback;
+
+  const NavigationButtonWidget({
+    super.key,
+    required this.width,
+    required this.targetPage,
+    required this.text,
+    this.notAbleToMoveToPageCallback = TopRightWarning.showOnScreen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final reportProvider = context.watch<GameScoutingReportProvider>();
+
+    return InkWell(
+      onTap: () async {
+        reportProvider.moveToPage(
+          context,
+          targetPage,
+          notAbleToMoveToPageCallback,
+        );
+      },
+      splashColor: Colors.indigo.withOpacity(0.3),
+      highlightColor: Colors.indigo.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        width: width,
+        height: width * 0.5,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          color: Colors.grey,
+          border: Border.all(color: Colors.indigo),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: FittedBox(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: (7) / (50 / width),
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

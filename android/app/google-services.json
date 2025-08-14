@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682214703186",
+    "project_id": "trigon-scouting-app",
+    "storage_bucket": "trigon-scouting-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682214703186:android:d0c5da97263428f3859f8b",
+        "android_client_info": {
+          "package_name": "com.trigon.scoutingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Ksngns9OPKwfc9BLMuwrZjaXwv6UxUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
