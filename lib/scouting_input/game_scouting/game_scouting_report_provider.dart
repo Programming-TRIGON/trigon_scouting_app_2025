@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 import 'help_widgets/discard_changes_dialog_widget.dart';
 
@@ -28,7 +29,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     }
 
     if (targetPage == GameScoutingPage.submit) {
-      await submit();
+      await submit("");
       if (context.mounted) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -85,11 +86,11 @@ class GameScoutingReportProvider extends ChangeNotifier {
            _report.endgameReport.validate();
   }
 
-  Future<void> submit() async {
+  Future<void> submit(String scoutedCompetitionID) async {
     final error = validate();
     if (error != null) {
       throw Exception(error);
     }
-    await _report.sendToFirebase();
+    FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionID);
   }
 }

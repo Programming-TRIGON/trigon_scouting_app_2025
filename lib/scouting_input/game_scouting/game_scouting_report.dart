@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class GameScoutingReport {
   final String scouterUID;
 
@@ -37,22 +35,15 @@ class GameScoutingReport {
     );
   }
 
-  Future<void> sendToFirebase() async {
-    final matchDocument = FirebaseFirestore.instance
-        .collection("competitions")
-        .doc("2025cmptx")
-        .collection("teams")
-        .doc(pregameReport.robotNumber!.toString())
-        .collection("games")
-        .doc(pregameReport.matchID!);
-    await matchDocument.set({
+  Map<String, dynamic> toMap() {
+    return {
       'GameScouting': {
-        'Pregame': pregameReport.parseToFirebaseMap(),
-        'Auto': autoReport.parseToFirebaseMap(),
-        'Teleop': teleopReport.parseToFirebaseMap(),
-        'Endgame': endgameReport.parseToFirebaseMap(),
+        'Pregame': pregameReport.toMap(),
+        'Auto': autoReport.toMap(),
+        'Teleop': teleopReport.toMap(),
+        'Endgame': endgameReport.toMap(),
       },
-    });
+    };
   }
 }
 
@@ -78,7 +69,7 @@ class Placements {
     misses--;
   }
 
-  Map<String, int> parseToFirebaseMap() {
+  Map<String, int> toMap() {
     return {'successes': successes, 'misses': misses};
   }
 }
@@ -100,7 +91,7 @@ class PregameScoutingReport {
     return null;
   }
 
-  Map<String, dynamic> parseToFirebaseMap() {
+  Map<String, dynamic> toMap() {
     return {'showedUp': showedUp, 'startingPosition': startingPosition};
   }
 }
@@ -130,14 +121,14 @@ class AutoScoutingReport {
     return null;
   }
 
-  Map<String, dynamic> parseToFirebaseMap() {
+  Map<String, dynamic> toMap() {
     return {
       'crossedAutoLine': crossedAutoLine,
-      'l4Placements': l4CoralPlacements.parseToFirebaseMap(),
-      'l3Placements': l3CoralPlacements.parseToFirebaseMap(),
-      'l2Placements': l2CoralPlacements.parseToFirebaseMap(),
-      'l1Placements': l1CoralPlacements.parseToFirebaseMap(),
-      'netAlgaePlacements': netAlgaePlacements.parseToFirebaseMap(),
+      'l4Placements': l4CoralPlacements.toMap(),
+      'l3Placements': l3CoralPlacements.toMap(),
+      'l2Placements': l2CoralPlacements.toMap(),
+      'l1Placements': l1CoralPlacements.toMap(),
+      'netAlgaePlacements': netAlgaePlacements.toMap(),
       'processorAlgaeCount': processorAlgaeCount,
       'algaeOutOfReefCount': algaeOutOfReefCount,
     };
@@ -167,13 +158,13 @@ class TeleopScoutingReport {
     return null;
   }
 
-  Map<String, dynamic> parseToFirebaseMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'l4Placements': l4CoralPlacements.parseToFirebaseMap(),
-      'l3Placements': l3CoralPlacements.parseToFirebaseMap(),
-      'l2Placements': l2CoralPlacements.parseToFirebaseMap(),
-      'l1Placements': l1CoralPlacements.parseToFirebaseMap(),
-      'netAlgaePlacements': netAlgaePlacements.parseToFirebaseMap(),
+      'l4Placements': l4CoralPlacements.toMap(),
+      'l3Placements': l3CoralPlacements.toMap(),
+      'l2Placements': l2CoralPlacements.toMap(),
+      'l1Placements': l1CoralPlacements.toMap(),
+      'netAlgaePlacements': netAlgaePlacements.toMap(),
       'processorAlgaeCount': processorAlgaeCount,
       'algaeOutOfReefCount': algaeOutOfReefCount,
     };
@@ -221,7 +212,7 @@ class EndgameScoutingReport {
     }
   }
 
-  Map<String, dynamic> parseToFirebaseMap() {
+  Map<String, dynamic> toMap() {
     return {
       'didTryToClimb': didTryToClimb,
       'didPark': didPark,

@@ -4,8 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
+import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
-class FirebaseUtilities {
+class FirebaseHandler {
   static final authInstance = FirebaseAuth.instance;
   static final firestore = FirebaseFirestore.instance;
 
@@ -61,5 +64,35 @@ class FirebaseUtilities {
     } catch (e) {
       log("Something went wrong.");
     }
+  }
+
+  static Future<void> setScoutedCompetition(FRCCompetition competition) async {
+    final scoutedCompetitionDoc = firestore.collection("competitions").doc("scoutedCompetition");
+    await scoutedCompetitionDoc.set(competition.toMap());
+  }
+
+  static Future<FRCCompetition?> getScoutedCompetition() async {
+    final docSnapshot = await firestore
+        .collection("competitions")
+        .doc("scoutedCompetition")
+        .get();
+
+    if (!docSnapshot.exists) return null;
+
+    final data = docSnapshot.data();
+    if (data == null) return null;
+
+    return FRCCompetition.fromMap(Map<String, dynamic>.from(data));
+  }
+
+  static Future<void> uploadGameScoutingReport(GameScoutingReport report, String competitionID) async {
+    final matchDocument = FirebaseFirestore.instance
+        .collection("competitions")
+        .doc(competitionID)
+        .collection("teams")
+        .doc(report.pregameReport.robotNumber!.toString())
+        .collection("games")
+        .doc(report.pregameReport.matchID!);
+    await matchDocument.set(report.toMap());
   }
 }

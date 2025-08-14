@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utilities/firebase_utilities.dart';
+import '../../utilities/firebase_handler.dart';
 
 class LoginProvider extends ChangeNotifier {
   final emailController = TextEditingController();
@@ -48,7 +48,7 @@ class LoginProvider extends ChangeNotifier {
       return;
     }
 
-    final user = await FirebaseUtilities.logInWithEmailAndPassword(
+    final user = await FirebaseHandler.logInWithEmailAndPassword(
       emailController.text,
       passwordController.text,
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/data_viewer/viewer_home_screen.dart';
 import 'package:trigon_scouting_app_2025/home_screen/app_choice_button.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_home_screen.dart';
 import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
 
@@ -32,7 +34,10 @@ class HomeScreen extends StatelessWidget {
                 AppChoiceButton(
                   buttonName: "Scouting Input",
                   imagePath: "assets/data_input.png",
-                  targetScreen: ScoutingHomeScreen(),
+                  targetScreen: ChangeNotifierProvider(
+                    create: (_) => ScoutedCompetitionProvider(),
+                    child: ScoutingHomeScreen(),
+                  ),
                 ),
                 SizedBox(height: 10),
                 AppChoiceButton(

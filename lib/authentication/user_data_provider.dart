@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-import '../utilities/firebase_utilities.dart';
+import '../utilities/firebase_handler.dart';
 
 enum UserRole {
   admin,
@@ -24,8 +24,11 @@ class UserDataProvider extends ChangeNotifier {
   UserRole? _role;
 
   bool get isDataLoading => _isDataLoading;
+
   String? get error => _error;
+
   User? get user => _user;
+
   UserRole? get role => _role;
 
   StreamSubscription<DocumentSnapshot>? _roleSubscriber;
@@ -81,7 +84,7 @@ class UserDataProvider extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await FirebaseUtilities.signOut();
+    await FirebaseHandler.signOut();
   }
 
   @override

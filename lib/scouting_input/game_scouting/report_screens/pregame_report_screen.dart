@@ -4,11 +4,13 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scout
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/field_elements_scouting_widgets/starting_position_scouting_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/navigation_buttons_widget.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
 
 class PregameReportScreen extends StatelessWidget {
   static const List<String> matchIDs = ["match 1", "match 2"];
-  static const List<int> robots = [5990, 11];
+
+  // static const List<int> robots = [5990, 11];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -51,6 +53,8 @@ class PregameReportScreen extends StatelessWidget {
 
   Widget createPregameForm(BuildContext context) {
     final reportProvider = context.watch<GameScoutingReportProvider>();
+    final scoutedCompetitionProvider = context
+        .watch<ScoutedCompetitionProvider>();
 
     return FittedBox(
       child: SizedBox(
@@ -71,10 +75,17 @@ class PregameReportScreen extends StatelessWidget {
                   ),
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                items: matchIDs.map((value) {
-                  return DropdownMenuItem(value: value, child: Text(value));
-                }).toList(),
-                onChanged: (value) => reportProvider.updatePregame((pregameReport) => pregameReport.matchID = value),
+                items: scoutedCompetitionProvider.scoutedCompetition!.matches
+                    .map((value) {
+                      return DropdownMenuItem(
+                        value: value.matchID,
+                        child: Text(value.matchID),
+                      );
+                    })
+                    .toList(),
+                onChanged: (value) => reportProvider.updatePregame(
+                  (pregameReport) => pregameReport.matchID = value,
+                ),
               ),
               SizedBox(height: 5),
               DropdownButtonFormField<int>(
@@ -86,15 +97,12 @@ class PregameReportScreen extends StatelessWidget {
                   ),
                 ),
                 validator: (value) =>
-                value == null ? "Please select a match ID" : null,
+                    value == null ? "Please select a match ID" : null,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                items: robots.map((value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (value) => reportProvider.updatePregame((pregameReport) => pregameReport.robotNumber = value),
+                items: mapTeams(reportProvider, scoutedCompetitionProvider),
+                onChanged: (value) => reportProvider.updatePregame(
+                  (pregameReport) => pregameReport.robotNumber = value,
+                ),
               ),
               SizedBox(height: 5),
               BoolToggleRow(
@@ -105,7 +113,9 @@ class PregameReportScreen extends StatelessWidget {
                   ),
                 ),
                 getter: () => reportProvider.report.pregameReport.showedUp,
-                setter: (value) => reportProvider.updatePregame((pregameReport) => pregameReport.showedUp = value),
+                setter: (value) => reportProvider.updatePregame(
+                  (pregameReport) => pregameReport.showedUp = value,
+                ),
                 outlineColor: Colors.grey,
               ),
               SizedBox(height: 5),
@@ -117,7 +127,9 @@ class PregameReportScreen extends StatelessWidget {
                   ),
                 ),
                 getter: () => reportProvider.report.pregameReport.bet,
-                setter: (value) => reportProvider.updatePregame((pregameReport) => pregameReport.bet = value),
+                setter: (value) => reportProvider.updatePregame(
+                  (pregameReport) => pregameReport.bet = value,
+                ),
                 outlineColor: Colors.grey,
               ),
             ],
@@ -125,5 +137,28 @@ class PregameReportScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<int>> mapTeams(
+    GameScoutingReportProvider reportProvider,
+    ScoutedCompetitionProvider scoutedCompetitionProvider,
+  ) {
+    final String? matchID = reportProvider.report.pregameReport.matchID;
+
+    if (matchID == null) {
+      return scoutedCompetitionProvider.scoutedCompetition!.teams.map((value) {
+        return DropdownMenuItem(
+          value: value.teamID,
+          child: Text(value.teamID.toString()),
+        );
+      }).toList();
+    }
+
+    return scoutedCompetitionProvider.scoutedCompetition!.getMatchByID(matchID)!.blueTeams.map((value) {
+      return DropdownMenuItem(
+        value: value.teamID,
+        child: Text(value.teamID.toString()),
+      );
+    }).toList();
   }
 }
