@@ -34,7 +34,7 @@ jobs:  # Telling what jobs we need to happen
           cd build
           tar -czf ios_build.tar.gz ios
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Releases
           path: |
@@ -66,4 +66,3 @@ jobs:  # Telling what jobs we need to happen
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
           tag: v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
-      
