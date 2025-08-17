@@ -107,7 +107,7 @@ class ScoutingHomeScreen extends StatelessWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialDesignFactory.createModernRoute(
         ChangeNotifierProvider(
