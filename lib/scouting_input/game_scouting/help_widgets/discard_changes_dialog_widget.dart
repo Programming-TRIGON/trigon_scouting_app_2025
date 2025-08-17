@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
 import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
 
@@ -24,11 +25,7 @@ class DiscardChangesDialogWidget extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialDesignFactory.createModernRoute(
-                ScoutingHomeScreen()
-            ),
-          ),
+          onPressed: () => GameScoutingReportProvider.goToHomeScreen(context),
           child: const Text('Discard'),
         ),
       ],

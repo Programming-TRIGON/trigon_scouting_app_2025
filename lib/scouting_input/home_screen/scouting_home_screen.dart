@@ -107,23 +107,14 @@ class ScoutingHomeScreen extends StatelessWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    Navigator.pushReplacement(
-      context,
+    Navigator.of(context).pushReplacement(
       MaterialDesignFactory.createModernRoute(
         ChangeNotifierProvider(
           create: (_) => GameScoutingReportProvider(context.read<UserDataProvider>().user!.uid),
           child: GameScoutingReportScreen(),
         ),
       ),
-    ).then((_) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    });
+    );
   }
 }
 
