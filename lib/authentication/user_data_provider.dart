@@ -8,10 +8,18 @@ import '../utilities/firebase_handler.dart';
 
 enum UserRole {
   admin,
+  shiftManager,
   viewer,
   scouter;
 
-  bool get hasViewerAccess => this == admin || this == viewer;
+  String capitalizedName() {
+    if (name.isEmpty) return name;
+    return name[0].toUpperCase() + name.substring(1);
+  }
+
+  bool get hasViewerAccess => (index <= viewer.index);
+
+  bool get hasScoutingAdminAccess => (index <= shiftManager.index);
 }
 
 class UserDataProvider extends ChangeNotifier {

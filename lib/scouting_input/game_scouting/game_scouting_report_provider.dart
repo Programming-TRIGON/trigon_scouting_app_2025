@@ -3,6 +3,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scout
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
+import '../../utilities/material_design_factory.dart';
+import '../home_screen/scouting_home_screen.dart';
 import 'help_widgets/discard_changes_dialog_widget.dart';
 
 class GameScoutingReportProvider extends ChangeNotifier {
@@ -19,19 +21,18 @@ class GameScoutingReportProvider extends ChangeNotifier {
 
   void moveToPage(BuildContext context, GameScoutingPage targetPage, Function(BuildContext, String) notAbleToMoveToPageCallback) async {
     if (targetPage == GameScoutingPage.discard) {
-      final shouldPop = await DiscardChangesDialogWidget().showOnScreen(
-        context,
-      );
-      if (shouldPop && context.mounted) {
-        Navigator.pop(context);
-      }
+      await DiscardChangesDialogWidget().showOnScreen(context,);
       return;
     }
 
     if (targetPage == GameScoutingPage.submit) {
       await submit("");
       if (context.mounted) {
-        Navigator.pop(context);
+        Navigator.of(context).pushReplacement(
+          MaterialDesignFactory.createModernRoute(
+              ScoutingHomeScreen()
+          ),
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Scouting form submitted successfully!'),
               backgroundColor: Colors.green),

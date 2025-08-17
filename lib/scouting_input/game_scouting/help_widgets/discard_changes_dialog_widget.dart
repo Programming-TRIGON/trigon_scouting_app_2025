@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_home_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
 import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
 
 class DiscardChangesDialogWidget extends StatelessWidget {

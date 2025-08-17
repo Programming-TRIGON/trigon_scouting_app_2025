@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/login_screen/login_screen.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/home_screen/home_screen.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_home_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
 
 class AuthenticationHandler extends StatelessWidget {
   const AuthenticationHandler({super.key});
