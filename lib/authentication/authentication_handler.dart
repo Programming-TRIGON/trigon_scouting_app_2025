@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/login_screen/login_screen.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
@@ -19,6 +20,14 @@ class AuthenticationHandler extends StatelessWidget {
     if (userDataProvider.error != null) {
       return Scaffold(body: Center(child: Text('Error: ${userDataProvider.error}')));
     }
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
 
     if (userDataProvider.user == null) {
       return const LoginScreen();
