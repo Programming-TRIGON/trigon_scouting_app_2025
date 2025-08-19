@@ -41,9 +41,15 @@ dependencies:
   http: ^1.5.0
   flutter_speed_dial: ^7.0.0
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/yoshay_scouting_logo_no_frfr_last_one_no_take_baks.jpg"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
