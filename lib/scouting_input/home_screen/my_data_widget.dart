@@ -10,14 +10,14 @@ class MyDataWidget extends StatelessWidget {
     final userDataProvider = context.watch<UserDataProvider>();
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.grey[850],
+        color: Colors.grey[850], // dark panel background
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey[700]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),
@@ -26,60 +26,62 @@ class MyDataWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // Left: Score
+          // Score
           Column(
             mainAxisSize: MainAxisSize.min,
             children: const [
               Text(
                 "10",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.lightGreenAccent,
                 ),
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 2),
               Text(
                 "Score",
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+                style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
             ],
           ),
 
-          // Center: Role
+          // Role
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 userDataProvider.role!.capitalizedName(),
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.limeAccent,
+                  color: Colors.amberAccent,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               const Text(
                 "Role",
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+                style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
             ],
           ),
+
+          // פלוגה / Unit
           Column(
             mainAxisSize: MainAxisSize.min,
             children: const [
               Text(
                 "669",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.cyanAccent,
                 ),
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 2),
               Text(
                 "פלוגה",
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+                style: TextStyle(color: Colors.white54, fontSize: 12),
               ),
             ],
           ),
@@ -88,6 +90,3 @@ class MyDataWidget extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -8,10 +8,6 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_prov
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
 
 class PregameReportScreen extends StatelessWidget {
-  static const List<String> matchIDs = ["match 1", "match 2"];
-
-  // static const List<int> robots = [5990, 11];
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   PregameReportScreen({super.key});

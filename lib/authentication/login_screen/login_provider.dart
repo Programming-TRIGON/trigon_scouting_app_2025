@@ -68,11 +68,6 @@ class LoginProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialDesignFactory.createModernRoute(const HomeScreen()),
-    // );
   }
 
   @override

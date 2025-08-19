@@ -15,6 +15,8 @@ class ScoutingHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userDataProvider = context.read<UserDataProvider>();
+
     return Scaffold(
       appBar: MaterialDesignFactory.createAppBar(
         context,
@@ -23,7 +25,7 @@ class ScoutingHomeScreen extends StatelessWidget {
         "Main Menu",
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500),
@@ -42,27 +44,46 @@ class ScoutingHomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: SpeedDial(
+        childrenButtonSize: Size(300, 56),
         icon: Icons.add,
         activeIcon: Icons.close,
         spacing: 12,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.sports_esports),
-            label: "New Game Scouting Report",
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.sports_esports, color: Colors.green),
+                SizedBox(width: 10),
+                Text("New Game Scouting Report"),
+              ],
+            ),
             onTap: () {
               navigateToGameScoutingPage(context);
             },
           ),
           SpeedDialChild(
-            child: const Icon(Icons.star),
-            label: "New Super Scouting Report",
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.star, color: Colors.amber),
+                SizedBox(width: 10),
+                Text("New Super Scouting Report"),
+              ],
+            ),
             onTap: () {
               // TODO: navigate to super scouting page
             },
           ),
           SpeedDialChild(
-            child: const Icon(Icons.camera_alt),
-            label: "New Picture Scouting Report",
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.camera_alt, color: Colors.blue),
+                SizedBox(width: 10),
+                Text("New Picture Scouting Report"),
+              ],
+            ),
             onTap: () {
               // TODO: navigate to picture scouting page
             },
@@ -70,32 +91,34 @@ class ScoutingHomeScreen extends StatelessWidget {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      extendBody: true,
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: _NavButton(
-                icon: Icons.analytics_outlined,
-                label: "המלשן 3000",
-                onTap: () {
-                  // TODO: Navigate to page
-                },
+      bottomNavigationBar: Offstage(
+        offstage: !userDataProvider.role!.hasScoutingAdminAccess,
+        child: BottomAppBar(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: _NavButton(
+                  icon: Icons.analytics_outlined,
+                  label: "המלשן 3000",
+                  onTap: () {
+                    // TODO: Navigate to page
+                  },
+                ),
               ),
-            ),
-            const SizedBox(width: 45),
-            Expanded(
-              child: _NavButton(
-                icon: Icons.schedule_outlined,
-                label: "מחלל המשמרות 4000",
-                onTap: () {
-                  // TODO: Navigate to page
-                },
+              const SizedBox(width: 45),
+              Expanded(
+                child: _NavButton(
+                  icon: Icons.schedule_outlined,
+                  label: "מחלל המשמרות 4000",
+                  onTap: () {
+                    // TODO: Navigate to page
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -110,7 +133,9 @@ class ScoutingHomeScreen extends StatelessWidget {
     Navigator.of(context).pushReplacement(
       MaterialDesignFactory.createModernRoute(
         ChangeNotifierProvider(
-          create: (_) => GameScoutingReportProvider(context.read<UserDataProvider>().user!.uid),
+          create: (_) => GameScoutingReportProvider(
+            context.read<UserDataProvider>().user!.uid,
+          ),
           child: GameScoutingReportScreen(),
         ),
       ),
@@ -138,14 +163,14 @@ class _NavButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.greenAccent, width: 1.5),
+          border: Border.all(color: Colors.amber, width: 1.5),
           color: Colors.black87,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 28, color: Colors.greenAccent),
+            Icon(icon, size: 28, color: Colors.amber),
             const SizedBox(height: 6),
             Text(
               label,
@@ -154,6 +179,7 @@ class _NavButton extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
               ),
+              softWrap: true,
               textAlign: TextAlign.center,
             ),
           ],

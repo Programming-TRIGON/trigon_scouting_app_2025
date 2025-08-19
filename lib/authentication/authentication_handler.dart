@@ -10,21 +10,21 @@ class AuthenticationHandler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = context.watch<UserDataProvider>();
+    final userDataProvider = context.watch<UserDataProvider>();
 
-    if (userData.isDataLoading) {
+    if (userDataProvider.isDataLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    if (userData.error != null) {
-      return Scaffold(body: Center(child: Text('Error: ${userData.error}')));
+    if (userDataProvider.error != null) {
+      return Scaffold(body: Center(child: Text('Error: ${userDataProvider.error}')));
     }
 
-    if (userData.user == null) {
+    if (userDataProvider.user == null) {
       return const LoginScreen();
     }
 
-    if (userData.role == null || !userData.role!.hasViewerAccess) {
+    if (userDataProvider.role == null || !userDataProvider.role!.hasViewerAccess) {
       return const ScoutingHomeScreen();
     }
 

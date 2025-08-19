@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/home_screen/home_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
@@ -53,26 +54,18 @@ class GameScoutingReportProvider extends ChangeNotifier {
     final UserDataProvider userDataProvider = context.read<UserDataProvider>();
     if (userDataProvider.role!.hasViewerAccess) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialDesignFactory.createNoAnimationRoute(HomeScreen()),
+        MaterialDesignFactory.createNoAnimationRoute(AuthenticationHandler()),
         (route) => false,
       );
-      Navigator.of(
-        context,
-      ).push(MaterialDesignFactory.createModernRoute(ScoutingHomeScreen()));
+      Navigator.of(context).push(
+          MaterialDesignFactory.createModernRoute(ScoutingHomeScreen())
+      );
     } else {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialDesignFactory.createNoAnimationRoute(ScoutingHomeScreen()),
+        MaterialDesignFactory.createModernRoute(AuthenticationHandler()),
         (route) => false,
       );
     }
-
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
   }
 
   void updateReport(void Function(GameScoutingReport) updater) {

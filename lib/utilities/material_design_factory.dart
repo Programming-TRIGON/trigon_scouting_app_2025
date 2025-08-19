@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 
 class MaterialDesignFactory {
@@ -33,11 +34,11 @@ class MaterialDesignFactory {
           onSelected: (value) async {
             if (value == 'logout') {
               userData.signOut();
-              // Navigator.of(context).popUntil((route) => route.isFirst);
-              // Navigator.pushReplacement(
-              //   context,
-              //   createModernRoute(LoginScreen()),
-              // );
+              Navigator.pushAndRemoveUntil(
+                context,
+                createModernRoute(AuthenticationHandler()),
+                (route) => false,
+              );
             } else if (value == 'reset') {
               // Handle reset password
             }
