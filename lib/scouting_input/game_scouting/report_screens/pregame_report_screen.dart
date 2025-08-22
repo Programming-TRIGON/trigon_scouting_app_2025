@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/field_elements_scouting_widgets/starting_position_scouting_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/navigation_buttons_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
-class PregameReportScreen extends StatelessWidget {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class PregameReportScreen extends StatefulWidget {
+  const PregameReportScreen({super.key});
 
-  PregameReportScreen({super.key});
+  @override
+  State<PregameReportScreen> createState() => _PregameReportScreenState();
+}
+
+class _PregameReportScreenState extends State<PregameReportScreen> {
+  final TextEditingController matchTypeController = TextEditingController();
+  final TextEditingController matchNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,113 +56,117 @@ class PregameReportScreen extends StatelessWidget {
   }
 
   Widget createPregameForm(BuildContext context) {
+    final userDataProvider = context.watch<UserDataProvider>();
+    final scoutedCompetitionProvider = context.watch<ScoutedCompetitionProvider>();
     final reportProvider = context.watch<GameScoutingReportProvider>();
-    final scoutedCompetitionProvider = context
-        .watch<ScoutedCompetitionProvider>();
 
     return FittedBox(
       child: SizedBox(
         width: 400,
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30),
-              DropdownButtonFormField<String>(
-                value: reportProvider.report.pregameReport.matchKey,
-                decoration: InputDecoration(
-                  labelText: 'Match ID',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            createMatchSelectionWidget(userDataProvider, scoutedCompetitionProvider, reportProvider),
+            SizedBox(height: 5),
+            DropdownMenu<String>(
+              enabled: false,
+              initialSelection: reportProvider.report.pregameReport.robotNumber?.toString() ?? "Please select a valid match",
+              inputDecorationTheme: InputDecorationTheme(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                items: scoutedCompetitionProvider.scoutedCompetition!.matches
-                    .map((value) {
-                      return DropdownMenuItem(
-                        value: value.matchKey,
-                        child: Text(value.matchKey),
-                      );
-                    })
-                    .toList(),
-                onChanged: (value) => reportProvider.updatePregame(
-                  (pregameReport) => pregameReport.matchKey = value,
+                child: Text('Robot Number'),
+              ),
+              dropdownMenuEntries: [
+                DropdownMenuEntry(
+                  label: reportProvider.report.pregameReport.robotNumber.toString(),
+                  value: reportProvider.report.pregameReport.robotNumber.toString()
+                )
+              ],
+            ),
+            SizedBox(height: 5),
+            BoolToggleRow(
+              text: Text(
+                "Showed Up",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
-              DropdownButtonFormField<int>(
-                value: reportProvider.report.pregameReport.robotNumber,
-                decoration: InputDecoration(
-                  labelText: 'Robot Number',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                validator: (value) =>
-                    value == null ? "Please select a match ID" : null,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                items: mapTeams(reportProvider, scoutedCompetitionProvider),
-                onChanged: (value) => reportProvider.updatePregame(
-                  (pregameReport) => pregameReport.robotNumber = value,
+              getter: () => reportProvider.report.pregameReport.showedUp,
+              setter: (value) => reportProvider.updatePregame(
+                (pregameReport) => pregameReport.showedUp = value,
+              ),
+              outlineColor: Colors.grey,
+            ),
+            SizedBox(height: 5),
+            BoolToggleRow(
+              text: Text(
+                "Bet: will this robot win?",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
-              BoolToggleRow(
-                text: Text(
-                  "Showed Up",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                getter: () => reportProvider.report.pregameReport.showedUp,
-                setter: (value) => reportProvider.updatePregame(
-                  (pregameReport) => pregameReport.showedUp = value,
-                ),
-                outlineColor: Colors.grey,
+              getter: () => reportProvider.report.pregameReport.bet,
+              setter: (value) => reportProvider.updatePregame(
+                (pregameReport) => pregameReport.bet = value,
               ),
-              SizedBox(height: 5),
-              BoolToggleRow(
-                text: Text(
-                  "Bet: will this robot win?",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                getter: () => reportProvider.report.pregameReport.bet,
-                setter: (value) => reportProvider.updatePregame(
-                  (pregameReport) => pregameReport.bet = value,
-                ),
-                outlineColor: Colors.grey,
-              ),
-            ],
-          ),
+              outlineColor: Colors.grey,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  List<DropdownMenuItem<int>> mapTeams(
-    GameScoutingReportProvider reportProvider,
-    ScoutedCompetitionProvider scoutedCompetitionProvider,
-  ) {
-    final String? matchKey = reportProvider.report.pregameReport.matchKey;
+  Widget createMatchSelectionWidget(UserDataProvider userDataProvider, ScoutedCompetitionProvider scoutedCompetitionProvider, GameScoutingReportProvider reportProvider) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        DropdownMenu<String>(
+          controller: matchTypeController,
+          dropdownMenuEntries: [
+            DropdownMenuEntry(value: "Practice", label: "Practice"),
+            DropdownMenuEntry(value: "Qualification", label: "Qualification"),
+            DropdownMenuEntry(value: "Playoffs", label: "Playoffs"),
+            DropdownMenuEntry(value: "Finals", label: "Finals")
+          ],
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text('Match Type'),
+          ),
+          onSelected: (_) {
+            matchNumberController.clear();
+            reportProvider.updatePregame((pregameReport) => pregameReport.robotNumber = null);
+          }
+        ),
+        DropdownMenu<int>(
+          controller: matchNumberController,
+          dropdownMenuEntries: scoutedCompetitionProvider.getAvailableGameScoutingMatchNumbers(userDataProvider.user!.uid, matchTypeController.text)
+              ?.map((matchNumber) => DropdownMenuEntry(value: matchNumber, label: matchNumber.toString())).toList() ?? [],
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text('Match Number'),
+            ),
+          onSelected: (_) => reportProvider.updatePregame((pregameReport) {
+            pregameReport.matchKey = FRCMatch.toMatchKey(matchTypeController.text, matchNumberController.text);
+            if (pregameReport.matchKey == null) return;
+            pregameReport.robotNumber = scoutedCompetitionProvider.getScoutedTeamInGameScoutingMatch(userDataProvider.user!.uid, pregameReport.matchKey!)?.teamID;
+          })
+        )
+      ],
+    );
+  }
 
-    if (matchKey == null) {
-      return scoutedCompetitionProvider.scoutedCompetition!.teams.map((value) {
-        return DropdownMenuItem(
-          value: value.teamID,
-          child: Text(value.teamID.toString()),
-        );
-      }).toList();
-    }
-
-    return scoutedCompetitionProvider.scoutedCompetition!.getMatchByKey(matchKey)!.blueTeams.map((value) {
-      return DropdownMenuItem(
-        value: value.teamID,
-        child: Text(value.teamID.toString()),
-      );
-    }).toList();
+  @override
+  void dispose() {
+    super.dispose();
+    matchTypeController.dispose();
+    matchNumberController.dispose();
   }
 }
