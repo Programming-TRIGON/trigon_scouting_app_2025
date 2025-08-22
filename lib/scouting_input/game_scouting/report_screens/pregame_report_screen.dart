@@ -63,7 +63,7 @@ class PregameReportScreen extends StatelessWidget {
             children: [
               SizedBox(height: 30),
               DropdownButtonFormField<String>(
-                value: reportProvider.report.pregameReport.matchID,
+                value: reportProvider.report.pregameReport.matchKey,
                 decoration: InputDecoration(
                   labelText: 'Match ID',
                   border: OutlineInputBorder(
@@ -74,13 +74,13 @@ class PregameReportScreen extends StatelessWidget {
                 items: scoutedCompetitionProvider.scoutedCompetition!.matches
                     .map((value) {
                       return DropdownMenuItem(
-                        value: value.matchID,
-                        child: Text(value.matchID),
+                        value: value.matchKey,
+                        child: Text(value.matchKey),
                       );
                     })
                     .toList(),
                 onChanged: (value) => reportProvider.updatePregame(
-                  (pregameReport) => pregameReport.matchID = value,
+                  (pregameReport) => pregameReport.matchKey = value,
                 ),
               ),
               SizedBox(height: 5),
@@ -139,9 +139,9 @@ class PregameReportScreen extends StatelessWidget {
     GameScoutingReportProvider reportProvider,
     ScoutedCompetitionProvider scoutedCompetitionProvider,
   ) {
-    final String? matchID = reportProvider.report.pregameReport.matchID;
+    final String? matchKey = reportProvider.report.pregameReport.matchKey;
 
-    if (matchID == null) {
+    if (matchKey == null) {
       return scoutedCompetitionProvider.scoutedCompetition!.teams.map((value) {
         return DropdownMenuItem(
           value: value.teamID,
@@ -150,7 +150,7 @@ class PregameReportScreen extends StatelessWidget {
       }).toList();
     }
 
-    return scoutedCompetitionProvider.scoutedCompetition!.getMatchByID(matchID)!.blueTeams.map((value) {
+    return scoutedCompetitionProvider.scoutedCompetition!.getMatchByKey(matchKey)!.blueTeams.map((value) {
       return DropdownMenuItem(
         value: value.teamID,
         child: Text(value.teamID.toString()),

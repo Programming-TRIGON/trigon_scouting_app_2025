@@ -10,9 +10,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseHandler.initializeFirebase();
 
-  // final comp = await TBAHandler.getCompetition("2025isde2");
-  // FirebaseHandler.setScoutedCompetition(comp);
-
   runApp(
     MultiProvider(
       providers: [

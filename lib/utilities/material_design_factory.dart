@@ -7,7 +7,7 @@ class MaterialDesignFactory {
   static AppBar createAppBar(
     BuildContext context,
     Color color,
-    String? suffix,
+    String? title,
     String? subtitle,
   ) {
     final userData = context.watch<UserDataProvider>();
@@ -19,7 +19,7 @@ class MaterialDesignFactory {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "TRIGON Scouting App${suffix ?? ''}",
+            title ?? "TRIGON Scouting App",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           if (subtitle != null)

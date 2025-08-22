@@ -75,14 +75,14 @@ class Placements {
 }
 
 class PregameScoutingReport {
-  String? matchID;
+  String? matchKey;
   int? robotNumber;
   bool? showedUp;
   int? startingPosition;
   bool? bet;
 
   String? validate() {
-    if (matchID == null) return "Please select match ID";
+    if (matchKey == null) return "Please select match ID";
     if (robotNumber == null) return "Please select robot number";
     if (showedUp == null) return "Please select whether the team showed up";
     if (showedUp == true && startingPosition == null) {

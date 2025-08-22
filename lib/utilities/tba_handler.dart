@@ -6,13 +6,8 @@ class TBAHandler {
 
   static Future<FRCCompetition> getCompetition(String competitionID) async {
     try {
-      final results = await Future.wait([
-        getTeamsInCompetition(competitionID),
-        getMatchesInCompetition(competitionID),
-      ]);
-
-      final List<FRCTeam> teams = results[0] as List<FRCTeam>;
-      final List<FRCMatch> matches = results[1] as List<FRCMatch>;
+      final teams = await getTeamsInCompetition(competitionID);
+      final matches = await getMatchesInCompetition(competitionID, teams);
 
       return FRCCompetition(
         competitionID: competitionID,
@@ -24,8 +19,10 @@ class TBAHandler {
     }
   }
 
-  static Future<List<FRCTeam>> getTeamsInCompetition(String competitionID) async {
-    final url = Uri.parse('https://www.thebluealliance.com/api/v3/event/$competitionID/teams');
+  static Future<List<FRCTeam>> getTeamsInCompetition(
+      String competitionID) async {
+    final url = Uri.parse(
+        'https://www.thebluealliance.com/api/v3/event/$competitionID/teams');
 
     final response = await http.get(
       url,
@@ -45,7 +42,8 @@ class TBAHandler {
     }).toList();
   }
 
-  static Future<List<FRCMatch>> getMatchesInCompetition(String competitionID) async {
+  static Future<List<FRCMatch>> getMatchesInCompetition(
+      String competitionID, List<FRCTeam> allTeams) async {
     final url = Uri.parse('https://www.thebluealliance.com/api/v3/event/$competitionID/matches');
 
     final response = await http.get(
@@ -59,26 +57,45 @@ class TBAHandler {
 
     final List<dynamic> jsonData = jsonDecode(response.body);
 
-    return jsonData.map((matchData) {
+    List<FRCMatch> matches = jsonData.map((matchData) {
       List<FRCTeam> blueTeams = [];
       List<FRCTeam> redTeams = [];
 
       for (var teamKey in matchData['alliances']['blue']['team_keys']) {
         int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
-        blueTeams.add(FRCTeam(teamID: teamNumber, name: ''));
+        final team = allTeams.firstWhere(
+              (t) => t.teamID == teamNumber,
+          orElse: () => FRCTeam(teamID: teamNumber, name: 'Unknown'),
+        );
+        blueTeams.add(team);
       }
 
       for (var teamKey in matchData['alliances']['red']['team_keys']) {
         int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
-        redTeams.add(FRCTeam(teamID: teamNumber, name: ''));
+        final team = allTeams.firstWhere(
+              (t) => t.teamID == teamNumber,
+          orElse: () => FRCTeam(teamID: teamNumber, name: 'Unknown'),
+        );
+        redTeams.add(team);
       }
 
       return FRCMatch(
-        matchID: matchData['key'].replaceFirst('${competitionID}_', ''),
+        matchKey: matchData['key'].replaceFirst('${competitionID}_', ''),
         blueTeams: blueTeams,
         redTeams: redTeams,
       );
     }).toList();
+
+    // sort like before
+    matches.sort((a, b) {
+      final typeCmp = a.matchTypeOrder.compareTo(b.matchTypeOrder);
+      if (typeCmp != 0) return typeCmp;
+      final setCmp = a.setNumber.compareTo(b.setNumber);
+      if (setCmp != 0) return setCmp;
+      return a.matchNumber.compareTo(b.matchNumber);
+    });
+
+    return matches;
   }
 }
 
@@ -87,6 +104,8 @@ class FRCTeam {
   final String name;
 
   FRCTeam({required this.teamID, required this.name});
+
+  String get teamText => "$teamID $name";
 
   Map<String, dynamic> toMap() {
     return {
@@ -104,19 +123,76 @@ class FRCTeam {
 }
 
 class FRCMatch {
-  final String matchID;
+  final String matchKey; // raw key: "qm13", "sf2m1", "f1m2"
   final List<FRCTeam> blueTeams;
   final List<FRCTeam> redTeams;
 
   FRCMatch({
-    required this.matchID,
+    required this.matchKey,
     required this.blueTeams,
     required this.redTeams,
   });
 
+  static String? toMatchKey(String matchType, String matchNumber) {
+    switch (matchType.toLowerCase()) {
+      case "practice":
+        return "p$matchNumber";
+      case "qualification":
+        return "qm$matchNumber";
+      case "playoffs":
+        return "sf${matchNumber}m1";
+      case "finals":
+        return "f1m$matchNumber";
+      default:
+        return null;
+    }
+  }
+
+  /// Extract type: "Practice", "Qualification", "Playoffs", "Finals"
+  String get matchType {
+    if (matchKey.startsWith('p')) return "Practice";
+    if (matchKey.startsWith('qm')) return "Qualification";
+    if (matchKey.startsWith('sf')) return "Playoffs";
+    if (matchKey.startsWith('f')) return "Finals";
+    return "Unknown";
+  }
+
+  /// Sorting priority
+  int get matchTypeOrder {
+    switch (matchType) {
+      case "Practice":
+        return 0;
+      case "Qualification":
+        return 1;
+      case "Playoffs":
+        return 2;
+      case "Finals":
+        return 3;
+      default:
+        return 99;
+    }
+  }
+
+  /// Match number (e.g., "qm13" → 13, "sf2m1" → 1)
+  int get matchNumber {
+    if (matchTypeOrder > 1) {
+      return setNumber;
+    }
+    final match = RegExp(r'\d+$').firstMatch(matchKey);
+    if (match != null) return int.tryParse(match.group(0)!) ?? 0;
+    return 0;
+  }
+
+  /// Set number for Playoffs/Finals (e.g., "sf2m1" → 2)
+  int get setNumber {
+    final match = RegExp(r'^[a-z]+(\d+)m\d+$').firstMatch(matchKey);
+    if (match != null) return int.tryParse(match.group(1)!) ?? 0;
+    return 0;
+  }
+
   Map<String, dynamic> toMap() {
     return {
-      'matchID': matchID,
+      'matchKey': matchKey,
       'blueTeams': blueTeams.map((t) => t.toMap()).toList(),
       'redTeams': redTeams.map((t) => t.toMap()).toList(),
     };
@@ -124,7 +200,7 @@ class FRCMatch {
 
   factory FRCMatch.fromMap(Map<String, dynamic> map) {
     return FRCMatch(
-      matchID: map['matchID'] as String,
+      matchKey: map['matchKey'] as String,
       blueTeams: (map['blueTeams'] as List)
           .map((t) => FRCTeam.fromMap(Map<String, dynamic>.from(t)))
           .toList(),
@@ -146,9 +222,9 @@ class FRCCompetition {
     required this.matches,
   });
 
-  FRCMatch? getMatchByID(String matchKey) {
+  FRCMatch? getMatchByKey(String matchKey) {
     for (FRCMatch match in matches) {
-      if (match.matchID == matchKey) return match;
+      if (match.matchKey == matchKey) return match;
     }
     return null;
   }

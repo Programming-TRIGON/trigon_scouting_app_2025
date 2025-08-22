@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/home_screen/home_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
@@ -57,9 +55,9 @@ class GameScoutingReportProvider extends ChangeNotifier {
         MaterialDesignFactory.createNoAnimationRoute(AuthenticationHandler()),
         (route) => false,
       );
-      Navigator.of(context).push(
-          MaterialDesignFactory.createModernRoute(ScoutingHomeScreen())
-      );
+      Navigator.of(
+        context,
+      ).push(MaterialDesignFactory.createModernRoute(ScoutingHomeScreen()));
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialDesignFactory.createModernRoute(AuthenticationHandler()),

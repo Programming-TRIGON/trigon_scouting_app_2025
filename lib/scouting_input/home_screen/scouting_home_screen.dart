@@ -4,9 +4,15 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_shift.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/game_scouting_report_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/picture_scouting/picture_scouting_shift.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 import '../../utilities/material_design_factory.dart';
+import '../super_scouting/super_scouting_shift.dart';
 import 'my_data_widget.dart';
 import 'my_shifts_widget.dart';
 
@@ -21,7 +27,7 @@ class ScoutingHomeScreen extends StatelessWidget {
       appBar: MaterialDesignFactory.createAppBar(
         context,
         Colors.green,
-        " - Scouting Input",
+        "Scouting Input",
         "Main Menu",
       ),
       body: Padding(

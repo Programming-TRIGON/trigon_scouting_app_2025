@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_shift.dart';
 
 class MyShiftsWidget extends StatefulWidget {
   const MyShiftsWidget({super.key});
@@ -8,68 +12,14 @@ class MyShiftsWidget extends StatefulWidget {
 }
 
 class _MyShiftsWidgetState extends State<MyShiftsWidget> {
-  final List<String> gameScoutingShifts = [
-    // Practice
-    "Practice 1\n1690 Orbit",
-    "Practice 2\n2056 Steel Raptors",
-    "Practice 3\n987 Titanium Tigers",
-
-    // Qualification Matches
-    "Qualification 1\n1114 Simbotics",
-    "Qualification 2\n254 Cheesy Poofs",
-    "Qualification 3\n1678 Citrus Circuits",
-    "Qualification 4\n33 Killer Bees",
-    "Qualification 5\n148 Robowranglers",
-    "Qualification 6\n4334 Night Hawks",
-    "Qualification 7\n624 Big Bang",
-    "Qualification 8\n118 Robonauts",
-    "Qualification 9\n604 Quixilver",
-    "Qualification 10\n2053 NRG",
-    "Qualification 11\n4003 Triple Helix",
-    "Qualification 12\n207 Thunder Chicks",
-    "Qualification 13\n195 CyberKnights",
-    "Qualification 14\n75 RoboRaiders",
-    "Qualification 15\n1671 Citrus Circuits",
-    "Qualification 16\n1640 Sab-BOT-age",
-    "Qualification 17\n33 Killer Bees",
-    "Qualification 18\n604 Quixilver",
-    "Qualification 19\n254 Cheesy Poofs",
-    "Qualification 20\n987 Titanium Tigers",
-    "Qualification 21\n2056 OP Robotics",
-    "Qualification 22\n1690 Orbit",
-
-    // Finals
-    "Finals SF1\n5990 Quantum Crushers",
-    "Finals SF2\n1114 Simbotics",
-    "Finals SF3\n1678 Citrus Circuits",
-    "Finals F1\n254 Cheesy Poofs",
-    "Finals F2\n2056 OP Robotics",
-  ];
-
-  final List<String> superScoutingShifts = [
-    "Finals SF1\n5990 Quantum Crushers",
-    "Finals SF2\n1114 Simbotics",
-    "Finals SF3\n1678 Citrus Circuits",
-  ];
-  final List<String> picScoutingShifts = [];
-
   int selectedIndex = 0;
-
-  List<String> get selectedShifts {
-    switch (selectedIndex) {
-      case 0:
-        return gameScoutingShifts;
-      case 1:
-        return superScoutingShifts;
-      case 2:
-        return picScoutingShifts;
-      default:
-        return [];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final UserDataProvider userDataProvider = context.watch<UserDataProvider>();
+    final ScoutedCompetitionProvider scoutedCompetitionProvider = context
+        .watch<ScoutedCompetitionProvider>();
+
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,7 +34,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
           const SizedBox(height: 12),
           createToggleButtons(),
           const SizedBox(height: 16),
-          createSchedulePanel(),
+          createSchedulePanel(userDataProvider, scoutedCompetitionProvider),
         ],
       ),
     );
@@ -121,17 +71,35 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
     );
   }
 
-  Widget createSchedulePanel() {
-    if (selectedShifts.isEmpty) {
+  Widget createSchedulePanel(
+    UserDataProvider userDataProvider,
+    ScoutedCompetitionProvider scoutedCompetitionProvider,
+  ) {
+    final List<ScoutingShift>? selectedShifts = getSelectedShifts(
+      userDataProvider,
+      scoutedCompetitionProvider,
+    );
+
+    if (selectedShifts?.isEmpty ?? true) {
       return Text(
         "No shifts available",
         style: TextStyle(color: Colors.grey[400], fontStyle: FontStyle.italic),
       );
     }
+    selectedShifts!;
 
-    final practice = selectedShifts.where((s) => s.startsWith("Practice")).toList();
-    final quals = selectedShifts.where((s) => s.startsWith("Qualification")).toList();
-    final finals = selectedShifts.where((s) => s.startsWith("Finals")).toList();
+    final quals = selectedShifts
+        .where((s) => s.getMatchType() == "Qualification")
+        .toList();
+    final playoffs = selectedShifts
+        .where((s) => s.getMatchType() == "Playoffs")
+        .toList();
+    final finals = selectedShifts
+        .where((s) => s.getMatchType() == "Finals")
+        .toList();
+    final notOrdered = selectedShifts
+        .where((s) => s.getMatchType() == null)
+        .toList();
 
     return Flexible(
       child: Container(
@@ -147,8 +115,12 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
             padding: const EdgeInsets.symmetric(vertical: 8),
             shrinkWrap: true,
             children: [
-              if (practice.isNotEmpty) buildSection("Practice", practice),
-              if (quals.isNotEmpty) buildSection("Qualification Matches", quals),
+              if (notOrdered.isNotEmpty)
+                ...notOrdered.map((s) => s.buildScheduleWidget()),
+              if (quals.isNotEmpty)
+                buildSection("Qualification Matches", quals),
+              if (playoffs.isNotEmpty)
+                buildSection("Playoff Matches", playoffs),
               if (finals.isNotEmpty) buildSection("Finals", finals),
             ],
           ),
@@ -157,7 +129,29 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
     );
   }
 
-  Widget buildSection(String title, List<String> items) {
+  List<ScoutingShift>? getSelectedShifts(
+    UserDataProvider userDataProvider,
+    ScoutedCompetitionProvider scoutedCompetitionProvider,
+  ) {
+    switch (selectedIndex) {
+      case 0:
+        return scoutedCompetitionProvider
+            .scoutedCompetition
+            ?.gameScoutingShifts?[userDataProvider.user!.uid];
+      case 1:
+        return scoutedCompetitionProvider
+            .scoutedCompetition
+            ?.superScoutingShifts?[userDataProvider.user!.uid];
+      case 2:
+        return scoutedCompetitionProvider
+            .scoutedCompetition
+            ?.pictureScoutingShifts?[userDataProvider.user!.uid];
+      default:
+        return null;
+    }
+  }
+
+  Widget buildSection(String title, List<ScoutingShift> scoutingShifts) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,17 +166,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
             ),
           ),
         ),
-        ...items.map(
-              (s) => Card(
-            color: Colors.grey[850],
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: ListTile(
-              leading: Icon(Icons.schedule, color: Colors.blue[400]),
-              title: Text(s, style: const TextStyle(color: Colors.white, fontSize: 14)),
-            ),
-          ),
-        ),
+        ...scoutingShifts.map((s) => s.buildScheduleWidget()),
       ],
     );
   }
