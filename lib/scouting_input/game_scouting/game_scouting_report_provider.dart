@@ -49,7 +49,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
   }
 
   static void goToHomeScreen(BuildContext context) async {
-    final UserDataProvider userDataProvider = context.read<UserDataProvider>();
+    final userDataProvider = context.read<UserDataProvider>();
     if (userDataProvider.role!.hasViewerAccess) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialDesignFactory.createNoAnimationRoute(AuthenticationHandler()),

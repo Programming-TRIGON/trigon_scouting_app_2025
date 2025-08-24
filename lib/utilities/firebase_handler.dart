@@ -111,7 +111,7 @@ class FirebaseHandler {
         .collection("teams")
         .doc(report.pregameReport.robotNumber!.toString())
         .collection("games")
-        .doc(report.pregameReport.matchKey!);
+        .doc(FRCMatch.toMatchKey(report.pregameReport.matchType!, report.pregameReport.matchNumber!.toString()));
     await matchDocument.set(report.toMap());
   }
 }

@@ -16,8 +16,8 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final UserDataProvider userDataProvider = context.watch<UserDataProvider>();
-    final ScoutedCompetitionProvider scoutedCompetitionProvider = context
+    final userDataProvider = context.watch<UserDataProvider>();
+    final scoutedCompetitionProvider = context
         .watch<ScoutedCompetitionProvider>();
 
     return Expanded(

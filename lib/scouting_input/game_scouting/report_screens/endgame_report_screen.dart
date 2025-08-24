@@ -38,12 +38,7 @@ class EndgameReportScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BoolToggleRow(
-              text: Text(
-                "Did try to climb?",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              label: "Did try to climb?",
               getter: () => reportProvider.report.endgameReport.didTryToClimb,
               setter: (value) => reportProvider.updateEndgame(
                 (endgameReport) => endgameReport.didTryToClimb = value,
@@ -55,12 +50,7 @@ class EndgameReportScreen extends StatelessWidget {
               offstage:
                   reportProvider.report.endgameReport.didTryToClimb != false,
               child: BoolToggleRow(
-                text: Text(
-                  "Did park?",
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                label: "Did park?",
                 getter: () => reportProvider.report.endgameReport.didPark,
                 setter: (value) => reportProvider.updateEndgame(
                   (endgameReport) => endgameReport.didPark = value,

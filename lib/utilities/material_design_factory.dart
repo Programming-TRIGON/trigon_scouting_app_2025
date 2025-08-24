@@ -10,7 +10,7 @@ class MaterialDesignFactory {
     String? title,
     String? subtitle,
   ) {
-    final userData = context.watch<UserDataProvider>();
+    final userDataProvider = context.watch<UserDataProvider>();
 
     return AppBar(
       toolbarHeight: 56,
@@ -29,11 +29,11 @@ class MaterialDesignFactory {
       actionsPadding: EdgeInsets.symmetric(horizontal: 10),
       actions: [
         PopupMenuButton<String>(
-          enabled: userData.user != null,
+          enabled: userDataProvider.user != null,
           tooltip: "Account Settings",
           onSelected: (value) async {
             if (value == 'logout') {
-              userData.signOut();
+              userDataProvider.signOut();
               Navigator.pushAndRemoveUntil(
                 context,
                 createModernRoute(AuthenticationHandler()),
@@ -50,9 +50,9 @@ class MaterialDesignFactory {
           child: Row(
             children: [
               Icon(Icons.person),
-              if (userData.user?.displayName != null)
+              if (userDataProvider.user?.displayName != null)
                 Text(
-                  userData.user!.displayName!,
+                  userDataProvider.user!.displayName!,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
             ],

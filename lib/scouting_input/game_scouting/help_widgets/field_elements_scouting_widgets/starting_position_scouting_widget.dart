@@ -10,9 +10,12 @@ class StartingPositionScoutingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final reportProvider = context.watch<GameScoutingReportProvider>();
     
-    return FittedBox(
-      child: Offstage(
-        offstage: reportProvider.report.pregameReport.showedUp != true,
+    return Visibility(
+      visible: reportProvider.report.pregameReport.showedUp == true,
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      child: FittedBox(
         child: Column(
           children: [
             Text("Select a starting position:", style: Theme.of(context).textTheme.bodyLarge),

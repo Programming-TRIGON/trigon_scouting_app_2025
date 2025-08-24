@@ -133,7 +133,9 @@ class FRCMatch {
     required this.redTeams,
   });
 
-  static String? toMatchKey(String matchType, String matchNumber) {
+  static String? toMatchKey(String? matchType, String? matchNumber) {
+    if (matchType == null|| matchNumber == null) return null;
+
     switch (matchType.toLowerCase()) {
       case "practice":
         return "p$matchNumber";

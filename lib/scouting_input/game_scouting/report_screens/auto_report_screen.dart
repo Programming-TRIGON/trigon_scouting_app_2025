@@ -15,12 +15,7 @@ class AutoReportScreen extends StatelessWidget {
     return ScoringElementsScoutingWidget(
       forAuto: true,
       boolToggleRow: BoolToggleRow(
-        text: Text(
-          "Auto line?",
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
-        ),
+        label: "Auto line?",
         getter: () => reportProvider.report.autoReport.crossedAutoLine,
         setter: (value) => reportProvider.updateAuto(
           (autoReport) => autoReport.crossedAutoLine = value,

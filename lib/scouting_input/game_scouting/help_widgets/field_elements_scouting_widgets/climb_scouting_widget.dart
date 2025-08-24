@@ -117,7 +117,7 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
         children: [
           FittedBox(
             child: BoolToggleRow(
-              text: Text("Did manage to climb?"),
+              label: "Did manage to climb?",
               getter: () =>
                   reportProvider.report.endgameReport.didManageToClimb,
               setter: (value) => reportProvider.updateEndgame(

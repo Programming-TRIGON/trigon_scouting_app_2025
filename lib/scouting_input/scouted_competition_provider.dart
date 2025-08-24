@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -24,6 +23,10 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
   FRCTeam? getScoutedTeamInGameScoutingMatch(String uid, String matchKey) {
     return scoutedCompetition?.gameScoutingShifts?[uid]
         ?.firstWhere((shift) => shift.matchKey == matchKey).scoutedTeam;
+  }
+
+  String? getTeamNameFromNumber(int? teamNumber) {
+    return scoutedCompetition?.teams.where((team) => team.teamID == teamNumber).firstOrNull?.name;
   }
 
   List<int>? getAvailableGameScoutingMatchNumbers(String uid, String matchType) {

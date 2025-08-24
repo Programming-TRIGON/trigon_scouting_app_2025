@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BoolToggleRow extends StatelessWidget {
-  final Widget text;
+  final String label;
   final bool? Function() getter;
   final void Function(bool) setter;
   final Color outlineColor;
 
   const BoolToggleRow({
     super.key,
-    required this.text,
+    required this.label,
     required this.getter,
     required this.setter,
     required this.outlineColor
@@ -19,41 +19,44 @@ class BoolToggleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool? value = getter();
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: outlineColor, width: 2),
-        borderRadius: BorderRadius.circular(10)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            text,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(width: 5),
-                buildToggleButton(
-                  context: context,
-                  icon: Icons.close,
-                  selected: value == false,
-                  fillColor: Colors.red,
-                  onTap: () => setter(false),
-                ),
-                SizedBox(width: 5),
-                buildToggleButton(
-                  context: context,
-                  icon: Icons.check,
-                  selected: value == true,
-                  fillColor: Colors.green,
-                  onTap: () => setter(true),
-                ),
-              ],
-            ),
-          ],
+    return FittedBox(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(color: outlineColor, width: 2),
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              SizedBox(width: 5,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 5),
+                  buildToggleButton(
+                    context: context,
+                    icon: Icons.close,
+                    selected: value == false,
+                    fillColor: Colors.red,
+                    onTap: () => setter(false),
+                  ),
+                  SizedBox(width: 5),
+                  buildToggleButton(
+                    context: context,
+                    icon: Icons.check,
+                    selected: value == true,
+                    fillColor: Colors.green,
+                    onTap: () => setter(true),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

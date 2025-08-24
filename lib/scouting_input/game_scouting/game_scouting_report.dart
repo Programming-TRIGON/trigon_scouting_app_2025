@@ -75,14 +75,17 @@ class Placements {
 }
 
 class PregameScoutingReport {
-  String? matchKey;
+  String? matchType;
+  int? matchNumber;
+  bool didOverrideSelection = false;
   int? robotNumber;
   bool? showedUp;
   int? startingPosition;
   bool? bet;
 
   String? validate() {
-    if (matchKey == null) return "Please select match ID";
+    if (matchType == null) return "Please select match type";
+    if (matchNumber == null) return "Please select match number";
     if (robotNumber == null) return "Please select robot number";
     if (showedUp == null) return "Please select whether the team showed up";
     if (showedUp == true && startingPosition == null) {
@@ -92,7 +95,11 @@ class PregameScoutingReport {
   }
 
   Map<String, dynamic> toMap() {
-    return {'showedUp': showedUp, 'startingPosition': startingPosition};
+    return {
+      'showedUp': showedUp,
+      'startingPosition': startingPosition,
+      'didOverrideSelection' : didOverrideSelection
+    };
   }
 }
 
