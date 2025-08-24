@@ -247,10 +247,10 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
     GameScoutingReportProvider reportProvider,
     int? value,
   ) {
-    if (reportProvider.report.pregameReport.didOverrideSelection) return;
-
     reportProvider.updatePregame((pregameReport) {
       pregameReport.matchNumber = value;
+
+      if (reportProvider.report.pregameReport.didOverrideSelection) return;
 
       final String? matchKey = FRCMatch.toMatchKey(
         reportProvider.report.pregameReport.matchType,
