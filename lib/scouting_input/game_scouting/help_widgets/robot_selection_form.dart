@@ -92,7 +92,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
           width: 200,
           label: Text('Match#', style: TextStyle(color: Colors.grey)),
           controller: matchNumberController,
-          initialSelection: reportProvider.report.pregameReport.robotNumber,
+          initialSelection: reportProvider.report.pregameReport.matchNumber,
           dropdownMenuEntries: buildMatchNumberSelectionOptions(
             userDataProvider,
             scoutedCompetitionProvider,
