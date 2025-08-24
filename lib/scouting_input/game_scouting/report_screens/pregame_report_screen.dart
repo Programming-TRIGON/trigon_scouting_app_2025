@@ -43,7 +43,7 @@ class PregameReportScreen extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: BoolToggleRow(
-                  label: "Did Show Up?",
+                  label: "Did Team Show Up?",
                   getter: () => reportProvider.report.pregameReport.showedUp,
                   setter: (value) => reportProvider.updatePregame(
                     (pregameReport) => pregameReport.showedUp = value,

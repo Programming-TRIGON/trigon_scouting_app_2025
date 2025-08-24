@@ -166,6 +166,9 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
               pregameReport.didOverrideSelection = value;
               pregameReport.matchType = null;
               pregameReport.matchNumber = null;
+              matchTypeController.clear();
+              matchNumberController.clear();
+              robotNumberController.clear();
             }),
           },
         ),

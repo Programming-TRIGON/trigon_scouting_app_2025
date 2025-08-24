@@ -33,7 +33,7 @@ class StartingPositionScoutingWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 70,
+                spacing: 50,
                 children: [
                   createStartingPositionsColumn(false, reportProvider),
                   createStartingPositionsColumn(true, reportProvider),
@@ -77,8 +77,8 @@ class StartingPositionScoutingWidget extends StatelessWidget {
         reportProvider.updatePregame((pregameReport) => pregameReport.startingPosition = index);
       },
       child: Container(
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? selectedColor : Colors.transparent, // Background color changes on selection

@@ -32,12 +32,11 @@ class BoolToggleRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              SizedBox(width: 5,),
+              SizedBox(width: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(width: 5),
                   buildToggleButton(
                     context: context,
                     icon: Icons.close,
