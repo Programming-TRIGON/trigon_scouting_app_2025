@@ -20,9 +20,19 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Stack(
           children: [
-            SizedBox.expand(
-              child: FittedBox(
-                child: createQuestionsColumn(context, reportProvider),
+            Center(
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: FittedBox(
+                      child: createQuestionsColumn(context, reportProvider),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  )
+                ],
               ),
             ),
             Align(
@@ -59,15 +69,18 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(decoration: TextDecoration.underline),
         ),
         SizedBox(height: 15),
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+        SizedBox(
+          width: 400,
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              labelText: 'Additional Comments',
             ),
-            labelText: 'Additional Comments',
-          ),
-          onChanged: (value) => reportProvider.updatePostgame(
-                (postgameReport) => postgameReport.comments = value,
+            onChanged: (value) => reportProvider.updatePostgame(
+                  (postgameReport) => postgameReport.comments = value,
+            ),
           ),
         ),
         SizedBox(height: 10),
