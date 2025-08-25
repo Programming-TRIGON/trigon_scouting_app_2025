@@ -99,8 +99,7 @@ class ScoutingHomeScreen extends StatelessWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
               children: const [
                 MyDataWidget(),
                 SizedBox(height: 20),

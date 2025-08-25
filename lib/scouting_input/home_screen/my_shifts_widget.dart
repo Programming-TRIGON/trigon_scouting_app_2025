@@ -20,23 +20,21 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
     final scoutedCompetitionProvider = context
         .watch<ScoutedCompetitionProvider>();
 
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "My Shifts",
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "My Shifts",
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-          const SizedBox(height: 12),
-          createToggleButtons(),
-          const SizedBox(height: 16),
-          createSchedulePanel(userDataProvider, scoutedCompetitionProvider),
-        ],
-      ),
+        ),
+        const SizedBox(height: 12),
+        createToggleButtons(),
+        const SizedBox(height: 16),
+        createSchedulePanel(userDataProvider, scoutedCompetitionProvider),
+      ],
     );
   }
 
@@ -101,29 +99,28 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
         .where((s) => s.getMatchType() == null)
         .toList();
 
-    return Flexible(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Scrollbar(
-          thumbVisibility: true,
-          interactive: true,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            shrinkWrap: true,
-            children: [
-              if (notOrdered.isNotEmpty)
-                ...notOrdered.map((s) => s.buildScheduleWidget()),
-              if (quals.isNotEmpty)
-                buildSection("Qualification Matches", quals),
-              if (playoffs.isNotEmpty)
-                buildSection("Playoff Matches", playoffs),
-              if (finals.isNotEmpty) buildSection("Finals", finals),
-            ],
-          ),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      height: 450,
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Scrollbar(
+        thumbVisibility: true,
+        interactive: true,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          shrinkWrap: true,
+          children: [
+            if (notOrdered.isNotEmpty)
+              ...notOrdered.map((s) => s.buildScheduleWidget()),
+            if (quals.isNotEmpty)
+              buildSection("Qualification Matches", quals),
+            if (playoffs.isNotEmpty)
+              buildSection("Playoff Matches", playoffs),
+            if (finals.isNotEmpty) buildSection("Finals", finals),
+          ],
         ),
       ),
     );
