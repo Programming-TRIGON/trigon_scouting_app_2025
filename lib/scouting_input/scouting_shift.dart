@@ -10,7 +10,7 @@ abstract class ScoutingShift {
   });
 
   String getMatchName() {
-    return "${getMatchType()} ${getMatchKey()}";
+    return "${getMatchType()} ${getMatchNumber()}";
   }
 
   String? getMatchType() {

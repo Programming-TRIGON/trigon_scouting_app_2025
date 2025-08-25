@@ -4,6 +4,21 @@ import 'package:trigon_scouting_app_2025/authentication/authentication_handler.d
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 
 class MaterialDesignFactory {
+  static Widget createLoadingPage(String label) {
+    return Scaffold(
+        body: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(label, style: TextStyle(fontSize: 20),),
+                SizedBox(height: 20,),
+                CircularProgressIndicator()
+              ]
+          ),
+        )
+    );
+  }
+
   static AppBar createAppBar(
     BuildContext context,
     Color color,

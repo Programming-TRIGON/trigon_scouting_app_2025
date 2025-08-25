@@ -9,6 +9,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_scr
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/teleop_report_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 
+import '../../../utilities/material_design_factory.dart';
 import 'auto_report_screen.dart';
 
 class GameScoutingReportScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class GameScoutingReportScreen extends StatelessWidget {
     final scoutedCompetitionProvider = context.watch<ScoutedCompetitionProvider>();
 
     if (scoutedCompetitionProvider.scoutedCompetition == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return MaterialDesignFactory.createLoadingPage("Scouted Competition Loading...");
     }
 
     switch (reportProvider.page) {

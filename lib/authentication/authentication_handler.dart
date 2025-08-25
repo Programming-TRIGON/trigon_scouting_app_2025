@@ -5,6 +5,7 @@ import 'package:trigon_scouting_app_2025/authentication/login_screen/login_scree
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/home_screen/home_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
+import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
 
 class AuthenticationHandler extends StatelessWidget {
   const AuthenticationHandler({super.key});
@@ -14,7 +15,7 @@ class AuthenticationHandler extends StatelessWidget {
     final userDataProvider = context.watch<UserDataProvider>();
 
     if (userDataProvider.isDataLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return MaterialDesignFactory.createLoadingPage("User Data Loading...");
     }
 
     if (userDataProvider.error != null) {
