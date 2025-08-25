@@ -68,8 +68,8 @@ class ScoutedCompetition extends FRCCompetition {
           shiftsList == null ? null : List<Map<String, dynamic>>.from(shiftsList).map((shiftMap) => PictureScoutingShift.fromMap(shiftMap)).toList()
         )
       ),
-      maximumScore: map['maximumScore'] as double,
-      minimumScore: map['minimumScore'] as double
+      maximumScore: (map['maximumScore'] as num).toDouble(),
+      minimumScore: (map['minimumScore'] as num).toDouble()
     );
   }
 }
