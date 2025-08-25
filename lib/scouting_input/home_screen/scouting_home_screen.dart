@@ -96,18 +96,20 @@ class ScoutingHomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: ListView(
-              children: const [
-                MyDataWidget(),
-                SizedBox(height: 20),
-                Divider(thickness: 2, color: Colors.grey),
-                SizedBox(height: 20),
-                MyShiftsWidget(),
-                SizedBox(height: 20),
-              ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: Column(
+                children: const [
+                  MyDataWidget(),
+                  SizedBox(height: 20),
+                  Divider(thickness: 2, color: Colors.grey),
+                  SizedBox(height: 20),
+                  MyShiftsWidget(),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
