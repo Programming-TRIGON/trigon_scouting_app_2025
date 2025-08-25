@@ -6,13 +6,15 @@ class BoolToggleRow extends StatelessWidget {
   final bool? Function() getter;
   final void Function(bool) setter;
   final Color outlineColor;
+  final double width;
 
   const BoolToggleRow({
     super.key,
     required this.label,
     required this.getter,
     required this.setter,
-    required this.outlineColor
+    required this.outlineColor,
+    this.width = 350
   });
 
   @override
@@ -20,7 +22,8 @@ class BoolToggleRow extends StatelessWidget {
     final bool? value = getter();
 
     return FittedBox(
-      child: DecoratedBox(
+      child: Container(
+        width: width,
         decoration: BoxDecoration(
           border: Border.all(color: outlineColor, width: 2),
           borderRadius: BorderRadius.circular(10)

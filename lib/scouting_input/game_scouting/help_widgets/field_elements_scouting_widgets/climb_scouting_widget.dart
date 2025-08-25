@@ -5,6 +5,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scout
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/outlined_text.dart';
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
 
 class ClimbScoutingWidget extends StatelessWidget {
   static final Image climbingPositionsImage = Image.asset(
@@ -116,14 +117,16 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           FittedBox(
-            child: BoolToggleRow(
-              label: "Did manage to climb?",
-              getter: () =>
-                  reportProvider.report.endgameReport.didManageToClimb,
-              setter: (value) => reportProvider.updateEndgame(
-                (endgameReport) => endgameReport.didManageToClimb = value,
+            child: Mandatory(
+              child: BoolToggleRow(
+                label: "Did manage to climb?",
+                getter: () =>
+                    reportProvider.report.endgameReport.didManageToClimb,
+                setter: (value) => reportProvider.updateEndgame(
+                  (endgameReport) => endgameReport.didManageToClimb = value,
+                ),
+                outlineColor: Colors.grey,
               ),
-              outlineColor: Colors.grey,
             ),
           ),
           const SizedBox(height: 12),
@@ -144,28 +147,30 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
   }
 
   Widget createClimbFailureDropdown(BuildContext context) {
-    return DropdownMenu<ClimbFailureReason>(
-      expandedInsets: EdgeInsets.zero,
-      initialSelection: context
-          .read<GameScoutingReportProvider>()
-          .report
-          .endgameReport
-          .climbFailureReason,
-      onSelected: (value) {
-        context.read<GameScoutingReportProvider>().updateEndgame(
-              (endgameReport) => endgameReport.climbFailureReason = value,
-        );
-      },
-      hintText: 'Climb failure reason',
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+    return Mandatory(
+      child: DropdownMenu<ClimbFailureReason>(
+        expandedInsets: EdgeInsets.zero,
+        initialSelection: context
+            .read<GameScoutingReportProvider>()
+            .report
+            .endgameReport
+            .climbFailureReason,
+        onSelected: (value) {
+          context.read<GameScoutingReportProvider>().updateEndgame(
+                (endgameReport) => endgameReport.climbFailureReason = value,
+          );
+        },
+        hintText: 'Climb failure reason',
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        dropdownMenuEntries: ClimbFailureReason.values
+            .map(
+              (reason) =>
+              DropdownMenuEntry(value: reason, label: reason.toNormalText()),
+        )
+            .toList(),
       ),
-      dropdownMenuEntries: ClimbFailureReason.values
-          .map(
-            (reason) =>
-            DropdownMenuEntry(value: reason, label: reason.toNormalText()),
-      )
-          .toList(),
     );
   }
 }

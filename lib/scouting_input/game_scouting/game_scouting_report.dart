@@ -7,6 +7,7 @@ class GameScoutingReport {
   final AutoScoutingReport autoReport;
   final TeleopScoutingReport teleopReport;
   final EndgameScoutingReport endgameReport;
+  final PostgameReport postgameReport;
 
   const GameScoutingReport({
     required this.scouterUID,
@@ -14,6 +15,7 @@ class GameScoutingReport {
     required this.autoReport,
     required this.teleopReport,
     required this.endgameReport,
+    required this.postgameReport,
   });
 
   int calculateTotalPoint() {
@@ -31,13 +33,15 @@ class GameScoutingReport {
     : pregameReport = PregameScoutingReport(),
       autoReport = AutoScoutingReport(),
       teleopReport = TeleopScoutingReport(),
-      endgameReport = EndgameScoutingReport();
+      endgameReport = EndgameScoutingReport(),
+      postgameReport = PostgameReport();
 
   GameScoutingReport copyWith({
     PregameScoutingReport? pregameReport,
     AutoScoutingReport? autoReport,
     TeleopScoutingReport? teleopReport,
     EndgameScoutingReport? endgameReport,
+    PostgameReport? postgameReport,
   }) {
     return GameScoutingReport(
       scouterUID: scouterUID,
@@ -45,6 +49,7 @@ class GameScoutingReport {
       autoReport: autoReport ?? this.autoReport,
       teleopReport: teleopReport ?? this.teleopReport,
       endgameReport: endgameReport ?? this.endgameReport,
+      postgameReport: postgameReport ?? this.postgameReport,
     );
   }
 
@@ -286,6 +291,25 @@ class EndgameScoutingReport {
       'deepCage': deepCage,
       'didManageToClimb': didManageToClimb,
       'climbFailureReason': climbFailureReason?.toNormalText(),
+    };
+  }
+}
+
+class PostgameReport {
+  bool? didCollectAlgaeFromGround;
+  String? comments;
+
+  String? validate() {
+    if (didCollectAlgaeFromGround == null) {
+      return "Please select whether the team collected algae from the ground";
+    }
+    return null;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'didCollectAlgaeFromGround': didCollectAlgaeFromGround,
+      'comments': comments,
     };
   }
 }

@@ -61,14 +61,12 @@ class NavigationButtonWidget extends StatelessWidget {
   final double width;
   final GameScoutingPage targetPage;
   final String text;
-  final Function(BuildContext, String) notAbleToMoveToPageCallback;
 
   const NavigationButtonWidget({
     super.key,
     required this.width,
     required this.targetPage,
     required this.text,
-    this.notAbleToMoveToPageCallback = TopRightWarning.showOnScreen,
   });
 
   @override
@@ -79,8 +77,7 @@ class NavigationButtonWidget extends StatelessWidget {
       onTap: () async {
         reportProvider.moveToPage(
           context,
-          targetPage,
-          notAbleToMoveToPageCallback,
+          targetPage
         );
       },
       splashColor: Colors.indigo.withValues(alpha: 0.3),

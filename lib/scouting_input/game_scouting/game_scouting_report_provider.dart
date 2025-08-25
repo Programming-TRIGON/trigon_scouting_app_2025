@@ -4,6 +4,7 @@ import 'package:trigon_scouting_app_2025/authentication/authentication_handler.d
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/top_right_warning.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
@@ -26,8 +27,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
 
   void moveToPage(
     BuildContext context,
-    GameScoutingPage targetPage,
-    Function(BuildContext, String) notAbleToMoveToPageCallback,
+    GameScoutingPage targetPage
   ) async {
     if (targetPage == GameScoutingPage.discard) {
       await DiscardChangesDialogWidget().showOnScreen(context);
@@ -44,7 +44,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     if (canMoveToPage == null) {
       _page = targetPage;
     } else {
-      notAbleToMoveToPageCallback(context, canMoveToPage);
+      TopRightWarning.showOnScreen(context, canMoveToPage);
     }
     notifyListeners();
   }
@@ -96,6 +96,11 @@ class GameScoutingReportProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updatePostgame(void Function(PostgameReport) updater) {
+    updater(_report.postgameReport);
+    notifyListeners();
+  }
+
   String? validate() {
     if (_report.pregameReport.showedUp == false && _report.pregameReport.validate() == null) {
       return null;
@@ -104,13 +109,15 @@ class GameScoutingReportProvider extends ChangeNotifier {
     return _report.pregameReport.validate() ??
         _report.autoReport.validate() ??
         _report.teleopReport.validate() ??
-        _report.endgameReport.validate();
+        _report.endgameReport.validate() ??
+        _report.postgameReport.validate();
   }
 
   Future<void> submit(BuildContext context) async {
     final error = validate();
     if (error != null) {
-      throw Exception(error);
+      TopRightWarning.showOnScreen(context, error);
+      return;
     }
 
     final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();

@@ -5,6 +5,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scout
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/field_elements_scouting_widgets/climb_scouting_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/navigation_buttons_widget.dart';
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
 
 class EndgameReportScreen extends StatelessWidget {
   const EndgameReportScreen({super.key});
@@ -37,25 +38,29 @@ class EndgameReportScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BoolToggleRow(
-              label: "Did try to climb?",
-              getter: () => reportProvider.report.endgameReport.didTryToClimb,
-              setter: (value) => reportProvider.updateEndgame(
-                (endgameReport) => endgameReport.didTryToClimb = value,
+            Mandatory(
+              child: BoolToggleRow(
+                label: "Did try to climb?",
+                getter: () => reportProvider.report.endgameReport.didTryToClimb,
+                setter: (value) => reportProvider.updateEndgame(
+                  (endgameReport) => endgameReport.didTryToClimb = value,
+                ),
+                outlineColor: Colors.grey,
               ),
-              outlineColor: Colors.grey,
             ),
             SizedBox(height: 8),
             Offstage(
               offstage:
                   reportProvider.report.endgameReport.didTryToClimb != false,
-              child: BoolToggleRow(
-                label: "Did park?",
-                getter: () => reportProvider.report.endgameReport.didPark,
-                setter: (value) => reportProvider.updateEndgame(
-                  (endgameReport) => endgameReport.didPark = value,
+              child: Mandatory(
+                child: BoolToggleRow(
+                  label: "Did park?",
+                  getter: () => reportProvider.report.endgameReport.didPark,
+                  setter: (value) => reportProvider.updateEndgame(
+                    (endgameReport) => endgameReport.didPark = value,
+                  ),
+                  outlineColor: Colors.grey,
                 ),
-                outlineColor: Colors.grey,
               ),
             ),
           ],

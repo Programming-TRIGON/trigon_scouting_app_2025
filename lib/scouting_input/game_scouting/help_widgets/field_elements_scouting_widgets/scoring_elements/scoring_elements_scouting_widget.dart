@@ -9,7 +9,7 @@ import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
 
 class ScoringElementsScoutingWidget extends StatelessWidget {
   final bool forAuto;
-  final BoolToggleRow boolToggleRow;
+  final Widget boolToggleRow;
 
   const ScoringElementsScoutingWidget({
     super.key,

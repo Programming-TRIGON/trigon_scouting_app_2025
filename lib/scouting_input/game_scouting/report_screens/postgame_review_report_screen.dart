@@ -7,8 +7,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widge
 import '../../scouted_competition_provider.dart';
 import '../game_scouting_report_provider.dart';
 
-class PostgameReportScreen extends StatelessWidget {
-  const PostgameReportScreen({super.key});
+class PostgameReviewReportScreen extends StatelessWidget {
+  const PostgameReviewReportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class PostgameReportScreen extends StatelessWidget {
                   context,
                   Text(
                     "Match Data Review",
-                    style: Theme.of(context).textTheme.displayLarge,
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(decoration: TextDecoration.underline),
                   ),
                   Text(
                     reportProvider.report.pregameReport.robotNumber!.toString(),
@@ -96,7 +96,7 @@ class PostgameReportScreen extends StatelessWidget {
                 width: 300,
                 child: FittedBox(
                   child: NavigationButtonsWidget(
-                    currentPage: GameScoutingPage.postgame,
+                    currentPage: GameScoutingPage.review,
                     width: 100,
                   ),
                 ),

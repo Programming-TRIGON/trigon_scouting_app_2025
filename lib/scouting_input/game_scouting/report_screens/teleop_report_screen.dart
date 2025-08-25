@@ -21,6 +21,7 @@ class TeleopReportScreen extends StatelessWidget {
           (teleopReport) => teleopReport.didDefend = value,
         ),
         outlineColor: Colors.indigo,
+        width: 250,
       ),
     );
   }

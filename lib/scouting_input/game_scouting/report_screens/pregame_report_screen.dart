@@ -6,6 +6,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widge
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/navigation_buttons_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/robot_selection_form.dart';
 import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
 
 class PregameReportScreen extends StatelessWidget {
   const PregameReportScreen({super.key});
@@ -42,13 +43,17 @@ class PregameReportScreen extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: BoolToggleRow(
-                  label: "Did Team Show Up?",
-                  getter: () => reportProvider.report.pregameReport.showedUp,
-                  setter: (value) => reportProvider.updatePregame(
-                    (pregameReport) => pregameReport.showedUp = value,
+                child: FittedBox(
+                  child: Mandatory(
+                    child: BoolToggleRow(
+                      label: "Did Team Show Up?",
+                      getter: () => reportProvider.report.pregameReport.showedUp,
+                      setter: (value) => reportProvider.updatePregame(
+                        (pregameReport) => pregameReport.showedUp = value,
+                      ),
+                      outlineColor: Colors.grey,
+                    ),
                   ),
-                  outlineColor: Colors.grey,
                 ),
               ),
               Expanded(flex: 12, child: StartingPositionScoutingWidget()),

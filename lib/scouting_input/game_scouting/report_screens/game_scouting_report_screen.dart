@@ -4,7 +4,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scout
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/discard_changes_dialog_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/endgame_report_screen.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/postgame_report_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/postgame_questions_report_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/postgame_review_report_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/pregame_report_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/report_screens/teleop_report_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
@@ -48,8 +49,10 @@ class GameScoutingReportScreen extends StatelessWidget {
         return TeleopReportScreen();
       case GameScoutingPage.endgame:
         return EndgameReportScreen();
-      case GameScoutingPage.postgame:
-        return PostgameReportScreen();
+      case GameScoutingPage.review:
+        return PostgameReviewReportScreen();
+      case GameScoutingPage.questions:
+        return PostgameQuestionsReportScreen();
       default:
         return PregameReportScreen();
     }

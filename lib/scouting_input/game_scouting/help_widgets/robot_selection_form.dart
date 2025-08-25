@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report_provider.dart';
+import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 import '../../../authentication/user_data_provider.dart';
@@ -73,42 +74,46 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DropdownMenu<String>(
-          width: 200,
-          label: Text('Match Type', style: TextStyle(color: Colors.grey)),
-          controller: matchTypeController,
-          initialSelection: reportProvider.report.pregameReport.matchType,
-          dropdownMenuEntries: buildMatchTypeSelectionOptions(),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        Mandatory(
+          child: DropdownMenu<String>(
+            width: 200,
+            label: Text('Match Type', style: TextStyle(color: Colors.grey)),
+            controller: matchTypeController,
+            initialSelection: reportProvider.report.pregameReport.matchType,
+            dropdownMenuEntries: buildMatchTypeSelectionOptions(),
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            enabled: true,
+            enableSearch: true,
+            enableFilter: true,
+            onSelected: (value) => onMatchTypeSelection(reportProvider, value),
           ),
-          enabled: true,
-          enableSearch: true,
-          enableFilter: true,
-          onSelected: (value) => onMatchTypeSelection(reportProvider, value),
         ),
         SizedBox(width: 5),
-        DropdownMenu<int>(
-          width: 200,
-          label: Text('Match Number', style: TextStyle(color: Colors.grey)),
-          controller: matchNumberController,
-          initialSelection: reportProvider.report.pregameReport.matchNumber,
-          dropdownMenuEntries: buildMatchNumberSelectionOptions(
-            userDataProvider,
-            scoutedCompetitionProvider,
-            reportProvider,
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          enabled: true,
-          enableSearch: true,
-          enableFilter: true,
-          onSelected: (value) => onMatchNumberSelection(
-            userDataProvider,
-            scoutedCompetitionProvider,
-            reportProvider,
-            value,
+        Mandatory(
+          child: DropdownMenu<int>(
+            width: 200,
+            label: Text('Match Number', style: TextStyle(color: Colors.grey)),
+            controller: matchNumberController,
+            initialSelection: reportProvider.report.pregameReport.matchNumber,
+            dropdownMenuEntries: buildMatchNumberSelectionOptions(
+              userDataProvider,
+              scoutedCompetitionProvider,
+              reportProvider,
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            enabled: true,
+            enableSearch: true,
+            enableFilter: true,
+            onSelected: (value) => onMatchNumberSelection(
+              userDataProvider,
+              scoutedCompetitionProvider,
+              reportProvider,
+              value,
+            ),
           ),
         ),
       ],
@@ -136,25 +141,27 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        DropdownMenu<int?>(
-          width: 200,
-          label: Text('Robot Number', style: TextStyle(color: Colors.grey)),
-          controller: robotNumberController,
-          initialSelection: reportProvider.report.pregameReport.robotNumber,
-          dropdownMenuEntries: buildRobotSelectionOptions(
-            scoutedCompetitionProvider,
-            reportProvider,
+        Mandatory(
+          child: DropdownMenu<int?>(
+            width: 200,
+            label: Text('Robot Number', style: TextStyle(color: Colors.grey)),
+            controller: robotNumberController,
+            initialSelection: reportProvider.report.pregameReport.robotNumber,
+            dropdownMenuEntries: buildRobotSelectionOptions(
+              scoutedCompetitionProvider,
+              reportProvider,
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            helperText: scoutedCompetitionProvider.getTeamNameFromNumber(
+              reportProvider.report.pregameReport.robotNumber,
+            ),
+            enabled: reportProvider.report.pregameReport.didOverrideSelection,
+            enableSearch: true,
+            enableFilter: true,
+            onSelected: (value) => onRobotNumberSelection(reportProvider, value),
           ),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          helperText: scoutedCompetitionProvider.getTeamNameFromNumber(
-            reportProvider.report.pregameReport.robotNumber,
-          ),
-          enabled: reportProvider.report.pregameReport.didOverrideSelection,
-          enableSearch: true,
-          enableFilter: true,
-          onSelected: (value) => onRobotNumberSelection(reportProvider, value),
         ),
         SizedBox(height: 5),
         Text("Override Selection"),
