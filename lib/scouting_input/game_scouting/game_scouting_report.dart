@@ -145,7 +145,7 @@ class AutoScoutingReport {
 
   int calculateTotalPoints() {
     final l4Points = l4CoralPlacements.successes * 7;
-    final l3Points = l3CoralPlacements.successes * 5;
+    final l3Points = l3CoralPlacements.successes * 6;
     final l2Points = l2CoralPlacements.successes * 4;
     final l1Points = l1CoralPlacements.successes * 3;
     final netPoints = netAlgaePlacements.successes * 4;
