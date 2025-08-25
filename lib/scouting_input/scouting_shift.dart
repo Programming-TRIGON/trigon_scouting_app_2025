@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 abstract class ScoutingShift {
-  final bool didScout;
+  bool didScout;
 
   ScoutingShift({
     required this.didScout

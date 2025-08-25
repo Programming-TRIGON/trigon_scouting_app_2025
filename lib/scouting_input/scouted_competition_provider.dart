@@ -9,6 +9,9 @@ import '../utilities/firebase_handler.dart';
 
 class ScoutedCompetitionProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late DocumentReference<Map<String, dynamic>> scoutedCompetitionDoc = _firestore
+      .collection("competitions")
+      .doc("scoutedCompetition"); 
 
   ScoutedCompetition? scoutedCompetition;
   StreamSubscription<DocumentSnapshot>? _scoutedCompetitionSubscriber;
@@ -34,13 +37,18 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
         ?.where((shift) => shift.getMatchType() == matchType)
         .map((shift) => shift.getMatchNumber()).toList();
   }
+  
+  void markGameScoutingShiftScouted(String? uid, String? matchKey) {
+    if (scoutedCompetition == null) return;
+
+    scoutedCompetition!.gameScoutingShifts?[uid]?.firstWhere((shift) => shift.matchKey == matchKey).didScout = true;
+    scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
+  }
 
   void listenToRole() {
     notifyListeners();
 
-    _scoutedCompetitionSubscriber = _firestore
-        .collection("competitions")
-        .doc("scoutedCompetition")
+    _scoutedCompetitionSubscriber = scoutedCompetitionDoc
         .snapshots()
         .listen(onDocumentSnapshot);
   }

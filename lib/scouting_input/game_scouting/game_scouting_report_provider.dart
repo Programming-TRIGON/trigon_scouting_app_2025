@@ -5,6 +5,7 @@ import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart'
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 import '../../utilities/material_design_factory.dart';
@@ -34,7 +35,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     }
 
     if (targetPage == GameScoutingPage.submit) {
-      await submit(context, "2025isde2");
+      await submit(context);
       return;
     }
 
@@ -106,12 +107,15 @@ class GameScoutingReportProvider extends ChangeNotifier {
         _report.endgameReport.validate();
   }
 
-  Future<void> submit(BuildContext context, String scoutedCompetitionID) async {
+  Future<void> submit(BuildContext context) async {
     final error = validate();
     if (error != null) {
       throw Exception(error);
     }
-    FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionID);
+
+    final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
+    FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionProvider.scoutedCompetition?.competitionID);
+    scoutedCompetitionProvider.markGameScoutingShiftScouted(_report.scouterUID, _report.pregameReport.getMatchKey());
 
     if (context.mounted) {
       goToHomeScreen(context);

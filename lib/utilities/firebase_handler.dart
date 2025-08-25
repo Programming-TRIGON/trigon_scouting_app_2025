@@ -104,15 +104,17 @@ class FirebaseHandler {
 
   static Future<void> uploadGameScoutingReport(
     GameScoutingReport report,
-    String competitionID,
+    String? competitionID,
   ) async {
+    if (competitionID == null) return;
+
     final matchDocument = FirebaseFirestore.instance
         .collection("competitions")
         .doc(competitionID)
         .collection("teams")
         .doc(report.pregameReport.robotNumber!.toString())
         .collection("games")
-        .doc(FRCMatch.toMatchKey(report.pregameReport.matchType!, report.pregameReport.matchNumber!.toString()));
+        .doc(report.pregameReport.getMatchKey());
     await matchDocument.set(report.toMap());
   }
 }

@@ -1,3 +1,5 @@
+import '../../utilities/tba_handler.dart';
+
 class GameScoutingReport {
   final String scouterUID;
 
@@ -82,6 +84,10 @@ class PregameScoutingReport {
   bool? showedUp;
   int? startingPosition;
   bool? bet;
+
+  String? getMatchKey() {
+    return FRCMatch.toMatchKey(matchType, matchNumber?.toString());
+  }
 
   String? validate() {
     if (matchType == null) return "Please select match type";
