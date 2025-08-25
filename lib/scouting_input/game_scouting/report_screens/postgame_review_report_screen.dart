@@ -14,7 +14,6 @@ class PostgameReviewReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final reportProvider = context.read<GameScoutingReportProvider>();
     final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
-    scoutedCompetitionProvider.updateBoundingScores(reportProvider.report.calculateTotalPoint());
 
     return Scaffold(
       body: Padding(

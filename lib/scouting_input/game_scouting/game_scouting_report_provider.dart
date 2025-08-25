@@ -123,6 +123,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
     FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionProvider.scoutedCompetition?.competitionID);
     scoutedCompetitionProvider.markGameScoutingShiftScouted(_report.scouterUID, _report.pregameReport.getMatchKey());
+    scoutedCompetitionProvider.updateBoundingScores(report.calculateTotalPoint());
 
     if (context.mounted) {
       goToHomeScreen(context);

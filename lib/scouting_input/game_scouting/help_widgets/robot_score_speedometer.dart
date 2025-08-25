@@ -71,7 +71,7 @@ class RobotScoreSpeedometer extends StatelessWidget {
           ],
           pointers: <GaugePointer>[
             NeedlePointer(
-              value: robotScore,
+              value: robotScore.clamp(lowestScore, highestScore),
               enableAnimation: true,
               animationDuration: 3000,
               animationType: AnimationType.easeOutBack,
