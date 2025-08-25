@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouted_competition.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
@@ -34,7 +35,7 @@ class FirebaseHandler {
     String email,
     String password,
     String name,
-    String role,
+    UserRole role,
   ) async {
     try {
       final cred = await authInstance.createUserWithEmailAndPassword(
@@ -45,7 +46,7 @@ class FirebaseHandler {
       await firestore.collection("users").doc(cred.user!.uid).set({
         "name": name,
         "email": email.trim(),
-        "role": role.trim(),
+        "role": role.name,
       });
       return cred.user;
     } catch (e) {
