@@ -15,7 +15,7 @@ class PregameReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

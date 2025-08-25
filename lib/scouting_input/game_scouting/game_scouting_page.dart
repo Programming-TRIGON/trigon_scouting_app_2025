@@ -6,8 +6,8 @@ enum GameScoutingPage {
   auto,
   teleop,
   endgame,
-  review,
   questions,
+  review,
   submit;
 
   String capitalizedName() {
@@ -34,10 +34,12 @@ enum GameScoutingPage {
         return reportProvider.report.autoReport.validate();
       case GameScoutingPage.endgame:
         return reportProvider.report.teleopReport.validate();
-      case GameScoutingPage.review:
+      case GameScoutingPage.questions:
         return reportProvider.report.endgameReport.validate();
-      case GameScoutingPage.submit:
+      case GameScoutingPage.review:
         return reportProvider.report.postgameReport.validate();
+      case GameScoutingPage.submit:
+        return reportProvider.validate();
       default: return null;
     }
   }

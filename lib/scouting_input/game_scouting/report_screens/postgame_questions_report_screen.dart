@@ -26,14 +26,17 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomRight,
-              child: SizedBox(
-                width: 200,
-                child: FittedBox(
-                  child: NavigationButtonsWidget(
-                    currentPage: GameScoutingPage.questions,
-                    width: 100,
+              child: Column(
+                children: [
+                  Spacer(flex: 5),
+                  Expanded(
+                    flex: 1,
+                    child: NavigationButtonsWidget(
+                      currentPage: GameScoutingPage.questions,
+                      width: 100,
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],

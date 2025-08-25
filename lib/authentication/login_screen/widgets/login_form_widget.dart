@@ -27,7 +27,7 @@ class LoginFormWidget extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
           SizedBox(
             width: 400,
             child: TextFormField(
