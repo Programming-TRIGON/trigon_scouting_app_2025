@@ -59,21 +59,15 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(decoration: TextDecoration.underline),
         ),
         SizedBox(height: 15),
-        SizedBox(
-          width: 400,
-          height: 200,
-          child: TextField(
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              labelText: 'Additional Comments',
+        TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            onChanged: (value) => reportProvider.updatePostgame(
-                  (postgameReport) => postgameReport.comments = value,
-            ),
+            labelText: 'Additional Comments',
+          ),
+          onChanged: (value) => reportProvider.updatePostgame(
+                (postgameReport) => postgameReport.comments = value,
           ),
         ),
         SizedBox(height: 10),
