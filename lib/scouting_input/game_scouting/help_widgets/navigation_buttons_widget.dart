@@ -16,8 +16,14 @@ class NavigationButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final previousPage = currentPage.getPrevious();
-    final nextPage = currentPage.getNext();
+    final reportProvider = context.read<GameScoutingReportProvider>();
+    final GameScoutingPage previousPage = currentPage.getPrevious();
+    final GameScoutingPage nextPage;
+    if (currentPage == GameScoutingPage.pregame && reportProvider.report.pregameReport.showedUp == false) {
+      nextPage = GameScoutingPage.submit;
+    } else {
+      nextPage = currentPage.getNext();
+    }
 
     return FittedBox(
       child: Column(
@@ -67,7 +73,7 @@ class NavigationButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reportProvider = context.watch<GameScoutingReportProvider>();
+    final reportProvider = context.read<GameScoutingReportProvider>();
 
     return InkWell(
       onTap: () async {

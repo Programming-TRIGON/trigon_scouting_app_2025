@@ -96,6 +96,10 @@ class GameScoutingReportProvider extends ChangeNotifier {
   }
 
   String? validate() {
+    if (_report.pregameReport.showedUp == false && _report.pregameReport.validate() == null) {
+      return null;
+    }
+
     return _report.pregameReport.validate() ??
         _report.autoReport.validate() ??
         _report.teleopReport.validate() ??

@@ -19,9 +19,73 @@ import 'my_shifts_widget.dart';
 class ScoutingHomeScreen extends StatelessWidget {
   const ScoutingHomeScreen({super.key});
 
+  void doGo(String uid) async {
+    final FRCCompetition frcComp2025isde2 = await TBAHandler.getCompetition(
+      "2025isde2",
+    );
+    FirebaseHandler.setScoutedCompetition(
+      ScoutedCompetition(
+        competitionID: frcComp2025isde2.competitionID,
+        teams: frcComp2025isde2.teams,
+        matches: frcComp2025isde2.matches,
+        gameScoutingShifts: {
+          uid: [
+            GameScoutingShift(
+              matchKey: "qm1",
+              scoutedTeam: FRCTeam(teamID: 1690, name: "Orbit"),
+              didScout: true
+            ),
+            GameScoutingShift(
+              matchKey: "qm2",
+              scoutedTeam: FRCTeam(teamID: 5990, name: "TRIGON"),
+              didScout: true
+            ),
+            GameScoutingShift(
+              matchKey: "qm3",
+              scoutedTeam: FRCTeam(teamID: 2096, name: "RoboActive"),
+              didScout: false
+            ),
+            GameScoutingShift(
+              matchKey: "sf11m1",
+              scoutedTeam: FRCTeam(teamID: 3339, name: "BumbleB"),
+              didScout: false
+            ),
+            GameScoutingShift(
+              matchKey: "f1m3",
+              scoutedTeam: FRCTeam(teamID: 2231, name: "OnyxTronix"),
+              didScout: false
+            ),
+          ],
+        },
+        superScoutingShifts: {
+          uid: [
+            SuperScoutingShift(
+                matchKey: "qm1",
+                scoutedAlliance: [FRCTeam(teamID: 1690, name: "Orbit"), FRCTeam(teamID: 5990, name: "TRIGON"), FRCTeam(teamID: 2096, name: "RoboActive")],
+                isBlueAlliance: true,
+                didScout: true
+            ),
+            SuperScoutingShift(
+                matchKey: "sf11m1",
+                scoutedAlliance: [FRCTeam(teamID: 118, name: "Robonauts"), FRCTeam(teamID: 254, name: "Chezy"), FRCTeam(teamID: 2056, name: "OP Robotics")],
+                isBlueAlliance: false,
+                didScout: false
+            ),
+          ],
+        },
+        pictureScoutingShifts: {
+          uid : [
+            PictureScoutingShift(scoutedTeam: FRCTeam(teamID: 3339, name: "BumbleB"), didScout: true)
+          ]
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userDataProvider = context.read<UserDataProvider>();
+    // doGo(userDataProvider.user!.uid);
 
     return Scaffold(
       appBar: MaterialDesignFactory.createAppBar(
