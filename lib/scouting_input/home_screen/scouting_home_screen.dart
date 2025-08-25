@@ -78,6 +78,8 @@ class ScoutingHomeScreen extends StatelessWidget {
             PictureScoutingShift(scoutedTeam: FRCTeam(teamID: 3339, name: "BumbleB"), didScout: true)
           ]
         },
+        maximumScore: 100,
+        minimumScore: 20
       ),
     );
   }

@@ -7,6 +7,7 @@ class ScoutedCompetition extends FRCCompetition {
   final Map<String, List<GameScoutingShift>?>? gameScoutingShifts;
   final Map<String, List<SuperScoutingShift>?>? superScoutingShifts;
   final Map<String, List<PictureScoutingShift>?>? pictureScoutingShifts;
+  double maximumScore, minimumScore;
 
   ScoutedCompetition({
     required super.competitionID,
@@ -14,7 +15,9 @@ class ScoutedCompetition extends FRCCompetition {
     required super.matches,
     required this.gameScoutingShifts,
     required this.superScoutingShifts,
-    required this.pictureScoutingShifts
+    required this.pictureScoutingShifts,
+    required this.maximumScore,
+    required this.minimumScore
   });
 
   @override
@@ -31,7 +34,9 @@ class ScoutedCompetition extends FRCCompetition {
       ),
       'pictureScoutingShifts' : pictureScoutingShifts?.map(
               (uid, shift) => MapEntry(uid, shift?.map((shift) => shift.toMap()).toList())
-      )
+      ),
+      'maximumScore': maximumScore,
+      'minimumScore': minimumScore,
     };
   }
 
@@ -63,6 +68,8 @@ class ScoutedCompetition extends FRCCompetition {
           shiftsList == null ? null : List<Map<String, dynamic>>.from(shiftsList).map((shiftMap) => PictureScoutingShift.fromMap(shiftMap)).toList()
         )
       ),
+      maximumScore: map['maximumScore'] as double,
+      minimumScore: map['minimumScore'] as double
     );
   }
 }

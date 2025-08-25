@@ -37,6 +37,19 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
         ?.where((shift) => shift.getMatchType() == matchType)
         .map((shift) => shift.getMatchNumber()).toList();
   }
+
+  void updateBoundingScores(int robotScore) {
+    if (scoutedCompetition == null) return;
+
+    if (robotScore > scoutedCompetition!.maximumScore) {
+      scoutedCompetition!.maximumScore = robotScore as double;
+      scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
+    }
+    if (robotScore < scoutedCompetition!.minimumScore) {
+      scoutedCompetition!.minimumScore = robotScore as double;
+      scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
+    }
+  }
   
   void markGameScoutingShiftScouted(String? uid, String? matchKey) {
     if (scoutedCompetition == null) return;

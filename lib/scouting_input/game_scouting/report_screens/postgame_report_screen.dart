@@ -1,10 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/game_scouting_page.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/navigation_buttons_widget.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/game_scouting/help_widgets/robot_score_speedometer.dart';
+
+import '../../scouted_competition_provider.dart';
+import '../game_scouting_report_provider.dart';
 
 class PostgameReportScreen extends StatelessWidget {
   const PostgameReportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final reportProvider = context.read<GameScoutingReportProvider>();
+    final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
+    scoutedCompetitionProvider.updateBoundingScores(reportProvider.report.calculateTotalPoint());
+
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                createVisualTextBox(
+                  context,
+                  Text(
+                    "Match Data Review",
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  Text(
+                    reportProvider.report.pregameReport.robotNumber!.toString(),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.displayLarge?.copyWith(color: Colors.green),
+                  ),
+                ),
+                SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Spacer(flex: 1),
+                    Expanded(
+                      flex: 2,
+                      child: createVisualTextBox(
+                        context,
+                        Text(
+                          "Cycles In Game",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        Text(
+                          reportProvider.report.calculateCycles().toString(),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.displayLarge?.copyWith(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 2),
+                    Expanded(
+                      flex: 2,
+                      child: createVisualTextBox(
+                        context,
+                        Text(
+                          "Points In Game",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        Text(
+                          reportProvider.report.calculateTotalPoint().toString(),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.displayLarge?.copyWith(color: Colors.orange),
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 1),
+                  ],
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: FittedBox(
+                child: RobotScoreSpeedometer(
+                  robotScore: reportProvider.report.calculateTotalPoint() as double,
+                  highestScore: scoutedCompetitionProvider.scoutedCompetition!.maximumScore,
+                  lowestScore: scoutedCompetitionProvider.scoutedCompetition!.minimumScore,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: SizedBox(
+                width: 300,
+                child: FittedBox(
+                  child: NavigationButtonsWidget(
+                    currentPage: GameScoutingPage.postgame,
+                    width: 100,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget createVisualTextBox(BuildContext context, Text label, Text innerText) {
+    return FittedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          label,
+          Container(
+            width: 180,
+            height: 70,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(width: 4, color: Colors.white),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: innerText,
+          ),
+        ],
+      ),
+    );
   }
 }

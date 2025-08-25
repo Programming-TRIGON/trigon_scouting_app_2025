@@ -99,28 +99,30 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
         .where((s) => s.getMatchType() == null)
         .toList();
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      height: 450,
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Scrollbar(
-        thumbVisibility: true,
-        interactive: true,
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          shrinkWrap: true,
-          children: [
-            if (notOrdered.isNotEmpty)
-              ...notOrdered.map((s) => s.buildScheduleWidget()),
-            if (quals.isNotEmpty)
-              buildSection("Qualification Matches", quals),
-            if (playoffs.isNotEmpty)
-              buildSection("Playoff Matches", playoffs),
-            if (finals.isNotEmpty) buildSection("Finals", finals),
-          ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 450),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Scrollbar(
+          thumbVisibility: true,
+          interactive: true,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            shrinkWrap: true,
+            children: [
+              if (notOrdered.isNotEmpty)
+                ...notOrdered.map((s) => s.buildScheduleWidget()),
+              if (quals.isNotEmpty)
+                buildSection("Qualification Matches", quals),
+              if (playoffs.isNotEmpty)
+                buildSection("Playoff Matches", playoffs),
+              if (finals.isNotEmpty) buildSection("Finals", finals),
+            ],
+          ),
         ),
       ),
     );

@@ -16,6 +16,17 @@ class GameScoutingReport {
     required this.endgameReport,
   });
 
+  int calculateTotalPoint() {
+    return autoReport.calculateTotalPoints() +
+        teleopReport.calculateTotalPoints() +
+        endgameReport.calculateTotalPoints();
+  }
+
+  int calculateCycles() {
+    return autoReport.calculateCycles() +
+        teleopReport.calculateCycles();
+  }
+
   GameScoutingReport.withUID(this.scouterUID)
     : pregameReport = PregameScoutingReport(),
       autoReport = AutoScoutingReport(),
@@ -127,6 +138,29 @@ class AutoScoutingReport {
   int processorAlgaeCount = 0;
   int algaeOutOfReefCount = 0;
 
+  int calculateTotalPoints() {
+    final l4Points = l4CoralPlacements.successes * 7;
+    final l3Points = l4CoralPlacements.successes * 5;
+    final l2Points = l4CoralPlacements.successes * 4;
+    final l1Points = l4CoralPlacements.successes * 3;
+    final netPoints = netAlgaePlacements.successes * 4;
+    final processorPoints = processorAlgaeCount * 2;
+    final leavePoints = (crossedAutoLine == true) ? 3 : 0;
+
+    return l4Points + l3Points + l2Points + l1Points + netPoints + processorPoints + leavePoints;
+  }
+
+  int calculateCycles() {
+    final l4Cycles = l4CoralPlacements.successes;
+    final l3Cycles = l3CoralPlacements.successes;
+    final l2Cycles = l2CoralPlacements.successes;
+    final l1Cycles = l1CoralPlacements.successes;
+    final netCycles = netAlgaePlacements.successes;
+    final processorCycles = processorAlgaeCount;
+
+    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles + processorCycles;
+  }
+
   String? validate() {
     if (crossedAutoLine == null) {
       return "Please select whether the robot crossed the auto line";
@@ -167,6 +201,28 @@ class TeleopScoutingReport {
   int processorAlgaeCount = 0;
   int algaeOutOfReefCount = 0;
 
+  int calculateTotalPoints() {
+    final l4Points = l4CoralPlacements.successes * 5;
+    final l3Points = l4CoralPlacements.successes * 4;
+    final l2Points = l4CoralPlacements.successes * 3;
+    final l1Points = l4CoralPlacements.successes * 2;
+    final netPoints = netAlgaePlacements.successes * 4;
+    final processorPoints = processorAlgaeCount * 2;
+
+    return l4Points + l3Points + l2Points + l1Points + netPoints + processorPoints;
+  }
+
+  int calculateCycles() {
+    final l4Cycles = l4CoralPlacements.successes;
+    final l3Cycles = l3CoralPlacements.successes;
+    final l2Cycles = l2CoralPlacements.successes;
+    final l1Cycles = l1CoralPlacements.successes;
+    final netCycles = netAlgaePlacements.successes;
+    final processorCycles = processorAlgaeCount;
+
+    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles + processorCycles;
+  }
+
   String? validate() {
     return null;
   }
@@ -184,27 +240,25 @@ class TeleopScoutingReport {
   }
 }
 
-enum ClimbFailureReason {
-  gotHit,
-  noTime,
-  fell,
-  other;
-
-  String toNormalText() {
-    final spaced = name.replaceAllMapped(
-      RegExp(r'([A-Z])'),
-      (m) => ' ${m.group(1)}',
-    );
-    return spaced[0].toUpperCase() + spaced.substring(1);
-  }
-}
-
 class EndgameScoutingReport {
   bool? didTryToClimb;
   bool? didPark;
   bool? deepCage;
   bool? didManageToClimb;
   ClimbFailureReason? climbFailureReason;
+
+  int calculateTotalPoints() {
+    if (didTryToClimb == true) {
+      if (didManageToClimb == true) {
+        return (deepCage == true) ? 12 : 6;
+      }
+
+      return 2;
+    }
+
+    if (didPark == true) return 2;
+    return 0;
+  }
 
   String? validate() {
     if (didTryToClimb == null) {
@@ -233,5 +287,20 @@ class EndgameScoutingReport {
       'didManageToClimb': didManageToClimb,
       'climbFailureReason': climbFailureReason?.toNormalText(),
     };
+  }
+}
+
+enum ClimbFailureReason {
+  gotHit,
+  noTime,
+  fell,
+  other;
+
+  String toNormalText() {
+    final spaced = name.replaceAllMapped(
+      RegExp(r'([A-Z])'),
+          (m) => ' ${m.group(1)}',
+    );
+    return spaced[0].toUpperCase() + spaced.substring(1);
   }
 }
