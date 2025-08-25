@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => LoginProvider(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: MaterialDesignFactory.createAppBar(
           context,
           Colors.blue,

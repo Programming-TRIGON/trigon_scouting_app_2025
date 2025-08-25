@@ -13,6 +13,7 @@ class EndgameReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Row(

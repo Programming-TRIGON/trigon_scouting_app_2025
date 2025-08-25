@@ -15,6 +15,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
     final reportProvider = context.watch<GameScoutingReportProvider>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Stack(

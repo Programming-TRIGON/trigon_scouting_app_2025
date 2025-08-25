@@ -22,6 +22,7 @@ class ScoringElementsScoutingWidget extends StatelessWidget {
     final Color outlineColor = forAuto ? Colors.amber : Colors.indigo;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Row(
