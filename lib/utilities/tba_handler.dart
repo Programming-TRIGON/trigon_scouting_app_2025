@@ -150,17 +150,32 @@ class FRCMatch {
     }
   }
 
-  /// Extract type: "Practice", "Qualification", "Playoffs", "Finals"
-  String get matchType {
-    if (matchKey.startsWith('p')) return "Practice";
-    if (matchKey.startsWith('qm')) return "Qualification";
-    if (matchKey.startsWith('sf')) return "Playoffs";
-    if (matchKey.startsWith('f')) return "Finals";
-    return "Unknown";
+  static String toMatchName(String matchKey) {
+    return "${toMatchType(matchKey)} ${toMatchNumber(matchKey)}";
   }
 
-  /// Sorting priority
-  int get matchTypeOrder {
+  static int toMatchNumber(String? matchKey) {
+    if (matchKey == null) return 0;
+
+    final matchType = toMatchType(matchKey);
+    if (matchType == "Playoffs") {
+      return toSetNumber(matchKey);
+    }
+    final match = RegExp(r'\d+$').firstMatch(matchKey);
+    if (match != null) return int.tryParse(match.group(0)!) ?? 0;
+    return 0;
+  }
+
+  /// Set number for Playoffs/Finals (e.g., "sf2m1" → 2)
+  static int toSetNumber(String? matchKey) {
+    if (matchKey == null) return 0;
+
+    final match = RegExp(r'^[a-z]+(\d+)m\d+$').firstMatch(matchKey);
+    if (match != null) return int.tryParse(match.group(1)!) ?? 0;
+    return 0;
+  }
+
+  static int toMatchTypeOrder(String? matchType) {
     switch (matchType) {
       case "Practice":
         return 0;
@@ -171,26 +186,26 @@ class FRCMatch {
       case "Finals":
         return 3;
       default:
-        return 99;
+        return -1;
     }
   }
 
-  /// Match number (e.g., "qm13" → 13, "sf2m1" → 1)
-  int get matchNumber {
-    if (matchTypeOrder > 1) {
-      return setNumber;
-    }
-    final match = RegExp(r'\d+$').firstMatch(matchKey);
-    if (match != null) return int.tryParse(match.group(0)!) ?? 0;
-    return 0;
+  static String? toMatchType(String? matchKey) {
+    if (matchKey == null) return null;
+
+    if (matchKey.startsWith('p')) return "Practice";
+    if (matchKey.startsWith('qm')) return "Qualification";
+    if (matchKey.startsWith('sf')) return "Playoffs";
+    if (matchKey.startsWith('f')) return "Finals";
+
+    return "Unknown";
   }
 
-  /// Set number for Playoffs/Finals (e.g., "sf2m1" → 2)
-  int get setNumber {
-    final match = RegExp(r'^[a-z]+(\d+)m\d+$').firstMatch(matchKey);
-    if (match != null) return int.tryParse(match.group(1)!) ?? 0;
-    return 0;
-  }
+  int get matchNumber => toMatchNumber(matchKey);
+  int get setNumber => toSetNumber(matchKey);
+  int get matchTypeOrder => toMatchTypeOrder(toMatchType(matchKey));
+  String get matchType => toMatchType(matchKey) ?? "Unknown";
+  String get matchName => toMatchName(matchKey);
 
   Map<String, dynamic> toMap() {
     return {
