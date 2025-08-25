@@ -145,9 +145,9 @@ class AutoScoutingReport {
 
   int calculateTotalPoints() {
     final l4Points = l4CoralPlacements.successes * 7;
-    final l3Points = l4CoralPlacements.successes * 5;
-    final l2Points = l4CoralPlacements.successes * 4;
-    final l1Points = l4CoralPlacements.successes * 3;
+    final l3Points = l3CoralPlacements.successes * 5;
+    final l2Points = l2CoralPlacements.successes * 4;
+    final l1Points = l1CoralPlacements.successes * 3;
     final netPoints = netAlgaePlacements.successes * 4;
     final processorPoints = processorAlgaeCount * 2;
     final leavePoints = (crossedAutoLine == true) ? 3 : 0;
@@ -208,9 +208,9 @@ class TeleopScoutingReport {
 
   int calculateTotalPoints() {
     final l4Points = l4CoralPlacements.successes * 5;
-    final l3Points = l4CoralPlacements.successes * 4;
-    final l2Points = l4CoralPlacements.successes * 3;
-    final l1Points = l4CoralPlacements.successes * 2;
+    final l3Points = l3CoralPlacements.successes * 4;
+    final l2Points = l2CoralPlacements.successes * 3;
+    final l1Points = l1CoralPlacements.successes * 2;
     final netPoints = netAlgaePlacements.successes * 4;
     final processorPoints = processorAlgaeCount * 2;
 
