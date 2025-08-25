@@ -184,7 +184,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               Expanded(
                 child: _NavButton(
                   icon: Icons.schedule_outlined,
-                  label: "מחלל המשמרות 4000",
+                  label: "המחלל 4000",
                   onTap: () {
                     // TODO: Navigate to page
                   },
