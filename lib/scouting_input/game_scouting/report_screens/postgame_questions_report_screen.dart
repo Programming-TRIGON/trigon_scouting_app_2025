@@ -27,7 +27,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: SizedBox(
-                width: 300,
+                width: 200,
                 child: FittedBox(
                   child: NavigationButtonsWidget(
                     currentPage: GameScoutingPage.questions,
@@ -65,6 +65,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
                   postgameReport.didCollectAlgaeFromGround = value,
             ),
             outlineColor: Colors.grey,
+            width: 400,
           ),
         ),
         SizedBox(height: 10),
@@ -75,10 +76,11 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
             (teleopReport) => teleopReport.didDefend = value,
           ),
           outlineColor: Colors.grey,
+          width: 400,
         ),
         SizedBox(height: 10),
         SizedBox(
-          width: 350,
+          width: 400,
           height: 200,
           child: TextField(
             keyboardType: TextInputType.multiline,

@@ -23,77 +23,80 @@ class PostgameReviewReportScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                createVisualTextBox(
-                  context,
-                  Text(
-                    "Match Data Review",
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(decoration: TextDecoration.underline),
-                  ),
-                  Text(
-                    reportProvider.report.pregameReport.robotNumber!.toString(),
-                    style: Theme.of(
-                      context,
-                    ).textTheme.displayLarge?.copyWith(color: Colors.green),
+                Expanded(
+                  child: createVisualTextBox(
+                    context,
+                    Text(
+                      "Match Data Review",
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(decoration: TextDecoration.underline),
+                    ),
+                    Text(
+                      reportProvider.report.pregameReport.robotNumber!.toString(),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.displayLarge?.copyWith(color: Colors.green),
+                    ),
                   ),
                 ),
-                SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Spacer(flex: 1),
-                    Expanded(
-                      flex: 2,
-                      child: createVisualTextBox(
-                        context,
-                        Text(
-                          "Cycles In Game",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                        Text(
-                          reportProvider.report.calculateCycles().toString(),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.displayLarge?.copyWith(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                    Spacer(flex: 2),
-                    Expanded(
-                      flex: 2,
-                      child: createVisualTextBox(
-                        context,
-                        Text(
-                          "Points In Game",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                        Text(
-                          reportProvider.report.calculateTotalPoint().toString(),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.displayLarge?.copyWith(color: Colors.orange),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Spacer(flex: 1),
+                      Expanded(
+                        flex: 2,
+                        child: createVisualTextBox(
+                          context,
+                          Text(
+                            "Cycles In Game",
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                          Text(
+                            reportProvider.report.calculateCycles().toString(),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.displayLarge?.copyWith(color: Colors.red),
+                          ),
                         ),
                       ),
+                      Spacer(flex: 2),
+                      Expanded(
+                        flex: 2,
+                        child: createVisualTextBox(
+                          context,
+                          Text(
+                            "Points In Game",
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                          Text(
+                            reportProvider.report.calculateTotalPoint().toString(),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.displayLarge?.copyWith(color: Colors.orange),
+                          ),
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: FittedBox(
+                    child: RobotScoreSpeedometer(
+                      robotScore: reportProvider.report.calculateTotalPoint().toDouble(),
+                      highestScore: scoutedCompetitionProvider.scoutedCompetition!.maximumScore,
+                      lowestScore: scoutedCompetitionProvider.scoutedCompetition!.minimumScore,
                     ),
-                    Spacer(flex: 1),
-                  ],
+                  ),
                 ),
               ],
             ),
             Align(
-              alignment: Alignment.bottomCenter,
-              child: FittedBox(
-                child: RobotScoreSpeedometer(
-                  robotScore: reportProvider.report.calculateTotalPoint() as double,
-                  highestScore: scoutedCompetitionProvider.scoutedCompetition!.maximumScore,
-                  lowestScore: scoutedCompetitionProvider.scoutedCompetition!.minimumScore,
-                ),
-              ),
-            ),
-            Align(
               alignment: Alignment.bottomRight,
               child: SizedBox(
-                width: 300,
+                width: 200,
                 child: FittedBox(
                   child: NavigationButtonsWidget(
                     currentPage: GameScoutingPage.review,
