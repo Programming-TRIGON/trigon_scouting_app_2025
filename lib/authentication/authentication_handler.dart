@@ -18,10 +18,6 @@ class AuthenticationHandler extends StatelessWidget {
       return MaterialDesignFactory.createLoadingPage("User Data Loading...");
     }
 
-    if (userDataProvider.error != null) {
-      return Scaffold(body: Center(child: Text('Error: ${userDataProvider.error}')));
-    }
-
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

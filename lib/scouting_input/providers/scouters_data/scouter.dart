@@ -1,0 +1,53 @@
+class Scouter {
+  final String uid;
+  final String name;
+  bool isGameScouter, isSuperScouter, isPictureScouter;
+  bool doesComeToDay1, doesComeToDay2;
+
+  Scouter({
+    required this.uid,
+    required this.name,
+    required this.isGameScouter,
+    required this.isSuperScouter,
+    required this.isPictureScouter,
+    required this.doesComeToDay1,
+    required this.doesComeToDay2,
+  });
+
+  static List<Scouter> scoutersListFromMap(Map<String, dynamic> map) {
+    return map.entries.map((entry) => Scouter.fromMap(entry.key, entry.value)).toList();
+  }
+
+  static Map<String, dynamic> scoutersListToMap(List<Scouter>? scouters) {
+    if (scouters == null) return {};
+    final Map<String, dynamic> map = {};
+    for (var scouter in scouters) {
+      map[scouter.uid] = scouter.toMap();
+    }
+    return map;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'name': name,
+      'isGameScouter': isGameScouter,
+      'isSuperScouter': isSuperScouter,
+      'isPictureScouter': isPictureScouter,
+      'doesComeToDay1': doesComeToDay1,
+      'doesComeToDay2': doesComeToDay2,
+    };
+  }
+
+  factory Scouter.fromMap(String uid, Map<String, dynamic> map) {
+    return Scouter(
+      uid: uid,
+      name: map['name'] as String,
+      isGameScouter: map['isGameScouter'] as bool,
+      isSuperScouter: map['isSuperScouter'] as bool,
+      isPictureScouter: map['isPictureScouter'] as bool,
+      doesComeToDay1: map['doesComeToDay1'] as bool,
+      doesComeToDay2: map['doesComeToDay2'] as bool,
+    );
+  }
+}

@@ -5,7 +5,6 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/field_elements_scouting_widgets/scoring_elements/reef_algae_scouting_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/field_elements_scouting_widgets/scoring_elements/reef_coral_scouting_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart';
-import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
 
 class ScoringElementsScoutingWidget extends StatelessWidget {
   final bool forAuto;

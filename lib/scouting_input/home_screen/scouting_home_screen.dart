@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_shift.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/game_scouting_report_screen.dart';
@@ -12,6 +13,7 @@ import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 import '../../utilities/material_design_factory.dart';
+import '../admin/generator_4000/generator_4000_provider.dart';
 import '../scouting_reports/super_scouting/super_scouting_shift.dart';
 import 'my_data_widget.dart';
 import 'my_shifts_widget.dart';
@@ -186,7 +188,12 @@ class ScoutingHomeScreen extends StatelessWidget {
                   icon: Icons.schedule_outlined,
                   label: "המחלל 4000",
                   onTap: () {
-                    // TODO: Navigate to page
+                    Navigator.of(context).push(MaterialDesignFactory.createModernRoute(
+                      ChangeNotifierProvider(
+                        create: (_) => Generator4000Provider(),
+                        child: Generator4000Screen(),
+                      ),
+                    ));
                   },
                 ),
               ),

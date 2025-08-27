@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-
-import '../utilities/firebase_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 enum UserRole {
   admin,
@@ -22,82 +21,109 @@ enum UserRole {
   bool get hasScoutingAdminAccess => (index <= shiftManager.index);
 }
 
-class UserDataProvider extends ChangeNotifier {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class TRIGONUser {
+  final String uid;
+  final String name;
+  final String email;
+  final UserRole role;
 
-  bool _isDataLoading = true;
-  String? _error;
-  User? _user;
-  UserRole? _role;
+  TRIGONUser({
+    required this.uid,
+    required this.name,
+    required this.email,
+    required this.role,
+  });
 
-  bool get isDataLoading => _isDataLoading;
-
-  String? get error => _error;
-
-  User? get user => _user;
-
-  UserRole? get role => _role;
-
-  StreamSubscription<DocumentSnapshot>? _roleSubscriber;
-
-  UserDataProvider() {
-    _firebaseAuth.authStateChanges().listen(
-      onData,
-      onError: (err) {
-        _error = err.toString();
-        _isDataLoading = false;
-        notifyListeners();
-      },
+  factory TRIGONUser.fromMap(String uid, Map<String, dynamic> data) {
+    return TRIGONUser(
+      uid: uid,
+      name: data["name"] as String,
+      email: data["email"] as String,
+      role: UserRole.values.byName(data["role"] as String),
     );
   }
 
-  void onData(User? firebaseUser) {
-    _user = firebaseUser;
-    _error = null;
-    _roleSubscriber?.cancel();
-
-    if (_user != null) {
-      listenToRole();
-    } else {
-      _isDataLoading = false;
-      notifyListeners();
-    }
+  Map<String, dynamic> toMap() {
+    return {"name": name, "email": email, "role": role.name};
   }
+}
 
-  void listenToRole() {
-    _isDataLoading = true;
-    notifyListeners();
+class UserDataProvider extends ChangeNotifier {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late CollectionReference<Map<String, dynamic>> usersCollection = firestore
+      .collection("users");
 
-    _roleSubscriber = _firestore
-        .collection("users")
-        .doc(_user!.uid)
-        .snapshots()
-        .listen(
-          (doc) {
-            if (doc.exists && doc.data() != null) {
-              _role = UserRole.values.byName(doc.data()!["role"]);
-            } else {
-              _role = null;
-            }
-            _isDataLoading = false;
-            notifyListeners();
-          },
-          onError: (e) {
-            _error = 'Failed to load permissions: $e';
-            _isDataLoading = false;
-            notifyListeners();
-          },
-        );
+  bool isDataLoading = true;
+  User? user;
+  List<TRIGONUser>? allUsers;
+  UserRole? role;
+
+  StreamSubscription<DocumentSnapshot>? roleSubscriber;
+
+  UserDataProvider() {
+    listenToData();
   }
 
   Future<void> signOut() async {
     await FirebaseHandler.signOut();
   }
 
+  String? userNameFromUID(String uid) {
+    return allUsers?.where((user) => user.uid == uid).firstOrNull?.name;
+  }
+
+  void listenToData() {
+    firebaseAuth.authStateChanges().listen(onUserData);
+  }
+
+  void onUserData(User? firebaseUser) {
+    user = firebaseUser;
+    roleSubscriber?.cancel();
+
+    if (user != null) {
+      listenToRole();
+      listenToAllUsers();
+    } else {
+      isDataLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void listenToRole() {
+    isDataLoading = true;
+    notifyListeners();
+
+    roleSubscriber = usersCollection
+        .doc(user!.uid)
+        .snapshots()
+        .listen(onUserRoleData);
+  }
+
+  void listenToAllUsers() {
+    isDataLoading = true;
+    notifyListeners();
+
+    usersCollection.snapshots().listen((querySnapshot) {
+      allUsers = querySnapshot.docs.map((doc) => TRIGONUser.fromMap(doc.id, doc.data())).toList();
+      isDataLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void onUserRoleData(DocumentSnapshot<Map<String, dynamic>> doc) {
+    if (doc.exists && doc.data() != null) {
+      role = UserRole.values.byName(doc.data()!["role"]);
+    } else {
+      role = null;
+    }
+    isDataLoading = false;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
-    _roleSubscriber?.cancel();
+    roleSubscriber?.cancel();
     super.dispose();
   }
 }
