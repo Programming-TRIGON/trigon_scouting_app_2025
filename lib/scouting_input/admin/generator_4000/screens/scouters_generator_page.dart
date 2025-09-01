@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/update_changes_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
 
@@ -47,15 +48,14 @@ class ScoutersGeneratorPage extends StatelessWidget {
     ScoutersDataProvider scoutersDataProvider,
     Generator4000Provider generator4000Provider,
   ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12), // same as DataTable
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 5,
             child: SearchBar(
               onChanged: (_) => generator4000Provider.updateControllerValue(),
               hintText: "Search Users",
@@ -64,14 +64,12 @@ class ScoutersGeneratorPage extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10),
-          Flexible(
-            flex: 1,
-            child: createAddUserWidget(userDataProvider, scoutersDataProvider),
-          ),
+          createAddUserWidget(userDataProvider, scoutersDataProvider),
           SizedBox(width: 10),
-          Flexible(
-            flex: 1,
-            child: createUploadingDataWidget(scoutersDataProvider),
+          UpdateChangesWidget(
+            onUpdate: () => scoutersDataProvider.sendScoutersToFirebase(),
+            onDiscard: () => scoutersDataProvider.discardScoutersChanges(),
+            isUpdateAvailable: scoutersDataProvider.doesHaveUnsavedScoutersChanges,
           ),
         ],
       ),
@@ -131,71 +129,74 @@ class ScoutersGeneratorPage extends StatelessWidget {
     Generator4000Provider generator4000Provider,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         color: Colors.grey[900],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: DataTable(
-        columnSpacing: 0,
-        columns: [
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text("Action"),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: DataTable(
+          columnSpacing: 0,
+          columns: [
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text("Action"),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Center(child: Text("Name")),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Center(child: Text("Name")),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text("Game"),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text("Game"),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text("Super"),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text("Super"),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text("Picture"),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text("Picture"),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text("Day 1"),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text("Day 1"),
+              ),
             ),
-          ),
-          DataColumn(
-            label: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text("Day 2"),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text("Day 2"),
+              ),
             ),
-          ),
-        ],
-        rows:
-            scoutersDataProvider.scouters?.reversed
-                .where(
-                  (scouter) => scouter.name.toLowerCase().contains(
-                    generator4000Provider.scoutersGeneratorSearchController.text
-                        .toLowerCase(),
-                  ),
-                )
-                .map(
-                  (scouter) =>
-                      createScouterDataRow(scouter, scoutersDataProvider),
-                )
-                .toList() ??
-            [],
+          ],
+          rows:
+              scoutersDataProvider.scouters?.reversed
+                  .where(
+                    (scouter) => scouter.name.toLowerCase().contains(
+                      generator4000Provider.scoutersGeneratorSearchController.text
+                          .toLowerCase(),
+                    ),
+                  )
+                  .map(
+                    (scouter) =>
+                        createScouterDataRow(scouter, scoutersDataProvider),
+                  )
+                  .toList() ??
+              [],
+        ),
       ),
     );
   }
@@ -205,11 +206,13 @@ class ScoutersGeneratorPage extends StatelessWidget {
     ScoutersDataProvider scoutersDataProvider,
   ) {
     return DataRow(
+      key: ValueKey(scouter.uid),
       cells: [
         DataCell(
           Center(
             child: IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
+              tooltip: "Remove Scouter",
               onPressed: () {
                 scoutersDataProvider.removeScouterWithoutSending(scouter);
               },
@@ -230,7 +233,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
               value: scouter.isGameScouter,
               onChanged: (value) {
                 scouter.isGameScouter = value ?? false;
-                scoutersDataProvider.notifyUpdate();
+                scoutersDataProvider.notifyUpdate(doesUpdateScouters: true);
               },
             ),
           ),
@@ -241,7 +244,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
               value: scouter.isSuperScouter,
               onChanged: (value) {
                 scouter.isSuperScouter = value ?? false;
-                scoutersDataProvider.notifyUpdate();
+                scoutersDataProvider.notifyUpdate(doesUpdateScouters: true);
               },
             ),
           ),
@@ -252,7 +255,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
               value: scouter.isPictureScouter,
               onChanged: (value) {
                 scouter.isPictureScouter = value ?? false;
-                scoutersDataProvider.notifyUpdate();
+                scoutersDataProvider.notifyUpdate(doesUpdateScouters: true);
               },
             ),
           ),
@@ -263,7 +266,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
               value: scouter.doesComeToDay1,
               onChanged: (value) {
                 scouter.doesComeToDay1 = value ?? false;
-                scoutersDataProvider.notifyUpdate();
+                scoutersDataProvider.notifyUpdate(doesUpdateScouters: true);
               },
             ),
           ),
@@ -274,7 +277,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
               value: scouter.doesComeToDay2,
               onChanged: (value) {
                 scouter.doesComeToDay2 = value ?? false;
-                scoutersDataProvider.notifyUpdate();
+                scoutersDataProvider.notifyUpdate(doesUpdateScouters: true);
               },
             ),
           ),

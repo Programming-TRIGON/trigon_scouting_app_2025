@@ -5,7 +5,6 @@ import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/scr
 
 class Generator4000Provider extends ChangeNotifier {
   final TextEditingController scoutersGeneratorSearchController = TextEditingController();
-  final TextEditingController unitsGeneratorSearchController = TextEditingController();
   Generator4000Page currentPage = Generator4000Page.scoutersGenerator;
   bool isDay1UnitsSelected = true;
 
@@ -26,7 +25,6 @@ class Generator4000Provider extends ChangeNotifier {
   @override
   void dispose() {
     scoutersGeneratorSearchController.dispose();
-    unitsGeneratorSearchController.dispose();
     super.dispose();
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/unit_widget.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/add_unit_action_button.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/folder_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/unit_widget.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/update_changes_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
 
-import '../../../../authentication/user_data_provider.dart';
 import '../../../providers/scouters_data/scouters_data_provider.dart';
 
 class UnitsGeneratorPage extends StatelessWidget {
@@ -12,43 +14,32 @@ class UnitsGeneratorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userDataProvider = context.watch<UserDataProvider>();
     final scoutersDataProvider = context.watch<ScoutersDataProvider>();
     final Generator4000Provider generator4000Provider = context
         .watch<Generator4000Provider>();
 
-    return Align(
-      alignment: Alignment.topCenter,
-      child: IntrinsicWidth(
-        child: Column(
-          children: [
-            createDayToggleButtons(generator4000Provider),
-            SizedBox(height: 10),
-            createTopRowWidget(
-              userDataProvider,
-              scoutersDataProvider,
-              generator4000Provider,
-            ),
-            SizedBox(height: 10),
-            SizedBox(
-              height: 300,
-              width: 600,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[900],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  // shrinkWrap: true,
-                  // cacheExtent: 0,
-                  children: (generator4000Provider.isDay1UnitsSelected ? scoutersDataProvider.day1Units : scoutersDataProvider.day2Units)
-                      ?.map((unit) => UnitWidget(unit: unit))
-                      .toList() ?? [Text("No units available")],
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 600),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              createDayToggleButtons(generator4000Provider),
+              const SizedBox(height: 10),
+              createTopRowWidget(scoutersDataProvider, generator4000Provider),
+              const SizedBox(height: 10),
+              FolderToggleRow(
+                // key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
+                tabs: mapUnits(
+                  generator4000Provider.isDay1UnitsSelected
+                      ? scoutersDataProvider.day1Units ?? []
+                      : scoutersDataProvider.day2Units ?? [],
+                  generator4000Provider.isDay1UnitsSelected,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -82,68 +73,30 @@ class UnitsGeneratorPage extends StatelessWidget {
     );
   }
 
+  Map<String, Widget> mapUnits(List<ScoutingUnit> units, bool isDay1Units) {
+    return {
+      for (var unit in units)
+        unit.name: ScoutingUnitWidget(unit: unit, isDay1Unit: isDay1Units),
+    };
+  }
+
   Widget createTopRowWidget(
-    UserDataProvider userDataProvider,
     ScoutersDataProvider scoutersDataProvider,
     Generator4000Provider generator4000Provider,
   ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12), // same as DataTable
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Flexible(
-            flex: 5,
-            child: SearchBar(
-              onChanged: (_) => generator4000Provider.updateControllerValue(),
-              hintText: "Search Units",
-              controller: generator4000Provider.unitsGeneratorSearchController,
-            ),
-          ),
-          SizedBox(width: 10),
-          Flexible(
-            flex: 1,
-            child: createAddUserWidget(
-              scoutersDataProvider,
-              generator4000Provider,
-            ),
-          ),
-          SizedBox(width: 10),
-          Flexible(
-            flex: 1,
-            child: createUploadingDataWidget(scoutersDataProvider),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget createAddUserWidget(
-    ScoutersDataProvider scoutersDataProvider,
-    Generator4000Provider generator4000Provider,
-  ) {
-    return FloatingActionButton(
-      onPressed: () {
-        scoutersDataProvider.addEmptyUnitWithoutSending(
-          generator4000Provider.isDay1UnitsSelected,
-        );
-      },
-      shape: CircleBorder(),
-      tooltip: "Add Empty Unit",
-      child: const Icon(Icons.add),
-    );
-  }
-
-  Widget createUploadingDataWidget(ScoutersDataProvider scoutersDataProvider) {
-    return FloatingActionButton(
-      onPressed: () {
-        scoutersDataProvider.sendUnitsToFirebase();
-      },
-      shape: CircleBorder(),
-      tooltip: "Upload Data",
-      child: const Icon(Icons.upload),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AddUnitFAB(isDay1Unit: generator4000Provider.isDay1UnitsSelected),
+        const SizedBox(width: 10),
+        UpdateChangesWidget(
+          onUpdate: () => scoutersDataProvider.sendUnitsToFirebase(),
+          onDiscard: () => scoutersDataProvider.discardUnitsChanges(),
+          isUpdateAvailable: scoutersDataProvider.doesHaveUnsavedUnitsChanges,
+        ),
+      ],
     );
   }
 }

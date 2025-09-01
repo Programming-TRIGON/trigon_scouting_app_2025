@@ -21,6 +21,9 @@ class ScoutersDataProvider extends ChangeNotifier {
   StreamSubscription<DocumentSnapshot>? scoutersSubscriber;
   StreamSubscription<DocumentSnapshot>? unitsSubscriber;
 
+  bool doesHaveUnsavedScoutersChanges = false;
+  bool doesHaveUnsavedUnitsChanges = false;
+
   ScoutersDataProvider() {
     initializeData();
     listenData();
@@ -30,8 +33,25 @@ class ScoutersDataProvider extends ChangeNotifier {
     return scouters == null || day1Units == null || day2Units == null;
   }
 
+  Scouter? getScouterByUid(String? uid) {
+    if (scouters == null || uid == null) return null;
+    return scouters!.where((scouter) => scouter.uid == uid).firstOrNull;
+  }
+
+  ScoutingUnit? getUnitOfUser(String uid) {
+    if (day1Units == null || day2Units == null) return null;
+    final unit = day1Units!
+        .where((unit) => unit.getScoutersUIDs().contains(uid))
+        .firstOrNull;
+    if (unit != null) return unit;
+    return day2Units!
+        .where((unit) => unit.getScoutersUIDs().contains(uid))
+        .firstOrNull;
+  }
+
   void removeScouterWithoutSending(Scouter scouter) {
     scouters?.removeWhere((s) => s.uid == scouter.uid);
+    doesHaveUnsavedScoutersChanges = true;
     notifyListeners();
   }
 
@@ -41,19 +61,20 @@ class ScoutersDataProvider extends ChangeNotifier {
     } else {
       day2Units?.removeWhere((u) => u.name == unit.name);
     }
+    doesHaveUnsavedUnitsChanges = true;
     notifyListeners();
   }
 
-  void addEmptyUnitWithoutSending(bool isDay1) {
+  void addEmptyUnitWithoutSending(bool isDay1, String unitName) {
+    final newUnit = ScoutingUnit(name: unitName);
     if (isDay1) {
       day1Units ??= [];
-      final newUnit = ScoutingUnit(name: (day1Units!.length + 1).toString());
       day1Units!.add(newUnit);
     } else {
       day2Units ??= [];
-      final newUnit = ScoutingUnit(name: (day2Units!.length + 1).toString());
       day2Units!.add(newUnit);
     }
+    doesHaveUnsavedUnitsChanges = true;
     notifyListeners();
   }
 
@@ -69,6 +90,7 @@ class ScoutersDataProvider extends ChangeNotifier {
     );
     scouters ??= [];
     scouters!.add(newScouter);
+    doesHaveUnsavedScoutersChanges = true;
     notifyListeners();
   }
 
@@ -80,11 +102,18 @@ class ScoutersDataProvider extends ChangeNotifier {
     final index = scouters!.indexWhere((scouter) => scouter.uid == uid);
     if (index == -1) return;
     updateFunction(scouters![index]);
+    doesHaveUnsavedScoutersChanges = true;
     notifyListeners();
   }
 
-  void notifyUpdate() {
+  void notifyUpdate({bool? doesUpdateScouters, bool? doesUpdateUnits}) {
     notifyListeners();
+    if (doesUpdateScouters == true) {
+      doesHaveUnsavedScoutersChanges = true;
+    }
+    if (doesUpdateUnits == true) {
+      doesHaveUnsavedUnitsChanges = true;
+    }
   }
 
   void updateUnitWithoutSending(
@@ -97,12 +126,15 @@ class ScoutersDataProvider extends ChangeNotifier {
     final index = unitsList.indexWhere((unit) => unit.name == name);
     if (index == -1) return;
     updateFunction(unitsList[index]);
+    doesHaveUnsavedUnitsChanges = true;
     notifyListeners();
   }
 
   void sendScoutersToFirebase() {
     if (scouters == null) return;
     scoutersDoc.set(Scouter.scoutersListToMap(scouters));
+    doesHaveUnsavedScoutersChanges = false;
+    notifyListeners();
   }
 
   void sendUnitsToFirebase() {
@@ -110,6 +142,20 @@ class ScoutersDataProvider extends ChangeNotifier {
       "day1Units": ScoutingUnit.scoutingUnitsListToMap(day1Units),
       "day2Units": ScoutingUnit.scoutingUnitsListToMap(day2Units),
     });
+    doesHaveUnsavedUnitsChanges = false;
+    notifyListeners();
+  }
+
+  void discardScoutersChanges() {
+    initializeScouters();
+    doesHaveUnsavedScoutersChanges = false;
+    notifyListeners();
+  }
+
+  void discardUnitsChanges() {
+    initializeUnits();
+    doesHaveUnsavedUnitsChanges = false;
+    notifyListeners();
   }
 
   void initializeData() async {
@@ -126,7 +172,11 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   Future<void> initializeUnits() async {
     final unitsSnapshot = await unitsDoc.get();
-    if (!unitsSnapshot.exists || unitsSnapshot.data() == null) return;
+    if (!unitsSnapshot.exists || unitsSnapshot.data() == null) {
+      day1Units = [];
+      day2Units = [];
+      return;
+    }
     final data = unitsSnapshot.data()!;
     day1Units = ScoutingUnit.scoutingUnitsListFromMap(data["day1Units"]);
     day2Units = ScoutingUnit.scoutingUnitsListFromMap(data["day2Units"]);

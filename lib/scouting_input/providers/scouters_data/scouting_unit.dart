@@ -1,14 +1,23 @@
 class ScoutingUnit {
-  String? name;
+  final String name;
   String? unitHeadUID, scouter1UID, scouter2UID, scouter3UID;
 
   ScoutingUnit({
-    this.name,
+    required this.name,
     this.unitHeadUID,
     this.scouter1UID,
     this.scouter2UID,
     this.scouter3UID,
   });
+
+  List<String?> getScoutersUIDs() {
+    return [
+      unitHeadUID,
+      scouter1UID,
+      scouter2UID,
+      scouter3UID,
+    ].whereType<String>().toList();
+  }
 
   static List<ScoutingUnit> scoutingUnitsListFromMap(Map<String, dynamic> map) {
     return map.entries.map((entry) => ScoutingUnit.fromMap(entry.value)).toList();

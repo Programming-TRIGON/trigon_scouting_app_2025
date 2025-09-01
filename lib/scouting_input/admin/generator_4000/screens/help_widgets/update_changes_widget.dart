@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+
+class UpdateChangesWidget extends StatelessWidget {
+  final void Function()? onUpdate;
+  final void Function()? onDiscard;
+  final bool isUpdateAvailable;
+
+  const UpdateChangesWidget({
+    super.key,
+    this.onUpdate,
+    this.onDiscard,
+    this.isUpdateAvailable = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final activeSaveColor = Colors.green.shade700;
+    final activeDiscardColor = Colors.red.shade700;
+    final disabledOverlay = Theme.of(context).disabledColor.withOpacity(0.4);
+
+    return Row(
+      children: [
+        FloatingActionButton(
+          onPressed: isUpdateAvailable ? (() => onUpdate?.call()) : null,
+          shape: const CircleBorder(),
+          backgroundColor: isUpdateAvailable
+              ? activeSaveColor
+              : activeSaveColor.withOpacity(0.4), // greyed out look
+          foregroundColor:
+          isUpdateAvailable ? Colors.white : disabledOverlay, // icon tint
+          tooltip: "Save Changes",
+          child: const Icon(Icons.save),
+        ),
+        const SizedBox(width: 10),
+        FloatingActionButton(
+          onPressed: isUpdateAvailable ? (() => onDiscard?.call()) : null,
+          shape: const CircleBorder(),
+          backgroundColor: isUpdateAvailable
+              ? activeDiscardColor
+              : activeDiscardColor.withOpacity(0.4),
+          foregroundColor:
+          isUpdateAvailable ? Colors.white : disabledOverlay,
+          tooltip: "Discard Changes",
+          child: const Icon(Icons.folder_delete),
+        ),
+      ],
+    );
+  }
+}
