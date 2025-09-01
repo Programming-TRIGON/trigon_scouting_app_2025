@@ -27,8 +27,7 @@ class ScoutingUnit {
     if (units == null) return {};
     final Map<String, dynamic> map = {};
     for (var unit in units) {
-      if (unit.name == null) continue;
-      map[unit.name!] = unit.toMap();
+      map[unit.name] = unit.toMap();
     }
     return map;
   }
@@ -46,10 +45,10 @@ class ScoutingUnit {
   factory ScoutingUnit.fromMap(Map<String, dynamic> map) {
     return ScoutingUnit(
       name: map['name'] as String,
-      unitHeadUID: map['unitHeadUID'] as String,
-      scouter1UID: map['scouter1UID'] as String,
-      scouter2UID: map['scouter2UID'] as String,
-      scouter3UID: map['scouter3UID'] as String,
+      unitHeadUID: map['unitHeadUID'] as String?,
+      scouter1UID: map['scouter1UID'] as String?,
+      scouter2UID: map['scouter2UID'] as String?,
+      scouter3UID: map['scouter3UID'] as String?,
     );
   }
 }

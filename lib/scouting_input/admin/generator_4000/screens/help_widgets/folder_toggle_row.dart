@@ -33,33 +33,31 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   @override
   Widget build(BuildContext context) {
     final optionKeys = widget.tabs.keys.toList();
-    return Flexible(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (optionKeys.length > 4)
+              Flexible(child: createTabsRow(optionKeys))
+            else
               createTabsRow(optionKeys),
-              Flexible(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Divider(color: borderColor, height: 1),
+            if (optionKeys.length <= 4)
+              Flexible(child: Divider(color: borderColor, height: 1)),
+          ],
+        ),
+        createFolderContainer(
+          widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
+              Center(
+                child: Text(
+                  widget.noDataContainerText,
+                  style: TextStyle(color: Colors.white70),
                 ),
               ),
-            ],
-          ),
-          createFolderContainer(
-            widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
-                Center(
-                  child: Text(
-                    widget.noDataContainerText,
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -68,15 +66,17 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
       behavior: const ScrollBehavior().copyWith(overscroll: false),
       child: Scrollbar(
         controller: _scrollController,
-        thumbVisibility: false,
+        thumbVisibility: true,
         trackVisibility: false,
         thickness: 4,
         radius: const Radius.circular(3),
         scrollbarOrientation: ScrollbarOrientation.top,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          scrollDirection: Axis.horizontal,
-          child: Row(
+        child: SizedBox(
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            controller: _scrollController,
+            shrinkWrap: true,
             children: optionKeys.isEmpty
                 ? [buildTab(widget.noDataTitle, true, null)]
                 : List.generate(optionKeys.length, (index) {

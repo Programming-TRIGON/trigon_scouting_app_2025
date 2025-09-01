@@ -23,27 +23,25 @@ class UnitsGeneratorPage extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 700, maxWidth: 400),
-          child: IntrinsicWidth(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                createDayToggleButtons(generator4000Provider),
-                const SizedBox(height: 10),
-                createTopRowWidget(scoutersDataProvider, generator4000Provider),
-                const SizedBox(height: 10),
-                FolderToggleRow(
-                  // key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
-                  tabs: mapUnits(
-                    generator4000Provider.isDay1UnitsSelected
-                        ? scoutersDataProvider.day1Units ?? []
-                        : scoutersDataProvider.day2Units ?? [],
-                    generator4000Provider.isDay1UnitsSelected,
-                  ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              createDayToggleButtons(generator4000Provider),
+              const SizedBox(height: 10),
+              createTopRowWidget(scoutersDataProvider, generator4000Provider),
+              const SizedBox(height: 10),
+              FolderToggleRow(
+                // key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
+                tabs: mapUnits(
+                  generator4000Provider.isDay1UnitsSelected
+                      ? scoutersDataProvider.day1Units ?? []
+                      : scoutersDataProvider.day2Units ?? [],
+                  generator4000Provider.isDay1UnitsSelected,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
