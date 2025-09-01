@@ -24,7 +24,7 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
   }
 
   FRCTeam? getScoutedTeamInGameScoutingMatch(String uid, String matchKey) {
-    return scoutedCompetition?.gameScoutingShifts?[uid]
+    return scoutedCompetition?.allScoutingShifts.gameScoutingShifts?[uid]
         ?.firstWhere((shift) => shift.matchKey == matchKey).scoutedTeam;
   }
 
@@ -33,7 +33,7 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
   }
 
   List<int>? getAvailableGameScoutingMatchNumbers(String uid, String matchType) {
-    return scoutedCompetition?.gameScoutingShifts?[uid]
+    return scoutedCompetition?.allScoutingShifts.gameScoutingShifts?[uid]
         ?.where((shift) => shift.getMatchType() == matchType)
         .map((shift) => shift.getMatchNumber()).toList();
   }
@@ -54,7 +54,7 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
   void markGameScoutingShiftScouted(String? uid, String? matchKey) {
     if (scoutedCompetition == null) return;
 
-    scoutedCompetition!.gameScoutingShifts?[uid]?.firstWhere((shift) => shift.matchKey == matchKey).didScout = true;
+    scoutedCompetition!.allScoutingShifts.gameScoutingShifts?[uid]?.firstWhere((shift) => shift.matchKey == matchKey).didScout = true;
     scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
   }
 

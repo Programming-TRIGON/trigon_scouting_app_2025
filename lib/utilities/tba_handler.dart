@@ -4,25 +4,25 @@ import 'package:http/http.dart' as http;
 class TBAHandler {
   static String apiKey = "4tkqQPrngugTm7YMAf5FjqDaz14cEDScelswSxhzR1SKnl42NugabiqP7LPdPnw4";
 
-  static Future<FRCCompetition> getCompetition(String competitionID) async {
+  static Future<FRCCompetition> getCompetition(String competitionKey) async {
     try {
-      final teams = await getTeamsInCompetition(competitionID);
-      final matches = await getMatchesInCompetition(competitionID, teams);
+      final teams = await getTeamsInCompetition(competitionKey);
+      final matches = await getMatchesInCompetition(competitionKey, teams);
 
       return FRCCompetition(
-        competitionID: competitionID,
+        competitionKey: competitionKey,
         teams: teams,
         matches: matches,
       );
     } catch (e) {
-      throw Exception('Failed to fetch competition $competitionID: $e');
+      throw Exception('Failed to fetch competition $competitionKey: $e');
     }
   }
 
   static Future<List<FRCTeam>> getTeamsInCompetition(
-      String competitionID) async {
+      String competitionKey) async {
     final url = Uri.parse(
-        'https://www.thebluealliance.com/api/v3/event/$competitionID/teams');
+        'https://www.thebluealliance.com/api/v3/event/$competitionKey/teams');
 
     final response = await http.get(
       url,
@@ -43,8 +43,8 @@ class TBAHandler {
   }
 
   static Future<List<FRCMatch>> getMatchesInCompetition(
-      String competitionID, List<FRCTeam> allTeams) async {
-    final url = Uri.parse('https://www.thebluealliance.com/api/v3/event/$competitionID/matches');
+      String competitionKey, List<FRCTeam> allTeams) async {
+    final url = Uri.parse('https://www.thebluealliance.com/api/v3/event/$competitionKey/matches');
 
     final response = await http.get(
       url,
@@ -80,9 +80,12 @@ class TBAHandler {
       }
 
       return FRCMatch(
-        matchKey: matchData['key'].replaceFirst('${competitionID}_', ''),
+        matchKey: matchData['key'].replaceFirst('${competitionKey}_', ''),
         blueTeams: blueTeams,
         redTeams: redTeams,
+        time: matchData['time'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(matchData['time'] * 1000, isUtc: true).toLocal()
+            : null,
       );
     }).toList();
 
@@ -126,11 +129,13 @@ class FRCMatch {
   final String matchKey; // raw key: "qm13", "sf2m1", "f1m2"
   final List<FRCTeam> blueTeams;
   final List<FRCTeam> redTeams;
+  final DateTime? time;
 
   FRCMatch({
     required this.matchKey,
     required this.blueTeams,
     required this.redTeams,
+    this.time,
   });
 
   static String? toMatchKey(String? matchType, String? matchNumber) {
@@ -212,6 +217,7 @@ class FRCMatch {
       'matchKey': matchKey,
       'blueTeams': blueTeams.map((t) => t.toMap()).toList(),
       'redTeams': redTeams.map((t) => t.toMap()).toList(),
+      'time': time?.toIso8601String(),
     };
   }
 
@@ -224,17 +230,18 @@ class FRCMatch {
       redTeams: (map['redTeams'] as List)
           .map((t) => FRCTeam.fromMap(Map<String, dynamic>.from(t)))
           .toList(),
+      time: map['time'] != null ? DateTime.parse(map['time'] as String) : null,
     );
   }
 }
 
 class FRCCompetition {
-  final String competitionID;
+  final String competitionKey;
   final List<FRCTeam> teams;
   final List<FRCMatch> matches;
 
   FRCCompetition({
-    required this.competitionID,
+    required this.competitionKey,
     required this.teams,
     required this.matches,
   });
@@ -248,7 +255,7 @@ class FRCCompetition {
 
   Map<String, dynamic> toMap() {
     return {
-      'competitionID': competitionID,
+      'competitionKey': competitionKey,
       'teams': teams.map((t) => t.toMap()).toList(),
       'matches': matches.map((m) => m.toMap()).toList(),
     };
@@ -256,7 +263,7 @@ class FRCCompetition {
 
   factory FRCCompetition.fromMap(Map<String, dynamic> map) {
     return FRCCompetition(
-      competitionID: map['competitionID'] as String,
+      competitionKey: map['competitionKey'] as String,
       teams: (map['teams'] as List)
           .map((t) => FRCTeam.fromMap(Map<String, dynamic>.from(t)))
           .toList(),

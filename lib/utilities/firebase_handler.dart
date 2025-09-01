@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 class FirebaseHandler {
@@ -81,6 +82,33 @@ class FirebaseHandler {
     }
   }
 
+  static Future<void> resetPassword({required BuildContext context, String? email}) async {
+    email ??= authInstance.currentUser!.email!;
+    try {
+      await authInstance.sendPasswordResetEmail(email: email);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Sent password reset to $email, check your inbox (and spam folder)!',
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      log("Something went wrong while resetting password. Stack trace:\n $e");
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Something went wrong while resetting password.',
+          ),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    }
+  }
+
   static Future<void> setScoutedCompetition(FRCCompetition competition) async {
     final scoutedCompetitionDoc = firestore
         .collection("competitions")
@@ -104,13 +132,13 @@ class FirebaseHandler {
 
   static Future<void> uploadGameScoutingReport(
     GameScoutingReport report,
-    String? competitionID,
+    String? competitionKey,
   ) async {
-    if (competitionID == null) return;
+    if (competitionKey == null) return;
 
     final matchDocument = FirebaseFirestore.instance
         .collection("competitions")
-        .doc(competitionID)
+        .doc(competitionKey)
         .collection("teams")
         .doc(report.pregameReport.robotNumber!.toString())
         .collection("games")

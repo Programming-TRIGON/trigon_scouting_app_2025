@@ -14,7 +14,7 @@ class Scouter {
     required this.doesComeToDay2,
   });
 
-  static List<Scouter> scoutersListFromMap(List<Map<String, dynamic>> list) {
+  static List<Scouter> scoutersListFromMap(List list) {
     return list.map((scouterMap) => Scouter.fromMap(scouterMap)).toList();
   }
 

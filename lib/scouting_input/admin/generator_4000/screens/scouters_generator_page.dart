@@ -88,41 +88,59 @@ class ScoutersGeneratorPage extends StatelessWidget {
   }
 
   Widget createAddUserWidget(
-    UserDataProvider userDataProvider,
-    ScoutersDataProvider scoutersDataProvider,
-  ) {
+      UserDataProvider userDataProvider,
+      ScoutersDataProvider scoutersDataProvider,
+      ) {
+    final items = userDataProvider.allUsers
+        ?.where(
+          (user) =>
+      scoutersDataProvider.scouters?.any(
+            (scouter) => scouter.uid == user.uid,
+      ) !=
+          true,
+    )
+        .map(
+          (user) => MenuItemButton(
+        child: Text(user.name),
+        onPressed: () {
+          scoutersDataProvider.addUserWithoutSending(user);
+        },
+      ),
+    )
+        .toList() ??
+        [];
+
     return MenuAnchor(
       builder: (context, controller, child) {
         return FloatingActionButton(
           onPressed: () {
             controller.open();
           },
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           tooltip: "Add Scouter",
           child: const Icon(Icons.add),
         );
       },
-      menuChildren:
-          userDataProvider.allUsers
-              ?.where(
-                (user) =>
-                    scoutersDataProvider.scouters?.any(
-                      (scouter) => scouter.uid == user.uid,
-                    ) !=
-                    true,
-              )
-              .map(
-                (user) => MenuItemButton(
-                  child: Text(user.name),
-                  onPressed: () {
-                    scoutersDataProvider.addUserWithoutSending(user);
-                  },
-                ),
-              )
-              .toList() ??
-          [],
+      menuChildren: [
+        if (items.isEmpty)
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("No users available"),
+          )
+        else
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 200), // 👈 maximum height for the dropdown
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: items,
+              ),
+            ),
+          ),
+      ],
     );
   }
+
 
   Widget createScoutersDataTable(
     ScoutersDataProvider scoutersDataProvider,

@@ -19,8 +19,8 @@ class ScoutingUnit {
     ].whereType<String>().toList();
   }
 
-  static List<ScoutingUnit> scoutingUnitsListFromMap(List<dynamic> list) {
-    return list.map((entry) => ScoutingUnit.fromMap(entry.value)).toList();
+  static List<ScoutingUnit> scoutingUnitsListFromMap(List list) {
+    return list.map((entry) => ScoutingUnit.fromMap(entry)).toList();
   }
 
   static List<Map<String, dynamic>> scoutingUnitsListToMap(List<ScoutingUnit>? units) {

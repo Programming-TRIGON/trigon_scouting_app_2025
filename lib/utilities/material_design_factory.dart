@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 class MaterialDesignFactory {
   static Widget createLoadingPage(String label) {
@@ -55,7 +56,7 @@ class MaterialDesignFactory {
                 (route) => false,
               );
             } else if (value == 'reset') {
-              // Handle reset password
+              FirebaseHandler.resetPassword(context: context);
             }
           },
           itemBuilder: (context) => [

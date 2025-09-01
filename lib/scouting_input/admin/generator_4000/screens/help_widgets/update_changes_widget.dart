@@ -16,7 +16,7 @@ class UpdateChangesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final activeSaveColor = Colors.green.shade700;
     final activeDiscardColor = Colors.red.shade700;
-    final disabledOverlay = Theme.of(context).disabledColor.withOpacity(0.4);
+    final disabledOverlay = Theme.of(context).disabledColor.withValues(alpha: 0.4);
 
     return Row(
       children: [
@@ -25,7 +25,7 @@ class UpdateChangesWidget extends StatelessWidget {
           shape: const CircleBorder(),
           backgroundColor: isUpdateAvailable
               ? activeSaveColor
-              : activeSaveColor.withOpacity(0.4), // greyed out look
+              : activeSaveColor.withValues(alpha: 0.4), // greyed out look
           foregroundColor:
           isUpdateAvailable ? Colors.white : disabledOverlay, // icon tint
           tooltip: "חלל אותי",
@@ -37,7 +37,7 @@ class UpdateChangesWidget extends StatelessWidget {
           shape: const CircleBorder(),
           backgroundColor: isUpdateAvailable
               ? activeDiscardColor
-              : activeDiscardColor.withOpacity(0.4),
+              : activeDiscardColor.withValues(alpha: 0.4),
           foregroundColor:
           isUpdateAvailable ? Colors.white : disabledOverlay,
           tooltip: "Discard Changes",

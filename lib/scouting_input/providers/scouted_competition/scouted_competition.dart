@@ -4,37 +4,25 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_s
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 class ScoutedCompetition extends FRCCompetition {
-  final Map<String, List<GameScoutingShift>?>? gameScoutingShifts;
-  final Map<String, List<SuperScoutingShift>?>? superScoutingShifts;
-  final Map<String, List<PictureScoutingShift>?>? pictureScoutingShifts;
+  AllScoutingShifts allScoutingShifts;
   double maximumScore, minimumScore;
 
   ScoutedCompetition({
-    required super.competitionID,
+    required super.competitionKey,
     required super.teams,
     required super.matches,
-    required this.gameScoutingShifts,
-    required this.superScoutingShifts,
-    required this.pictureScoutingShifts,
+    required this.allScoutingShifts,
     required this.maximumScore,
-    required this.minimumScore
+    required this.minimumScore,
   });
 
   @override
   Map<String, dynamic> toMap() {
     return {
-      'competitionID': competitionID,
+      'competitionKey': competitionKey,
       'teams': teams.map((team) => team.toMap()).toList(),
       'matches': matches.map((match) => match.toMap()).toList(),
-      'gameScoutingShifts': gameScoutingShifts?.map(
-              (uid, shift) => MapEntry(uid, shift?.map((shift) => shift.toMap()).toList())
-      ),
-      'superScoutingShifts' : superScoutingShifts?.map(
-              (uid, shift) => MapEntry(uid, shift?.map((shift) => shift.toMap()).toList())
-      ),
-      'pictureScoutingShifts' : pictureScoutingShifts?.map(
-              (uid, shift) => MapEntry(uid, shift?.map((shift) => shift.toMap()).toList())
-      ),
+      'scoutingShifts': allScoutingShifts.toMap(),
       'maximumScore': maximumScore,
       'minimumScore': minimumScore,
     };
@@ -43,33 +31,82 @@ class ScoutedCompetition extends FRCCompetition {
   @override
   factory ScoutedCompetition.fromMap(Map<String, dynamic> map) {
     return ScoutedCompetition(
-      competitionID: map['competitionID'] as String,
+      competitionKey: map['competitionKey'] as String,
       teams: (map['teams'] as List)
-        .map((t) => FRCTeam.fromMap(Map<String, dynamic>.from(t)))
-        .toList(),
+          .map((t) => FRCTeam.fromMap(Map<String, dynamic>.from(t)))
+          .toList(),
       matches: (map['matches'] as List)
-        .map((m) => FRCMatch.fromMap(Map<String, dynamic>.from(m)))
-        .toList(),
-      gameScoutingShifts: (map['gameScoutingShifts'] as Map)
-        .map((uid, shiftsList) => MapEntry(
-          uid as String,
-          shiftsList == null ? null : List<Map<String, dynamic>>.from(shiftsList).map((shiftMap) => GameScoutingShift.fromMap(shiftMap)).toList()
-        )
-      ),
-      superScoutingShifts: (map['superScoutingShifts'] as Map)
-        .map((uid, shiftsList) => MapEntry(
-          uid as String,
-          shiftsList == null ? null : List<Map<String, dynamic>>.from(shiftsList).map((shiftMap) => SuperScoutingShift.fromMap(shiftMap)).toList()
-        )
-      ),
-      pictureScoutingShifts: (map['pictureScoutingShifts'] as Map)
-        .map((uid, shiftsList) => MapEntry(
-          uid as String,
-          shiftsList == null ? null : List<Map<String, dynamic>>.from(shiftsList).map((shiftMap) => PictureScoutingShift.fromMap(shiftMap)).toList()
-        )
+          .map((m) => FRCMatch.fromMap(Map<String, dynamic>.from(m)))
+          .toList(),
+      allScoutingShifts: AllScoutingShifts.fromMap(
+        Map<String, dynamic>.from(map['scoutingShifts']),
       ),
       maximumScore: (map['maximumScore'] as num).toDouble(),
-      minimumScore: (map['minimumScore'] as num).toDouble()
+      minimumScore: (map['minimumScore'] as num).toDouble(),
+    );
+  }
+}
+
+class AllScoutingShifts {
+  final Map<String, List<GameScoutingShift>?>? gameScoutingShifts;
+  final Map<String, List<SuperScoutingShift>?>? superScoutingShifts;
+  final Map<String, List<PictureScoutingShift>?>? pictureScoutingShifts;
+
+  const AllScoutingShifts({
+    this.gameScoutingShifts = const {},
+    this.superScoutingShifts = const {},
+    this.pictureScoutingShifts = const {},
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'gameScoutingShifts': gameScoutingShifts?.map(
+        (uid, shift) =>
+            MapEntry(uid, shift?.map((shift) => shift.toMap()).toList()),
+      ),
+      'superScoutingShifts': superScoutingShifts?.map(
+        (uid, shift) =>
+            MapEntry(uid, shift?.map((shift) => shift.toMap()).toList()),
+      ),
+      'pictureScoutingShifts': pictureScoutingShifts?.map(
+        (uid, shift) =>
+            MapEntry(uid, shift?.map((shift) => shift.toMap()).toList()),
+      ),
+    };
+  }
+
+  factory AllScoutingShifts.fromMap(Map<String, dynamic> map) {
+    return AllScoutingShifts(
+      gameScoutingShifts: (map['gameScoutingShifts'] as Map).map(
+        (uid, shiftsList) => MapEntry(
+          uid as String,
+          shiftsList == null
+              ? null
+              : List<Map<String, dynamic>>.from(shiftsList)
+                    .map((shiftMap) => GameScoutingShift.fromMap(shiftMap))
+                    .toList(),
+        ),
+      ),
+      superScoutingShifts: (map['superScoutingShifts'] as Map).map(
+        (uid, shiftsList) => MapEntry(
+          uid as String,
+          shiftsList == null
+              ? null
+              : List<Map<String, dynamic>>.from(shiftsList)
+                    .map((shiftMap) => SuperScoutingShift.fromMap(shiftMap))
+                    .toList(),
+        ),
+      ),
+      pictureScoutingShifts: (map['pictureScoutingShifts'] as Map).map(
+        (uid, shiftsList) => MapEntry(
+          uid as String,
+          shiftsList == null
+              ? null
+              : List<Map<String, dynamic>>.from(shiftsList)
+                    .map((shiftMap) => PictureScoutingShift.fromMap(shiftMap))
+                    .toList(),
+        ),
+      ),
     );
   }
 }

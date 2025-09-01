@@ -137,15 +137,15 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       case 0:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.gameScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts.gameScoutingShifts?[userDataProvider.user!.uid];
       case 1:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.superScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts.superScoutingShifts?[userDataProvider.user!.uid];
       case 2:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.pictureScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts.pictureScoutingShifts?[userDataProvider.user!.uid];
       default:
         return null;
     }
