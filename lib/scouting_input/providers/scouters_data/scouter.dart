@@ -14,17 +14,13 @@ class Scouter {
     required this.doesComeToDay2,
   });
 
-  static List<Scouter> scoutersListFromMap(Map<String, dynamic> map) {
-    return map.entries.map((entry) => Scouter.fromMap(entry.key, entry.value)).toList();
+  static List<Scouter> scoutersListFromMap(List<Map<String, dynamic>> list) {
+    return list.map((scouterMap) => Scouter.fromMap(scouterMap)).toList();
   }
 
-  static Map<String, dynamic> scoutersListToMap(List<Scouter>? scouters) {
-    if (scouters == null) return {};
-    final Map<String, dynamic> map = {};
-    for (var scouter in scouters) {
-      map[scouter.uid] = scouter.toMap();
-    }
-    return map;
+  static List<Map<String, dynamic>> scoutersListToMap(List<Scouter>? scouters) {
+    if (scouters == null) return [];
+    return scouters.map((scouter) => scouter.toMap()).toList();
   }
 
   Map<String, dynamic> toMap() {
@@ -39,9 +35,9 @@ class Scouter {
     };
   }
 
-  factory Scouter.fromMap(String uid, Map<String, dynamic> map) {
+  factory Scouter.fromMap(Map<String, dynamic> map) {
     return Scouter(
-      uid: uid,
+      uid: map['uid'] as String,
       name: map['name'] as String,
       isGameScouter: map['isGameScouter'] as bool,
       isSuperScouter: map['isSuperScouter'] as bool,

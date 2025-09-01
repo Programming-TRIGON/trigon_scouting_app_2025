@@ -19,17 +19,13 @@ class ScoutingUnit {
     ].whereType<String>().toList();
   }
 
-  static List<ScoutingUnit> scoutingUnitsListFromMap(Map<String, dynamic> map) {
-    return map.entries.map((entry) => ScoutingUnit.fromMap(entry.value)).toList();
+  static List<ScoutingUnit> scoutingUnitsListFromMap(List<dynamic> list) {
+    return list.map((entry) => ScoutingUnit.fromMap(entry.value)).toList();
   }
 
-  static Map<String, dynamic> scoutingUnitsListToMap(List<ScoutingUnit>? units) {
-    if (units == null) return {};
-    final Map<String, dynamic> map = {};
-    for (var unit in units) {
-      map[unit.name] = unit.toMap();
-    }
-    return map;
+  static List<Map<String, dynamic>> scoutingUnitsListToMap(List<ScoutingUnit>? units) {
+    if (units == null) return [];
+    return units.map((unit) => unit.toMap()).toList();
   }
 
   Map<String, dynamic> toMap() {

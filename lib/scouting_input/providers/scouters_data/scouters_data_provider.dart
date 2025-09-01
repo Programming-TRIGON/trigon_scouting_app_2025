@@ -132,7 +132,7 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   void sendScoutersToFirebase() async {
     if (scouters == null) return;
-    await scoutersDoc.set(Scouter.scoutersListToMap(scouters));
+    await scoutersDoc.set({'scouters' : Scouter.scoutersListToMap(scouters)});
     doesHaveUnsavedScoutersChanges = false;
     notifyListeners();
   }
@@ -167,7 +167,7 @@ class ScoutersDataProvider extends ChangeNotifier {
   Future<void> initializeScouters() async {
     final scoutersSnapshot = await scoutersDoc.get();
     if (!scoutersSnapshot.exists || scoutersSnapshot.data() == null) return;
-    scouters = Scouter.scoutersListFromMap(scoutersSnapshot.data()!);
+    scouters = Scouter.scoutersListFromMap(List<Map<String, dynamic>>.of(scoutersSnapshot.data()!['scouters']));
   }
 
   Future<void> initializeUnits() async {
@@ -178,8 +178,8 @@ class ScoutersDataProvider extends ChangeNotifier {
       return;
     }
     final data = unitsSnapshot.data()!;
-    day1Units = ScoutingUnit.scoutingUnitsListFromMap(data["day1Units"]);
-    day2Units = ScoutingUnit.scoutingUnitsListFromMap(data["day2Units"]);
+    day1Units = ScoutingUnit.scoutingUnitsListFromMap(List<dynamic>.of(data["day1Units"]));
+    day2Units = ScoutingUnit.scoutingUnitsListFromMap(List<dynamic>.of(data["day2Units"]));
   }
 
   void listenData() {
@@ -190,7 +190,7 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   void onScoutersSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
     if (doc.exists && doc.data() != null) {
-      scouters = Scouter.scoutersListFromMap(doc.data()!);
+      scouters = Scouter.scoutersListFromMap(List<Map<String, dynamic>>.of(doc.data()!['scouters']));
     } else {
       scouters = null;
     }
@@ -200,8 +200,8 @@ class ScoutersDataProvider extends ChangeNotifier {
   void onUnitsSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
     if (doc.exists && doc.data() != null) {
       final data = doc.data()!;
-      day1Units = ScoutingUnit.scoutingUnitsListFromMap(data["day1Units"]);
-      day2Units = ScoutingUnit.scoutingUnitsListFromMap(data["day2Units"]);
+      day1Units = ScoutingUnit.scoutingUnitsListFromMap(List<dynamic>.of(data["day1Units"]));
+      day2Units = ScoutingUnit.scoutingUnitsListFromMap(List<dynamic>.of(data["day2Units"]));
     } else {
       day1Units = null;
       day2Units = null;
