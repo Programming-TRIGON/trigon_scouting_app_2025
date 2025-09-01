@@ -28,7 +28,7 @@ class UpdateChangesWidget extends StatelessWidget {
               : activeSaveColor.withOpacity(0.4), // greyed out look
           foregroundColor:
           isUpdateAvailable ? Colors.white : disabledOverlay, // icon tint
-          tooltip: "Save Changes",
+          tooltip: "חלל אותי",
           child: const Icon(Icons.save),
         ),
         const SizedBox(width: 10),

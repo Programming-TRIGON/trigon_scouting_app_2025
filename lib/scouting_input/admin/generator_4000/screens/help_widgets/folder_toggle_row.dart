@@ -34,23 +34,31 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   Widget build(BuildContext context) {
     final optionKeys = widget.tabs.keys.toList();
     return Flexible(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 400),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            createTabsRow(optionKeys),
-            createFolderContainer(
-              widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
-                  Center(
-                    child: Text(
-                      widget.noDataContainerText,
-                      style: TextStyle(color: Colors.white70),
-                    ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              createTabsRow(optionKeys),
+              Flexible(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Divider(color: borderColor, height: 1),
+                ),
+              ),
+            ],
+          ),
+          createFolderContainer(
+            widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
+                Center(
+                  child: Text(
+                    widget.noDataContainerText,
+                    style: TextStyle(color: Colors.white70),
                   ),
-            ),
-          ],
-        ),
+                ),
+          ),
+        ],
       ),
     );
   }
