@@ -35,7 +35,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
     final optionKeys = widget.tabs.keys.toList();
     return Flexible(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
+        constraints: const BoxConstraints(maxWidth: 400),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -89,28 +89,29 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   }
 
   Widget buildTab(String text, bool selected, VoidCallback? onPressed) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 80,
-          maxWidth: 80,
-          minHeight: 40,
-          maxHeight: 40,
+    return Container(
+      width: 80,
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: borderColor, width: 1),
+          left: BorderSide(color: borderColor, width: 1),
+          right: BorderSide(color: borderColor, width: 1),
+          bottom: selected
+              ? BorderSide.none
+              : BorderSide(color: borderColor, width: 1),
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: borderColor, width: 1),
-              left: BorderSide(color: borderColor, width: 1),
-              right: BorderSide(color: borderColor, width: 1),
-              bottom: selected
-                  ? BorderSide.none
-                  : BorderSide(color: borderColor, width: 1),
-            ),
-            color: selected ? selectedColor : unselectedColor,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-          ),
+        color: selected ? selectedColor : unselectedColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+      ),
+      child: Material(
+        color: selected ? selectedColor : unselectedColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+        ),
+        child: InkWell(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+          onTap: onPressed,
           child: Center(
             child: Text(
               text,
@@ -130,9 +131,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: selectedColor,
-        borderRadius: const BorderRadius.vertical(
-          bottom: Radius.circular(12),
-        ),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
         border: Border(
           top: BorderSide.none,
           left: BorderSide(color: borderColor, width: 1),

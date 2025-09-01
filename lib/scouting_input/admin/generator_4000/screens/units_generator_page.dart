@@ -20,7 +20,7 @@ class UnitsGeneratorPage extends StatelessWidget {
 
     return SingleChildScrollView(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxHeight: 600),
+        constraints: const BoxConstraints(maxHeight: 700),
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(
