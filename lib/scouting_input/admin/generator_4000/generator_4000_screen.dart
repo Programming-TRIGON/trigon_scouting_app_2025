@@ -19,7 +19,7 @@ class Generator4000Screen extends StatelessWidget {
         generatorProvider.currentPage.title,
       ),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: generatorProvider.currentPage.build(),
       ),
       bottomNavigationBar: BottomNavigationBar(

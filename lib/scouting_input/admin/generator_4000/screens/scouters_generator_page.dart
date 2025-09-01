@@ -129,7 +129,8 @@ class ScoutersGeneratorPage extends StatelessWidget {
     Generator4000Provider generator4000Provider,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(0),
+      margin: const EdgeInsets.all(0),
       decoration: BoxDecoration(
         color: Colors.grey[900],
         borderRadius: BorderRadius.circular(12),
@@ -141,7 +142,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
           columns: [
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: Text("Action"),
               ),
             ),
@@ -177,7 +178,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
+                padding: const EdgeInsets.only(left: 6),
                 child: Text("Day 2"),
               ),
             ),
