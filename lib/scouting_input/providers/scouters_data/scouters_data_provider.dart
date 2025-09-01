@@ -130,15 +130,15 @@ class ScoutersDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sendScoutersToFirebase() {
+  void sendScoutersToFirebase() async {
     if (scouters == null) return;
-    scoutersDoc.set(Scouter.scoutersListToMap(scouters));
+    await scoutersDoc.set(Scouter.scoutersListToMap(scouters));
     doesHaveUnsavedScoutersChanges = false;
     notifyListeners();
   }
 
-  void sendUnitsToFirebase() {
-    unitsDoc.set({
+  void sendUnitsToFirebase() async {
+    await unitsDoc.set({
       "day1Units": ScoutingUnit.scoutingUnitsListToMap(day1Units),
       "day2Units": ScoutingUnit.scoutingUnitsListToMap(day2Units),
     });
@@ -146,14 +146,14 @@ class ScoutersDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void discardScoutersChanges() {
-    initializeScouters();
+  void discardScoutersChanges() async {
+    await initializeScouters();
     doesHaveUnsavedScoutersChanges = false;
     notifyListeners();
   }
 
-  void discardUnitsChanges() {
-    initializeUnits();
+  void discardUnitsChanges() async {
+    await initializeUnits();
     doesHaveUnsavedUnitsChanges = false;
     notifyListeners();
   }
