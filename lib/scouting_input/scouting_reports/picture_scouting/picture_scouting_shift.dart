@@ -23,6 +23,7 @@ class PictureScoutingShift extends ScoutingShift {
   @override
   Widget buildScheduleWidget() {
     return Card(
+      key: globalKey,
       color: didScout ? Colors.green : Colors.grey[850],
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

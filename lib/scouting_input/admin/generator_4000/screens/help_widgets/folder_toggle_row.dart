@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 class FolderToggleRow extends StatefulWidget {
@@ -22,6 +23,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   static final Color borderColor = Colors.grey[700]!;
 
   int _selectedIndex = 0;
+  int _previousIndex = 0;
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -48,14 +50,28 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
               Flexible(child: Divider(color: borderColor, height: 1)),
           ],
         ),
-        createFolderContainer(
-          widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
-              Center(
-                child: Text(
-                  widget.noDataContainerText,
-                  style: TextStyle(color: Colors.white70),
+        PageTransitionSwitcher(
+          duration: const Duration(milliseconds: 300),
+          reverse: _selectedIndex < _previousIndex,
+          transitionBuilder: (Widget child, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return SharedAxisTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.horizontal,
+              fillColor: Colors.transparent, // keeps background consistent
+              child: child,
+            );
+          },
+          child: createFolderContainer(
+            widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
+                Center(
+                  child: Text(
+                    widget.noDataContainerText,
+                    style: TextStyle(color: Colors.white70),
+                  ),
                 ),
-              ),
+          ),
         ),
       ],
     );
@@ -85,6 +101,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
                       _selectedIndex == index,
                       () {
                         setState(() {
+                          _previousIndex = _selectedIndex;
                           _selectedIndex = index;
                         });
                       },
@@ -118,6 +135,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
         ),
         child: InkWell(
+          splashFactory: InkRipple.splashFactory,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
           onTap: onPressed,
           child: Center(
@@ -136,6 +154,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
 
   Widget createFolderContainer(Widget child) {
     return Container(
+      key: ValueKey<int>(_selectedIndex),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: selectedColor,

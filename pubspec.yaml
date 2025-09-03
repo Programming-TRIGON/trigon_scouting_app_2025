@@ -41,6 +41,7 @@ dependencies:
   http: ^1.5.0
   flutter_speed_dial: ^7.0.0
   syncfusion_flutter_gauges: ^30.2.6
+  animations: ^2.0.11
 
 flutter_launcher_icons:
   android: true

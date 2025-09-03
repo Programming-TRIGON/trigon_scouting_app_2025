@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../utilities/tba_handler.dart';
 
 abstract class ScoutingShift {
+  final GlobalKey globalKey = GlobalKey();
   bool didScout;
 
   ScoutingShift({

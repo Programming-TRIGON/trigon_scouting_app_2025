@@ -18,13 +18,17 @@ class Generator4000Screen extends StatelessWidget {
         "המחלל 4000",
         generatorProvider.currentPage.title,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: generatorProvider.currentPage.build(),
+      body: PageView(
+        controller: generatorProvider.pageController,
+        onPageChanged: (index) =>
+            generatorProvider.setCurrentIndex(index),
+        children: Generator4000Page.values
+            .map((page) => page.build())
+            .toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: generatorProvider.currentPage.index,
-        onTap: (index) => generatorProvider.setCurrentPage(Generator4000Page.values[index]),
+        onTap: (index) => generatorProvider.animateToPage(Generator4000Page.values[index]),
         backgroundColor: Colors.grey[800],
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.white,

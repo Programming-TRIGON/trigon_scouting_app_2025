@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart';
 
 import '../providers/scouted_competition/scouted_competition_provider.dart';
@@ -13,13 +14,26 @@ class MyShiftsWidget extends StatefulWidget {
 }
 
 class _MyShiftsWidgetState extends State<MyShiftsWidget> {
+  final ScrollController _scrollController = ScrollController();
   int selectedIndex = 0;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final userDataProvider = context.watch<UserDataProvider>();
     final scoutedCompetitionProvider = context
         .watch<ScoutedCompetitionProvider>();
+
+    final List<ScoutingShift>? selectedShifts = getSelectedShifts(
+      userDataProvider,
+      scoutedCompetitionProvider,
+    );
+    ensureJumpsToShift(selectedShifts);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,7 +48,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
         const SizedBox(height: 12),
         createToggleButtons(),
         const SizedBox(height: 16),
-        createSchedulePanel(userDataProvider, scoutedCompetitionProvider),
+        createSchedulePanel(selectedShifts),
       ],
     );
   }
@@ -70,15 +84,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
     );
   }
 
-  Widget createSchedulePanel(
-    UserDataProvider userDataProvider,
-    ScoutedCompetitionProvider scoutedCompetitionProvider,
-  ) {
-    final List<ScoutingShift>? selectedShifts = getSelectedShifts(
-      userDataProvider,
-      scoutedCompetitionProvider,
-    );
-
+  Widget createSchedulePanel(List<ScoutingShift>? selectedShifts) {
     if (selectedShifts?.isEmpty ?? true) {
       return Text(
         "No shifts available",
@@ -109,9 +115,11 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Scrollbar(
+          controller: _scrollController,
           thumbVisibility: true,
           interactive: true,
           child: ListView(
+            controller: _scrollController,
             padding: const EdgeInsets.symmetric(vertical: 8),
             shrinkWrap: true,
             children: [
@@ -137,15 +145,18 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       case 0:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.allScoutingShifts.gameScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts
+            .gameScoutingShifts?[userDataProvider.user!.uid];
       case 1:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.allScoutingShifts.superScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts
+            .superScoutingShifts?[userDataProvider.user!.uid];
       case 2:
         return scoutedCompetitionProvider
             .scoutedCompetition
-            ?.allScoutingShifts.pictureScoutingShifts?[userDataProvider.user!.uid];
+            ?.allScoutingShifts
+            .pictureScoutingShifts?[userDataProvider.user!.uid];
       default:
         return null;
     }
@@ -169,5 +180,26 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
         ...scoutingShifts.map((s) => s.buildScheduleWidget()),
       ],
     );
+  }
+
+  void ensureJumpsToShift(List<ScoutingShift>? shifts) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (shifts != null) {
+        final firstDidntScout = shifts.where(
+          (s) => !s.didScout,
+        ).firstOrNull;
+        if (firstDidntScout != null) {
+          final ctx = firstDidntScout.globalKey.currentContext;
+          if (ctx != null) {
+            Scrollable.ensureVisible(
+              ctx,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+            ScoutingHomeScreen.scrollController.jumpTo(0);
+          }
+        }
+      }
+    });
   }
 }

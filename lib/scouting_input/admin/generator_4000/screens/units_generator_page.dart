@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
@@ -32,13 +33,26 @@ class UnitsGeneratorPage extends StatelessWidget {
               const SizedBox(height: 10),
               createTopRowWidget(scoutersDataProvider, generator4000Provider),
               const SizedBox(height: 10),
-              FolderToggleRow(
-                // key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
-                tabs: mapUnits(
-                  generator4000Provider.isDay1UnitsSelected
-                      ? scoutersDataProvider.day1Units ?? []
-                      : scoutersDataProvider.day2Units ?? [],
-                  generator4000Provider.isDay1UnitsSelected,
+              PageTransitionSwitcher(
+                duration: const Duration(milliseconds: 300),
+                reverse: !generator4000Provider.isDay1UnitsSelected,
+                transitionBuilder: (Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
+                  return SharedAxisTransition(
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.horizontal,
+                    fillColor: Colors.transparent, // keeps background consistent
+                    child: child,
+                  );
+                },
+                child: FolderToggleRow(
+                  key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
+                  tabs: mapUnits(
+                    generator4000Provider.isDay1UnitsSelected
+                        ? scoutersDataProvider.day1Units ?? []
+                        : scoutersDataProvider.day2Units ?? [],
+                    generator4000Provider.isDay1UnitsSelected,
+                  ),
                 ),
               ),
             ],

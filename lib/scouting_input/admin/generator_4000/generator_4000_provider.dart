@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/scouters_generator_page.dart';
@@ -13,12 +12,27 @@ import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 class Generator4000Provider extends ChangeNotifier {
   final TextEditingController scoutersGeneratorSearchController =
       TextEditingController();
-  Generator4000Page currentPage = Generator4000Page.scoutersGenerator;
+  PageController pageController = PageController(initialPage: 0);
+  int currentIndex = 0;
   bool isDay1UnitsSelected = true;
 
-  void setCurrentPage(Generator4000Page page) {
-    currentPage = page;
+  void animateToPage(Generator4000Page page) {
+    pageController.animateToPage(
+      page.index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    currentIndex = page.index;
     notifyListeners();
+  }
+
+  void setCurrentIndex(int index) {
+    currentIndex = index;
+    notifyListeners();
+  }
+
+  Generator4000Page get currentPage {
+    return Generator4000Page.values[currentIndex];
   }
 
   void setIsDay1UnitsSelected(bool value) {
@@ -46,7 +60,12 @@ class Generator4000Provider extends ChangeNotifier {
       maximumScore: 100,
       minimumScore: 20,
     );
-    final AllScoutingShifts allScoutingShifts = ShiftsGeneratorCalculations.generateShiftsSchedule(scoutedCompetition, scoutersDataProvider, maxConsecutiveMatches);
+    final AllScoutingShifts allScoutingShifts =
+        ShiftsGeneratorCalculations.generateShiftsSchedule(
+          scoutedCompetition,
+          scoutersDataProvider,
+          maxConsecutiveMatches,
+        );
     scoutedCompetition.allScoutingShifts = allScoutingShifts;
     await FirebaseHandler.setScoutedCompetition(scoutedCompetition);
     notifyListeners();
@@ -55,6 +74,7 @@ class Generator4000Provider extends ChangeNotifier {
   @override
   void dispose() {
     scoutersGeneratorSearchController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 }
@@ -76,13 +96,18 @@ enum Generator4000Page {
   const Generator4000Page({required this.title, required this.icon});
 
   Widget build() {
+    final Widget page;
     switch (this) {
       case Generator4000Page.scoutersGenerator:
-        return ScoutersGeneratorPage();
+        page = ScoutersGeneratorPage();
       case Generator4000Page.unitsGenerator:
-        return UnitsGeneratorPage();
+        page =UnitsGeneratorPage();
       case Generator4000Page.shiftsGenerator:
-        return ShiftsGeneratorPage();
+        page = ShiftsGeneratorPage();
     }
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: page,
+    );
   }
 }
