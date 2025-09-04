@@ -1,11 +1,11 @@
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
 
 class MyShiftsWidget extends StatefulWidget {
   const MyShiftsWidget({super.key});
@@ -40,7 +40,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'My Shifts',
+          "My Shifts",
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -71,15 +71,15 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       children: const [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text('Game'),
+          child: Text("Game"),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text('Super'),
+          child: Text("Super"),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text('Picture'),
+          child: Text("Picture"),
         ),
       ],
     );
@@ -88,20 +88,20 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
   Widget createSchedulePanel(List<ScoutingShift>? selectedShifts) {
     if (selectedShifts?.isEmpty ?? true) {
       return Text(
-        'No shifts available',
+        "No shifts available",
         style: TextStyle(color: Colors.grey[400], fontStyle: FontStyle.italic),
       );
     }
     selectedShifts!;
 
     final quals = selectedShifts
-        .where((s) => s.getMatchType() == 'Qualification')
+        .where((s) => s.getMatchType() == "Qualification")
         .toList();
     final playoffs = selectedShifts
-        .where((s) => s.getMatchType() == 'Playoffs')
+        .where((s) => s.getMatchType() == "Playoffs")
         .toList();
     final finals = selectedShifts
-        .where((s) => s.getMatchType() == 'Finals')
+        .where((s) => s.getMatchType() == "Finals")
         .toList();
     final notOrdered = selectedShifts
         .where((s) => s.getMatchType() == null)
@@ -129,10 +129,10 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
                 if (notOrdered.isNotEmpty)
                   ...notOrdered.map((s) => s.buildScheduleWidget()),
                 if (quals.isNotEmpty)
-                  ...buildSection('Qualification Matches', quals),
+                  ...buildSection("Qualification Matches", quals),
                 if (playoffs.isNotEmpty)
-                  ...buildSection('Playoff Matches', playoffs),
-                if (finals.isNotEmpty) ...buildSection('Finals', finals),
+                  ...buildSection("Playoff Matches", playoffs),
+                if (finals.isNotEmpty) ...buildSection("Finals", finals),
               ],
             ),
           ),

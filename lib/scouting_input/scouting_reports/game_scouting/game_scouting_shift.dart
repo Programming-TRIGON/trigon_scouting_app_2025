@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart";
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class GameScoutingShift extends ScoutingShift {
   final String matchKey;
@@ -20,17 +20,17 @@ class GameScoutingShift extends ScoutingShift {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'matchKey': matchKey,
-      'scoutedTeam': scoutedTeam.toMap(),
-      'didScout': didScout,
+      "matchKey": matchKey,
+      "scoutedTeam": scoutedTeam.toMap(),
+      "didScout": didScout,
     };
   }
 
   factory GameScoutingShift.fromMap(Map<String, dynamic> map) {
     return GameScoutingShift(
-      matchKey: map['matchKey'] as String,
-      scoutedTeam: FRCTeam.fromMap(map['scoutedTeam']),
-      didScout: map['didScout'] as bool,
+      matchKey: map["matchKey"] as String,
+      scoutedTeam: FRCTeam.fromMap(map["scoutedTeam"]),
+      didScout: map["didScout"] as bool,
     );
   }
 

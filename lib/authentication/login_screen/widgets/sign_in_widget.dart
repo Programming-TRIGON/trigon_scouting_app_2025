@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/login_provider.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/login_provider.dart";
 
 class SignInWidget extends StatelessWidget {
   const SignInWidget({super.key});
@@ -20,7 +20,7 @@ class SignInWidget extends StatelessWidget {
           ),
           backgroundColor: Colors.green,
         ),
-        child: const Text('Sign in', style: TextStyle(color: Colors.black)),
+        child: const Text("Sign in", style: TextStyle(color: Colors.black)),
       ),
     );
   }

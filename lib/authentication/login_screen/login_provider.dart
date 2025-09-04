@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
+import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 
 class LoginProvider extends ChangeNotifier {
   final emailController = TextEditingController();
@@ -16,21 +16,21 @@ class LoginProvider extends ChangeNotifier {
 
   String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email is required';
+      return "Email is required";
     }
-    final emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegex = RegExp(r"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$");
     if (!emailRegex.hasMatch(value.trim())) {
-      return 'Please enter a valid email address';
+      return "Please enter a valid email address";
     }
     return null;
   }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return "Password is required";
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return "Password must be at least 8 characters long";
     }
     return null;
   }
@@ -40,7 +40,7 @@ class LoginProvider extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Invalid password or email, or not connected to the Internet.',
+            "Invalid password or email, or not connected to the Internet.",
           ),
           backgroundColor: Colors.redAccent,
         ),
@@ -58,7 +58,7 @@ class LoginProvider extends ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Invalid password or email, or not connected to the Internet.',
+              "Invalid password or email, or not connected to the Internet.",
             ),
             backgroundColor: Colors.redAccent,
           ),

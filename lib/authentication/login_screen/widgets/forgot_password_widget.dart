@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 
 class ForgotPasswordWidget extends StatelessWidget {
   const ForgotPasswordWidget({super.key});
@@ -23,7 +23,7 @@ class ForgotPasswordWidget extends StatelessWidget {
           return const TextStyle(decoration: TextDecoration.none);
         }),
       ),
-      child: const Text('Forgot password?'),
+      child: const Text("Forgot password?"),
     );
   }
 
@@ -33,18 +33,18 @@ class ForgotPasswordWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Enter you email to reset password'),
+        title: const Text("Enter you email to reset password"),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'E-mail'),
+          decoration: const InputDecoration(hintText: "E-mail"),
         ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // Close dialog
             },
-            child: const Text('Cancel'),
+            child: const Text("Cancel"),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -55,7 +55,7 @@ class ForgotPasswordWidget extends StatelessWidget {
               if (!context.mounted) return;
               Navigator.of(context).pop();
             },
-            child: const Text('Reset'),
+            child: const Text("Reset"),
           ),
         ],
       ),

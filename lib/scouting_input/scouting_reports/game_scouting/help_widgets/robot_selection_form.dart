@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/utilities/mandatory.dart";
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
 
 class RobotSelectionForm extends StatefulWidget {
   const RobotSelectionForm({super.key});
@@ -53,7 +53,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
           ),
           const SizedBox(height: 5),
           BoolToggleRow(
-            label: 'Bet: will this robot win?',
+            label: "Bet: will this robot win?",
             getter: () => reportProvider.report.pregameReport.bet,
             setter: (value) => reportProvider.updatePregame(
                   (pregameReport) => pregameReport.bet = value,
@@ -77,7 +77,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
         Mandatory(
           child: DropdownMenu<String>(
             width: 200,
-            label: const Text('Match Type', style: TextStyle(color: Colors.grey)),
+            label: const Text("Match Type", style: TextStyle(color: Colors.grey)),
             controller: matchTypeController,
             initialSelection: reportProvider.report.pregameReport.matchType,
             dropdownMenuEntries: buildMatchTypeSelectionOptions(),
@@ -94,7 +94,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
         Mandatory(
           child: DropdownMenu<int>(
             width: 200,
-            label: const Text('Match Number', style: TextStyle(color: Colors.grey)),
+            label: const Text("Match Number", style: TextStyle(color: Colors.grey)),
             controller: matchNumberController,
             initialSelection: reportProvider.report.pregameReport.matchNumber,
             dropdownMenuEntries: buildMatchNumberSelectionOptions(
@@ -144,7 +144,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
         Mandatory(
           child: DropdownMenu<int?>(
             width: 200,
-            label: const Text('Robot Number', style: TextStyle(color: Colors.grey)),
+            label: const Text("Robot Number", style: TextStyle(color: Colors.grey)),
             controller: robotNumberController,
             initialSelection: reportProvider.report.pregameReport.robotNumber,
             dropdownMenuEntries: buildRobotSelectionOptions(
@@ -164,7 +164,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
           ),
         ),
         const SizedBox(height: 5),
-        const Text('Override Selection'),
+        const Text("Override Selection"),
         Switch(
           value: reportProvider.report.pregameReport.didOverrideSelection,
           onChanged: (value) => {
@@ -187,7 +187,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
   }
 
   List<DropdownMenuEntry<String>> buildMatchTypeSelectionOptions() {
-    return ['Practice', 'Qualification', 'Playoffs', 'Finals'].map((matchType) {
+    return ["Practice", "Qualification", "Playoffs", "Finals"].map((matchType) {
       return DropdownMenuEntry(value: matchType, label: matchType);
     }).toList();
   }

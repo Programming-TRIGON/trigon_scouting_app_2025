@@ -1,11 +1,11 @@
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/picture_scouting/picture_scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_scouting/super_scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_shift.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/picture_scouting/picture_scouting_shift.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_scouting/super_scouting_shift.dart";
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class ShiftsGeneratorCalculations {
   static AllScoutingShifts generateShiftsSchedule(

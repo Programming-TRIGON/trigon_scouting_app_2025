@@ -1,13 +1,13 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart";
 
 class ReefAlgaeScoutingWidget extends StatelessWidget {
-  static final Image reefAlgaeImage = Image.asset('assets/reef_algae.png');
+  static final Image reefAlgaeImage = Image.asset("assets/reef_algae.png");
   static const double buttonWidth = 60;
 
   final bool forAuto;
@@ -51,7 +51,7 @@ class ReefAlgaeScoutingWidget extends StatelessWidget {
                           const SizedBox(height: 60),
                           FittedBox(
                             child: OutlinedText(
-                              text: 'Removes',
+                              text: "Removes",
                               strokeColor: Colors.black,
                               strokeWidth: 10,
                               style: Theme.of(context).textTheme.headlineMedium!
@@ -81,7 +81,7 @@ class ReefAlgaeScoutingWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: OutlinedText(
-                          text: 'Reef Algae',
+                          text: "Reef Algae",
                           style: Theme.of(context).textTheme.headlineMedium,
                           strokeColor: Colors.black,
                           strokeWidth: 5,

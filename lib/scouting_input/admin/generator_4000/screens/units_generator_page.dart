@@ -1,14 +1,14 @@
-import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/add_unit_action_button.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/folder_toggle_row.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/unit_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/update_changes_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
+import "package:animations/animations.dart";
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/add_unit_action_button.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/folder_toggle_row.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/unit_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/update_changes_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 
 class UnitsGeneratorPage extends StatelessWidget {
   const UnitsGeneratorPage({super.key});
@@ -46,7 +46,7 @@ class UnitsGeneratorPage extends StatelessWidget {
                   );
                 },
                 child: FolderToggleRow(
-                  key: generator4000Provider.isDay1UnitsSelected ? const Key('day1UnitsFolder') : const Key('day2UnitsFolder'),
+                  key: generator4000Provider.isDay1UnitsSelected ? const Key("day1UnitsFolder") : const Key("day2UnitsFolder"),
                   tabs: mapUnits(
                     generator4000Provider.isDay1UnitsSelected
                         ? scoutersDataProvider.day1Units ?? []
@@ -80,11 +80,11 @@ class UnitsGeneratorPage extends StatelessWidget {
       children: const [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text('Day 1'),
+          child: Text("Day 1"),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text('Day 2'),
+          child: Text("Day 2"),
         ),
       ],
     );
@@ -109,7 +109,7 @@ class UnitsGeneratorPage extends StatelessWidget {
         AddUnitFAB(isDay1Unit: generator4000Provider.isDay1UnitsSelected),
         const SizedBox(width: 10),
         UpdateChangesWidget(
-          keyString: 'update_units_changes',
+          keyString: "update_units_changes",
           onUpdate: () => scoutersDataProvider.sendUnitsToFirebase(),
           onDiscard: () => scoutersDataProvider.discardUnitsChanges(),
           isUpdateAvailable: scoutersDataProvider.doesHaveUnsavedUnitsChanges,

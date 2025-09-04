@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
 
 class AppChoiceButton extends StatelessWidget {
   final String buttonName;

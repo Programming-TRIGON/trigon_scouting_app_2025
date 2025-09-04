@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class OutlinedText extends StatelessWidget {
   final String text;

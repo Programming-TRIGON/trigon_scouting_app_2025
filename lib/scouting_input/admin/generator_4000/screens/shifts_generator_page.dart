@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/units_shift_schedules_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 
 class ShiftsGeneratorPage extends StatefulWidget {
   const ShiftsGeneratorPage({super.key});
@@ -20,7 +21,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
   @override
   void initState() {
     super.initState();
-    consecutiveScoutingMatchesController.text = '6';
+    consecutiveScoutingMatchesController.text = "6";
   }
 
   @override
@@ -37,14 +38,14 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
     final scoutersDataProvider = context.watch<ScoutersDataProvider>();
     final generator4000Provider = context.watch<Generator4000Provider>();
     competitionKeyController.text =
-        scoutedCompetitionProvider.scoutedCompetition?.competitionKey ?? '';
+        scoutedCompetitionProvider.scoutedCompetition?.competitionKey ?? "";
 
     return Column(
       children: [
         TextField(
           controller: competitionKeyController,
           decoration: const InputDecoration(
-            labelText: 'Competition Key',
+            labelText: "Competition Key",
             border: OutlineInputBorder(),
           ),
         ),
@@ -52,7 +53,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
           controller: consecutiveScoutingMatchesController,
           keyboardType: TextInputType.number,
           decoration: const InputDecoration(
-            labelText: 'Max Consecutive Scouting Matches',
+            labelText: "Max Consecutive Scouting Matches",
             border: OutlineInputBorder(),
           ),
         ),
@@ -67,7 +68,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text(
-                    'Shifts generated and saved successfully!',
+                    "Shifts generated and saved successfully!",
                   ),
                   backgroundColor: Colors.green,
                 ),
@@ -76,14 +77,14 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Error: ${e.toString()}'),
+                  content: Text("Error: ${e.toString()}"),
                   backgroundColor: Colors.red,
                 ),
               );
               return;
             }
           },
-          child: const Text('חלל אותי!!'),
+          child: const Text("חלל אותי!!"),
         ),
       ],
     );

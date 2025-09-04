@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class DiscardChangesDialogWidget extends StatelessWidget {
   const DiscardChangesDialogWidget({super.key});
@@ -15,16 +15,16 @@ class DiscardChangesDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Discard Changes?'),
-      content: const Text('Are you sure you want to discard your changes?'),
+      title: const Text("Discard Changes?"),
+      content: const Text("Are you sure you want to discard your changes?"),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: const Text("Cancel"),
         ),
         TextButton(
           onPressed: () => GameScoutingReportProvider.goToHomeScreen(context),
-          child: const Text('Discard'),
+          child: const Text("Discard"),
         ),
       ],
     );

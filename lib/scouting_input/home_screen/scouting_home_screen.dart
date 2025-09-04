@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_screen.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/game_scouting_report_screen.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_speed_dial/flutter_speed_dial.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_screen.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/game_scouting_report_screen.dart";
 
-import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/home_screen/my_data_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/home_screen/my_shifts_widget.dart';
+import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/home_screen/my_data_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/home_screen/my_shifts_widget.dart";
 
 class ScoutingHomeScreen extends StatelessWidget {
   static ScrollController scrollController = ScrollController();
@@ -25,8 +25,8 @@ class ScoutingHomeScreen extends StatelessWidget {
       appBar: MaterialDesignFactory.createAppBar(
         context,
         Colors.green,
-        'Scouting Input',
-        'Main Menu',
+        "Scouting Input",
+        "Main Menu",
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
@@ -61,7 +61,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.sports_esports, color: Colors.green),
                 SizedBox(width: 10),
-                Text('New Game Scouting Report'),
+                Text("New Game Scouting Report"),
               ],
             ),
             onTap: () {
@@ -74,7 +74,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.star, color: Colors.amber),
                 SizedBox(width: 10),
-                Text('New Super Scouting Report'),
+                Text("New Super Scouting Report"),
               ],
             ),
             onTap: () {
@@ -87,7 +87,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.camera_alt, color: Colors.blue),
                 SizedBox(width: 10),
-                Text('New Picture Scouting Report'),
+                Text("New Picture Scouting Report"),
               ],
             ),
             onTap: () {
@@ -107,7 +107,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               Expanded(
                 child: _NavButton(
                   icon: Icons.analytics_outlined,
-                  label: 'המלשן 3000',
+                  label: "המלשן 3000",
                   onTap: () {
                     // TODO: Navigate to page
                   },
@@ -117,7 +117,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               Expanded(
                 child: _NavButton(
                   icon: Icons.schedule_outlined,
-                  label: 'המחלל 4000',
+                  label: "המחלל 4000",
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialDesignFactory.createModernRoute(

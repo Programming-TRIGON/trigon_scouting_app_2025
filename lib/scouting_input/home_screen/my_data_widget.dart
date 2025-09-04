@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 
 class MyDataWidget extends StatelessWidget {
   const MyDataWidget({super.key});
@@ -10,7 +10,7 @@ class MyDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userDataProvider = context.watch<UserDataProvider>();
     final ScoutersDataProvider scoutersDataProvider = context.watch<ScoutersDataProvider>();
-    final String? unitName = scoutersDataProvider.getUnitOfUser(userDataProvider.user?.uid ?? '')?.name;
+    final String? unitName = scoutersDataProvider.getUnitOfUser(userDataProvider.user?.uid ?? "")?.name;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -36,7 +36,7 @@ class MyDataWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '10',
+                  "10",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -45,7 +45,7 @@ class MyDataWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  'Score',
+                  "Score",
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
@@ -67,7 +67,7 @@ class MyDataWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'Role',
+                  "Role",
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
@@ -80,7 +80,7 @@ class MyDataWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  unitName ?? '---',
+                  unitName ?? "---",
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class MyDataWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'פלוגה',
+                  "פלוגה",
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],

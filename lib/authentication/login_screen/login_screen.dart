@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/login_provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/widgets/forgot_password_widget.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/widgets/login_form_widget.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/widgets/login_header_widget.dart';
-import 'package:trigon_scouting_app_2025/authentication/login_screen/widgets/sign_in_widget.dart';
-import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/login_provider.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/widgets/forgot_password_widget.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/widgets/login_form_widget.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/widgets/login_header_widget.dart";
+import "package:trigon_scouting_app_2025/authentication/login_screen/widgets/sign_in_widget.dart";
+import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class Mandatory extends StatelessWidget {
   final Widget child;
@@ -21,7 +21,7 @@ class Mandatory extends StatelessWidget {
             top: -11,   // move slightly above the border
             left: 5, // move slightly outside the border
             child: Text(
-              '*',
+              "*",
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 22,

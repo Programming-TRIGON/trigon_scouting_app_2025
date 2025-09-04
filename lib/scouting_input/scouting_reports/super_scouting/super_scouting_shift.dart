@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart";
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class SuperScoutingShift extends ScoutingShift {
   final String matchKey;
@@ -22,21 +22,21 @@ class SuperScoutingShift extends ScoutingShift {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'matchKey': matchKey,
-      'scoutedAlliance': scoutedAlliance.map((team) => team.toMap()).toList(),
-      'isBlueAlliance': isBlueAlliance,
-      'didScout': didScout,
+      "matchKey": matchKey,
+      "scoutedAlliance": scoutedAlliance.map((team) => team.toMap()).toList(),
+      "isBlueAlliance": isBlueAlliance,
+      "didScout": didScout,
     };
   }
 
   factory SuperScoutingShift.fromMap(Map<String, dynamic> map) {
     return SuperScoutingShift(
-      matchKey: map['matchKey'] as String,
-      scoutedAlliance: (map['scoutedAlliance'] as List)
+      matchKey: map["matchKey"] as String,
+      scoutedAlliance: (map["scoutedAlliance"] as List)
           .map((map) => FRCTeam.fromMap(map))
           .toList(),
-      isBlueAlliance: map['isBlueAlliance'] as bool,
-      didScout: map['didScout'] as bool,
+      isBlueAlliance: map["isBlueAlliance"] as bool,
+      didScout: map["didScout"] as bool,
     );
   }
 
@@ -54,7 +54,7 @@ class SuperScoutingShift extends ScoutingShift {
           style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          isBlueAlliance ? 'Blue Alliance' : 'Red Alliance',
+          isBlueAlliance ? "Blue Alliance" : "Red Alliance",
           style: const TextStyle(color: Colors.white, fontSize: 14),
         ),
       ),

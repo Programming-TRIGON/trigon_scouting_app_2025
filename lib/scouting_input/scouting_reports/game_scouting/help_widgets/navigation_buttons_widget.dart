@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class NavigationButtonsWidget extends StatelessWidget {
   final GameScoutingPage currentPage;
@@ -40,13 +40,13 @@ class NavigationButtonsWidget extends StatelessWidget {
               NavigationButtonWidget(
                 width: width,
                 targetPage: previousPage,
-                text: '← ${previousPage.capitalizedName()}',
+                text: "← ${previousPage.capitalizedName()}",
               ),
               const SizedBox(width: 5),
               NavigationButtonWidget(
                 width: width,
                 targetPage: nextPage,
-                text: '${nextPage.capitalizedName()} →',
+                text: "${nextPage.capitalizedName()} →",
               ),
             ],
           ),

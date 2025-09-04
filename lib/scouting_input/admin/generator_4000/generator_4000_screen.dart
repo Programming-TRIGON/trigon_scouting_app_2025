@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
 
 class Generator4000Screen extends StatelessWidget {
   const Generator4000Screen({super.key});
@@ -15,7 +15,7 @@ class Generator4000Screen extends StatelessWidget {
       appBar: MaterialDesignFactory.createAppBar(
         context,
         Colors.green,
-        'המחלל 4000',
+        "המחלל 4000",
         generatorProvider.currentPage.title,
       ),
       body: PageView(

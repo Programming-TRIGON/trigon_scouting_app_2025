@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class StartingPositionScoutingWidget extends StatelessWidget {
   const StartingPositionScoutingWidget({super.key});
@@ -18,7 +18,7 @@ class StartingPositionScoutingWidget extends StatelessWidget {
       child: FittedBox(
         child: Column(
           children: [
-            Text('Select a starting position:', style: Theme.of(context).textTheme.bodyLarge),
+            Text("Select a starting position:", style: Theme.of(context).textTheme.bodyLarge),
             Container(
               width: 390 * 0.8,
               height: 340 * 0.8,
@@ -26,7 +26,7 @@ class StartingPositionScoutingWidget extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(10),
                 image: const DecorationImage(
-                  image: AssetImage('assets/starting_positions_image.png'),
+                  image: AssetImage("assets/starting_positions_image.png"),
                   fit: BoxFit.cover,
                 ),
               ),

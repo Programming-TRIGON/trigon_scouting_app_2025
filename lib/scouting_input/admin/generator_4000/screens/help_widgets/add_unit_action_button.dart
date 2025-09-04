@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart";
 
 class AddUnitFAB extends StatelessWidget {
   final bool isDay1Unit;
@@ -13,11 +13,11 @@ class AddUnitFAB extends StatelessWidget {
     final scoutersDataProvider = context.watch<ScoutersDataProvider>();
 
     return FloatingActionButton(
-      key: ValueKey('addUnitFAB_day${isDay1Unit ? 1 : 2}'),
-      heroTag: 'addUnitFAB_day${isDay1Unit ? 1 : 2}',
+      key: ValueKey("addUnitFAB_day${isDay1Unit ? 1 : 2}"),
+      heroTag: "addUnitFAB_day${isDay1Unit ? 1 : 2}",
       onPressed: () => showAddUnitDialog(context, scoutersDataProvider),
       shape: const CircleBorder(),
-      tooltip: 'Add Unit',
+      tooltip: "Add Unit",
       child: const Icon(Icons.add),
     );
   }
@@ -28,18 +28,18 @@ class AddUnitFAB extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Enter Unit Name'),
+        title: const Text("Enter Unit Name"),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'Unit Name'),
+          decoration: const InputDecoration(hintText: "Unit Name"),
         ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // Close dialog
             },
-            child: const Text('Cancel'),
+            child: const Text("Cancel"),
           ),
           ElevatedButton(
             onPressed: () {
@@ -49,7 +49,7 @@ class AddUnitFAB extends StatelessWidget {
                 addUnit(unitName, context, scoutersDataProvider);
               }
             },
-            child: const Text('Add'),
+            child: const Text("Add"),
           ),
         ],
       ),

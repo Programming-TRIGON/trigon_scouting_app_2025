@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class FolderToggleRow extends StatefulWidget {
   final Map<String, Widget> tabs;
@@ -8,8 +8,8 @@ class FolderToggleRow extends StatefulWidget {
   const FolderToggleRow({
     super.key,
     required this.tabs,
-    this.noDataTitle = 'No Data',
-    this.noDataContainerText = 'No data available.',
+    this.noDataTitle = "No Data",
+    this.noDataContainerText = "No data available.",
   });
 
   @override

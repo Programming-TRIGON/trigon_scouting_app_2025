@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
+import "package:flutter/material.dart";
+import "package:syncfusion_flutter_gauges/gauges.dart";
 
 class RobotScoreSpeedometer extends StatelessWidget {
   final double robotScore;
@@ -87,13 +87,13 @@ class RobotScoreSpeedometer extends StatelessWidget {
           ],
           annotations: const <GaugeAnnotation>[
             GaugeAnnotation(
-              widget: Text('Elyouzoom',
+              widget: Text("Elyouzoom",
                   style: TextStyle(fontWeight: FontWeight.w600)),
               angle: 175,
               positionFactor: 0.85,
             ),
             GaugeAnnotation(
-              widget: Text('Legendog',
+              widget: Text("Legendog",
                   style: TextStyle(fontWeight: FontWeight.w600)),
               angle: 5,
               positionFactor: 0.85,

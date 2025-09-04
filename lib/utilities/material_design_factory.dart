@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/authentication_handler.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 
 class MaterialDesignFactory {
   static Widget createLoadingPage(String label) {
@@ -35,7 +35,7 @@ class MaterialDesignFactory {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title ?? 'TRIGON Scouting App',
+            title ?? "TRIGON Scouting App",
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           if (subtitle != null)
@@ -46,22 +46,22 @@ class MaterialDesignFactory {
       actions: [
         PopupMenuButton<String>(
           enabled: userDataProvider.user != null,
-          tooltip: 'Account Settings',
+          tooltip: "Account Settings",
           onSelected: (value) async {
-            if (value == 'logout') {
+            if (value == "logout") {
               userDataProvider.signOut();
               Navigator.pushAndRemoveUntil(
                 context,
                 createModernRoute(const AuthenticationHandler()),
                 (route) => false,
               );
-            } else if (value == 'reset') {
+            } else if (value == "reset") {
               FirebaseHandler.resetPassword(context: context);
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: 'logout', child: Text('Logout')),
-            const PopupMenuItem(value: 'reset', child: Text('Reset Password')),
+            const PopupMenuItem(value: "logout", child: Text("Logout")),
+            const PopupMenuItem(value: "reset", child: Text("Reset Password")),
           ],
           child: Row(
             children: [

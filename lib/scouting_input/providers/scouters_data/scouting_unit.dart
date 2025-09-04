@@ -30,21 +30,21 @@ class ScoutingUnit {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
-      'unitHeadUID': unitHeadUID,
-      'scouter1UID': scouter1UID,
-      'scouter2UID': scouter2UID,
-      'scouter3UID': scouter3UID,
+      "name": name,
+      "unitHeadUID": unitHeadUID,
+      "scouter1UID": scouter1UID,
+      "scouter2UID": scouter2UID,
+      "scouter3UID": scouter3UID,
     };
   }
 
   factory ScoutingUnit.fromMap(Map<String, dynamic> map) {
     return ScoutingUnit(
-      name: map['name'] as String,
-      unitHeadUID: map['unitHeadUID'] as String?,
-      scouter1UID: map['scouter1UID'] as String?,
-      scouter2UID: map['scouter2UID'] as String?,
-      scouter3UID: map['scouter3UID'] as String?,
+      name: map["name"] as String,
+      unitHeadUID: map["unitHeadUID"] as String?,
+      scouter1UID: map["scouter1UID"] as String?,
+      scouter2UID: map["scouter2UID"] as String?,
+      scouter3UID: map["scouter3UID"] as String?,
     );
   }
 }

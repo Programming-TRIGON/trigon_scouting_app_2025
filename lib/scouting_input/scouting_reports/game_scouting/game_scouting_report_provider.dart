@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/authentication/authentication_handler.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/top_right_warning.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
-import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/authentication/authentication_handler.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/top_right_warning.dart";
+import "package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
+import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 
-import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/discard_changes_dialog_widget.dart';
+import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/discard_changes_dialog_widget.dart";
 
 class GameScoutingReportProvider extends ChangeNotifier {
   late GameScoutingReport _report;
@@ -129,7 +129,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
       goToHomeScreen(context);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Scouting form submitted successfully!'),
+          content: Text("Scouting form submitted successfully!"),
           backgroundColor: Colors.green,
         ),
       );

@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
-import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
-import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart";
+import "package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart";
+import "package:trigon_scouting_app_2025/utilities/mandatory.dart";
 
 class ClimbScoutingWidget extends StatelessWidget {
   static final Image climbingPositionsImage = Image.asset(
-    'assets/climbing_positions.png',
+    "assets/climbing_positions.png",
   );
 
   const ClimbScoutingWidget({super.key});
@@ -33,7 +33,7 @@ class ClimbScoutingWidget extends StatelessWidget {
               110,
               50,
               140,
-              'Shallow Cage',
+              "Shallow Cage",
             ),
             createPositionedClimbGestureDetector(
               context,
@@ -43,12 +43,12 @@ class ClimbScoutingWidget extends StatelessWidget {
               250,
               50,
               140,
-              'Deep Cage',
+              "Deep Cage",
             ),
             Align(
               alignment: Alignment.topCenter,
               child: OutlinedText(
-                text: 'Select Climb Position:',
+                text: "Select Climb Position:",
                 style: Theme.of(context).textTheme.headlineLarge,
                 strokeColor: Colors.black,
                 strokeWidth: 7,
@@ -119,7 +119,7 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
           FittedBox(
             child: Mandatory(
               child: BoolToggleRow(
-                label: 'Did manage to climb?',
+                label: "Did manage to climb?",
                 getter: () =>
                     reportProvider.report.endgameReport.didManageToClimb,
                 setter: (value) => reportProvider.updateEndgame(
@@ -140,7 +140,7 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Save'),
+          child: const Text("Save"),
         ),
       ],
     );
@@ -160,7 +160,7 @@ class ClimbSelectionPopupWidget extends StatelessWidget {
                 (endgameReport) => endgameReport.climbFailureReason = value,
           );
         },
-        hintText: 'Climb failure reason',
+        hintText: "Climb failure reason",
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),

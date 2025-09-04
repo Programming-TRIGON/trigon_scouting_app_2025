@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/robot_score_speedometer.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/robot_score_speedometer.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class PostgameReviewReportScreen extends StatelessWidget {
   const PostgameReviewReportScreen({super.key});
@@ -27,7 +27,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                   child: createVisualTextBox(
                     context,
                     Text(
-                      'Match Data Review',
+                      "Match Data Review",
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(decoration: TextDecoration.underline),
                     ),
                     Text(
@@ -49,7 +49,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                         child: createVisualTextBox(
                           context,
                           Text(
-                            'Cycles In Game',
+                            "Cycles In Game",
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(
@@ -66,7 +66,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                         child: createVisualTextBox(
                           context,
                           Text(
-                            'Points In Game',
+                            "Points In Game",
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(

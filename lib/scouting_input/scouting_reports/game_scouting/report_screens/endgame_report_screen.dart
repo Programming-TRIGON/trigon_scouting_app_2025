@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/field_elements_scouting_widgets/climb_scouting_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart';
-import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
-import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/field_elements_scouting_widgets/climb_scouting_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart";
+import "package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart";
+import "package:trigon_scouting_app_2025/utilities/mandatory.dart";
 
 class EndgameReportScreen extends StatelessWidget {
   const EndgameReportScreen({super.key});
@@ -41,7 +41,7 @@ class EndgameReportScreen extends StatelessWidget {
           children: [
             Mandatory(
               child: BoolToggleRow(
-                label: 'Did try to climb?',
+                label: "Did try to climb?",
                 getter: () => reportProvider.report.endgameReport.didTryToClimb,
                 setter: (value) => reportProvider.updateEndgame(
                   (endgameReport) => endgameReport.didTryToClimb = value,
@@ -55,7 +55,7 @@ class EndgameReportScreen extends StatelessWidget {
                   reportProvider.report.endgameReport.didTryToClimb != false,
               child: Mandatory(
                 child: BoolToggleRow(
-                  label: 'Did park?',
+                  label: "Did park?",
                   getter: () => reportProvider.report.endgameReport.didPark,
                   setter: (value) => reportProvider.updateEndgame(
                     (endgameReport) => endgameReport.didPark = value,

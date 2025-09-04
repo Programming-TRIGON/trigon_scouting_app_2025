@@ -1,14 +1,14 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class ProcessorScoutingWidget extends StatelessWidget {
-  static final Image processorImage = Image.asset('assets/processor.png');
+  static final Image processorImage = Image.asset("assets/processor.png");
   static const double processorImageWidth = 471;
   static const double processorImageHeight = 434;
   static const double buttonWidth = 135;
@@ -55,7 +55,7 @@ class ProcessorScoutingWidget extends StatelessWidget {
                         const SizedBox(height: 200),
                         FittedBox(
                           child: OutlinedText(
-                            text: 'Success',
+                            text: "Success",
                             strokeColor: Colors.black,
                             strokeWidth: 20,
                             style: Theme.of(context).textTheme.displayLarge!
@@ -88,7 +88,7 @@ class ProcessorScoutingWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: OutlinedText(
-                    text: 'Processor',
+                    text: "Processor",
                     style: Theme.of(context).textTheme.displayLarge,
                     strokeColor: Colors.black,
                     strokeWidth: 15,

@@ -1,19 +1,19 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:flutter/foundation.dart";
+import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart";
+import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart";
 
 class ScoutersDataProvider extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late DocumentReference<Map<String, dynamic>> scoutersDoc = firestore
-      .collection('scouters_data')
-      .doc('scouters');
+      .collection("scouters_data")
+      .doc("scouters");
   late DocumentReference<Map<String, dynamic>> unitsDoc = firestore
-      .collection('scouters_data')
-      .doc('units');
+      .collection("scouters_data")
+      .doc("units");
 
   List<Scouter>? scouters;
   List<ScoutingUnit>? day1Units;
@@ -140,15 +140,15 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   void sendScoutersToFirebase() async {
     if (scouters == null) return;
-    await scoutersDoc.set({'scouters': Scouter.scoutersListToMap(scouters)});
+    await scoutersDoc.set({"scouters": Scouter.scoutersListToMap(scouters)});
     doesHaveUnsavedScoutersChanges = false;
     notifyListeners();
   }
 
   void sendUnitsToFirebase() async {
     await unitsDoc.set({
-      'day1Units': ScoutingUnit.scoutingUnitsListToMap(day1Units),
-      'day2Units': ScoutingUnit.scoutingUnitsListToMap(day2Units),
+      "day1Units": ScoutingUnit.scoutingUnitsListToMap(day1Units),
+      "day2Units": ScoutingUnit.scoutingUnitsListToMap(day2Units),
     });
     doesHaveUnsavedUnitsChanges = false;
     notifyListeners();
@@ -176,7 +176,7 @@ class ScoutersDataProvider extends ChangeNotifier {
     final scoutersSnapshot = await scoutersDoc.get();
     if (!scoutersSnapshot.exists || scoutersSnapshot.data() == null) return;
     scouters = Scouter.scoutersListFromMap(
-      List.of(scoutersSnapshot.data()!['scouters']),
+      List.of(scoutersSnapshot.data()!["scouters"]),
     );
   }
 
@@ -189,10 +189,10 @@ class ScoutersDataProvider extends ChangeNotifier {
     }
     final data = unitsSnapshot.data()!;
     day1Units = ScoutingUnit.scoutingUnitsListFromMap(
-      List.of(data['day1Units']),
+      List.of(data["day1Units"]),
     );
     day2Units = ScoutingUnit.scoutingUnitsListFromMap(
-      List.of(data['day2Units']),
+      List.of(data["day2Units"]),
     );
   }
 
@@ -204,7 +204,7 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   void onScoutersSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
     if (doc.exists && doc.data() != null) {
-      scouters = Scouter.scoutersListFromMap(List.of(doc.data()!['scouters']));
+      scouters = Scouter.scoutersListFromMap(List.of(doc.data()!["scouters"]));
     } else {
       scouters = null;
     }
@@ -215,10 +215,10 @@ class ScoutersDataProvider extends ChangeNotifier {
     if (doc.exists && doc.data() != null) {
       final data = doc.data()!;
       day1Units = ScoutingUnit.scoutingUnitsListFromMap(
-        List.of(data['day1Units']),
+        List.of(data["day1Units"]),
       );
       day2Units = ScoutingUnit.scoutingUnitsListFromMap(
-        List.of(data['day2Units']),
+        List.of(data["day2Units"]),
       );
     } else {
       day1Units = null;

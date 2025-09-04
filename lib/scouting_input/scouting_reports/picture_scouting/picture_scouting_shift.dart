@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart';
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:flutter/material.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/scouting_shift.dart";
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class PictureScoutingShift extends ScoutingShift {
   final FRCTeam scoutedTeam;
@@ -9,14 +9,14 @@ class PictureScoutingShift extends ScoutingShift {
 
   @override
   Map<String, dynamic> toMap() {
-    return {'scoutedTeam': scoutedTeam.toMap(), 'didScout': didScout};
+    return {"scoutedTeam": scoutedTeam.toMap(), "didScout": didScout};
   }
 
   @override
   factory PictureScoutingShift.fromMap(Map<String, dynamic> map) {
     return PictureScoutingShift(
-      scoutedTeam: FRCTeam.fromMap(map['scoutedTeam']),
-      didScout: map['didScout'] as bool,
+      scoutedTeam: FRCTeam.fromMap(map["scoutedTeam"]),
+      didScout: map["didScout"] as bool,
     );
   }
 

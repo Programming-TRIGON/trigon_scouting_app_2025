@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart";
 
 class ReefCoralScoutingWidget extends StatelessWidget {
-  static final Image reefImage = Image.asset('assets/reef_coral.png');
+  static final Image reefImage = Image.asset("assets/reef_coral.png");
   static const double l1Padding = 108;
   static const double l1PaddingToL2DifferenceRatio = 100 / 92;
   static const double l2DifferenceToL4DifferenceRatio = 3.5 / 3.1;
@@ -66,7 +66,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child: OutlinedText(
-                    text: 'Reef Coral',
+                    text: "Reef Coral",
                     style: Theme.of(context).textTheme.displayMedium,
                     strokeColor: Colors.black,
                     strokeWidth: 15,
@@ -92,7 +92,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
       children: [
         FittedBox(
           child: OutlinedText(
-            text: forSuccess ? 'Success' : 'Miss',
+            text: forSuccess ? "Success" : "Miss",
             strokeColor: Colors.black,
             strokeWidth: 10,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(

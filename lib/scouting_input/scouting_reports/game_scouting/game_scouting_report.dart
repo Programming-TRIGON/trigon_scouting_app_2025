@@ -1,4 +1,4 @@
-import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
+import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class GameScoutingReport {
   final String scouterUID;
@@ -55,11 +55,11 @@ class GameScoutingReport {
 
   Map<String, dynamic> toMap() {
     return {
-      'GameScouting': {
-        'Pregame': pregameReport.toMap(),
-        'Auto': autoReport.toMap(),
-        'Teleop': teleopReport.toMap(),
-        'Endgame': endgameReport.toMap(),
+      "GameScouting": {
+        "Pregame": pregameReport.toMap(),
+        "Auto": autoReport.toMap(),
+        "Teleop": teleopReport.toMap(),
+        "Endgame": endgameReport.toMap(),
       },
     };
   }
@@ -88,7 +88,7 @@ class Placements {
   }
 
   Map<String, int> toMap() {
-    return {'successes': successes, 'misses': misses};
+    return {"successes": successes, "misses": misses};
   }
 }
 
@@ -106,21 +106,21 @@ class PregameScoutingReport {
   }
 
   String? validate() {
-    if (matchType == null) return 'Please select match type';
-    if (matchNumber == null) return 'Please select match number';
-    if (robotNumber == null) return 'Please select robot number';
-    if (showedUp == null) return 'Please select whether the team showed up';
+    if (matchType == null) return "Please select match type";
+    if (matchNumber == null) return "Please select match number";
+    if (robotNumber == null) return "Please select robot number";
+    if (showedUp == null) return "Please select whether the team showed up";
     if (showedUp == true && startingPosition == null) {
-      return 'Please select a starting position';
+      return "Please select a starting position";
     }
     return null;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'showedUp': showedUp,
-      'startingPosition': startingPosition,
-      'didOverrideSelection' : didOverrideSelection
+      "showedUp": showedUp,
+      "startingPosition": startingPosition,
+      "didOverrideSelection" : didOverrideSelection
     };
   }
 }
@@ -168,21 +168,21 @@ class AutoScoutingReport {
 
   String? validate() {
     if (crossedAutoLine == null) {
-      return 'Please select whether the robot crossed the auto line';
+      return "Please select whether the robot crossed the auto line";
     }
     return null;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'crossedAutoLine': crossedAutoLine,
-      'l4Placements': l4CoralPlacements.toMap(),
-      'l3Placements': l3CoralPlacements.toMap(),
-      'l2Placements': l2CoralPlacements.toMap(),
-      'l1Placements': l1CoralPlacements.toMap(),
-      'netAlgaePlacements': netAlgaePlacements.toMap(),
-      'processorAlgaeCount': processorAlgaeCount,
-      'algaeOutOfReefCount': algaeOutOfReefCount,
+      "crossedAutoLine": crossedAutoLine,
+      "l4Placements": l4CoralPlacements.toMap(),
+      "l3Placements": l3CoralPlacements.toMap(),
+      "l2Placements": l2CoralPlacements.toMap(),
+      "l1Placements": l1CoralPlacements.toMap(),
+      "netAlgaePlacements": netAlgaePlacements.toMap(),
+      "processorAlgaeCount": processorAlgaeCount,
+      "algaeOutOfReefCount": algaeOutOfReefCount,
     };
   }
 }
@@ -234,13 +234,13 @@ class TeleopScoutingReport {
 
   Map<String, dynamic> toMap() {
     return {
-      'l4Placements': l4CoralPlacements.toMap(),
-      'l3Placements': l3CoralPlacements.toMap(),
-      'l2Placements': l2CoralPlacements.toMap(),
-      'l1Placements': l1CoralPlacements.toMap(),
-      'netAlgaePlacements': netAlgaePlacements.toMap(),
-      'processorAlgaeCount': processorAlgaeCount,
-      'algaeOutOfReefCount': algaeOutOfReefCount,
+      "l4Placements": l4CoralPlacements.toMap(),
+      "l3Placements": l3CoralPlacements.toMap(),
+      "l2Placements": l2CoralPlacements.toMap(),
+      "l1Placements": l1CoralPlacements.toMap(),
+      "netAlgaePlacements": netAlgaePlacements.toMap(),
+      "processorAlgaeCount": processorAlgaeCount,
+      "algaeOutOfReefCount": algaeOutOfReefCount,
     };
   }
 }
@@ -267,18 +267,18 @@ class EndgameScoutingReport {
 
   String? validate() {
     if (didTryToClimb == null) {
-      return 'Please select whether the robot tried to climb';
+      return "Please select whether the robot tried to climb";
     }
     if (didTryToClimb == false) {
-      if (didPark == null) return 'Please select whether the robot parked';
+      if (didPark == null) return "Please select whether the robot parked";
       return null;
     } else {
-      if (deepCage == null) return 'Please select the cage type';
+      if (deepCage == null) return "Please select the cage type";
       if (didManageToClimb == null) {
-        return 'Please select whether the robot managed to climb';
+        return "Please select whether the robot managed to climb";
       }
       if (didManageToClimb == false && climbFailureReason == null) {
-        return 'Please select a climb failure reason';
+        return "Please select a climb failure reason";
       }
       return null;
     }
@@ -286,11 +286,11 @@ class EndgameScoutingReport {
 
   Map<String, dynamic> toMap() {
     return {
-      'didTryToClimb': didTryToClimb,
-      'didPark': didPark,
-      'deepCage': deepCage,
-      'didManageToClimb': didManageToClimb,
-      'climbFailureReason': climbFailureReason?.toNormalText(),
+      "didTryToClimb": didTryToClimb,
+      "didPark": didPark,
+      "deepCage": deepCage,
+      "didManageToClimb": didManageToClimb,
+      "climbFailureReason": climbFailureReason?.toNormalText(),
     };
   }
 }
@@ -301,15 +301,15 @@ class PostgameReport {
 
   String? validate() {
     if (didCollectAlgaeFromGround == null) {
-      return 'Please select whether the team collected algae from the ground';
+      return "Please select whether the team collected algae from the ground";
     }
     return null;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'didCollectAlgaeFromGround': didCollectAlgaeFromGround,
-      'comments': comments,
+      "didCollectAlgaeFromGround": didCollectAlgaeFromGround,
+      "comments": comments,
     };
   }
 }
@@ -322,8 +322,8 @@ enum ClimbFailureReason {
 
   String toNormalText() {
     final spaced = name.replaceAllMapped(
-      RegExp(r'([A-Z])'),
-          (m) => ' ${m.group(1)}',
+      RegExp(r"([A-Z])"),
+          (m) => " ${m.group(1)}",
     );
     return spaced[0].toUpperCase() + spaced.substring(1);
   }

@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart';
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart';
-import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
-import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_page.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart";
+import "package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart";
+import "package:trigon_scouting_app_2025/utilities/mandatory.dart";
 
-import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 
 class PostgameQuestionsReportScreen extends StatelessWidget {
   const PostgameQuestionsReportScreen({super.key});
@@ -65,7 +65,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Postgame Questions',
+          "Postgame Questions",
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(decoration: TextDecoration.underline),
         ),
         const SizedBox(height: 15),
@@ -76,7 +76,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              labelText: 'Additional Comments',
+              labelText: "Additional Comments",
             ),
             onChanged: (value) => reportProvider.updatePostgame(
                   (postgameReport) => postgameReport.comments = value,
@@ -86,7 +86,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
         const SizedBox(height: 10),
         Mandatory(
           child: BoolToggleRow(
-            label: 'Did collect algae from ground?',
+            label: "Did collect algae from ground?",
             getter: () =>
                 reportProvider.report.postgameReport.didCollectAlgaeFromGround,
             setter: (value) => reportProvider.updatePostgame(
@@ -99,7 +99,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         BoolToggleRow(
-          label: 'Did defend?',
+          label: "Did defend?",
           getter: () => reportProvider.report.teleopReport.didDefend,
           setter: (value) => reportProvider.updateTeleop(
             (teleopReport) => teleopReport.didDefend = value,
