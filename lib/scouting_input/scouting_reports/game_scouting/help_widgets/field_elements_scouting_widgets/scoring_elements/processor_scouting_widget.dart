@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/change_count_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
 
-import '../../../game_scouting_report_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
 
 class ProcessorScoutingWidget extends StatelessWidget {
   static final Image processorImage = Image.asset('assets/processor.png');

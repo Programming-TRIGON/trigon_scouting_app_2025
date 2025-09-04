@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../utilities/tba_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 abstract class ScoutingShift {
   final GlobalKey globalKey = GlobalKey();

@@ -4,9 +4,9 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/utilities/mandatory.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
-import '../../../../authentication/user_data_provider.dart';
-import '../../../../utilities/bool_toggle_row.dart';
-import '../../../providers/scouted_competition/scouted_competition_provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/utilities/bool_toggle_row.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
 
 class RobotSelectionForm extends StatefulWidget {
   const RobotSelectionForm({super.key});

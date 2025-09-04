@@ -1,4 +1,4 @@
-import '../../../utilities/tba_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 class GameScoutingReport {
   final String scouterUID;

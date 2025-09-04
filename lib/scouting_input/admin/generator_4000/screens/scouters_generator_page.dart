@@ -5,7 +5,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/scr
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouter.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
 
-import '../../../../authentication/user_data_provider.dart';
+import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
 
 class ScoutersGeneratorPage extends StatelessWidget {
   const ScoutersGeneratorPage({super.key});

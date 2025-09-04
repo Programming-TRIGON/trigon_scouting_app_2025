@@ -10,8 +10,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/teleop_report_screen.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
 
-import '../../../../utilities/material_design_factory.dart';
-import 'auto_report_screen.dart';
+import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/auto_report_screen.dart';
 
 class GameScoutingReportScreen extends StatelessWidget {
   const GameScoutingReportScreen({super.key});

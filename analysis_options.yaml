@@ -27,6 +27,16 @@ linter:
     prefer_const_declarations: true
     prefer_const_constructors: true
     prefer_const_literals_to_create_immutables: true
+    always_declare_return_types: true
+    always_use_package_imports: true
+    avoid_positional_boolean_parameters: true
+    camel_case_types: true
+    constant_identifier_names: true
+    close_sinks: true
+    avoid_print: true
+    unnecessary_this: true
+    avoid_unnecessary_containers: true
+    prefer_const_constructors_in_immutables: true
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
 
 # Additional information about this file can be found at

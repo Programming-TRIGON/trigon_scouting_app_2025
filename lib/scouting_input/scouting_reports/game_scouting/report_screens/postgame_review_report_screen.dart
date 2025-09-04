@@ -4,8 +4,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/navigation_buttons_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/robot_score_speedometer.dart';
 
-import '../../../providers/scouted_competition/scouted_competition_provider.dart';
-import '../game_scouting_report_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
 
 class PostgameReviewReportScreen extends StatelessWidget {
   const PostgameReviewReportScreen({super.key});

@@ -8,7 +8,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/scr
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/update_changes_widget.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouting_unit.dart';
 
-import '../../../providers/scouters_data/scouters_data_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart';
 
 class UnitsGeneratorPage extends StatelessWidget {
   const UnitsGeneratorPage({super.key});

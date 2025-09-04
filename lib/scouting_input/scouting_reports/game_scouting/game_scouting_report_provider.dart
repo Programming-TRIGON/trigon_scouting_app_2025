@@ -9,8 +9,8 @@ import 'package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_hom
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart';
 import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
-import '../../../utilities/material_design_factory.dart';
-import 'help_widgets/discard_changes_dialog_widget.dart';
+import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/discard_changes_dialog_widget.dart';
 
 class GameScoutingReportProvider extends ChangeNotifier {
   late GameScoutingReport _report;

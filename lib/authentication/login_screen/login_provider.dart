@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utilities/firebase_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 class LoginProvider extends ChangeNotifier {
   final emailController = TextEditingController();

@@ -7,10 +7,10 @@ import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/gen
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/game_scouting_report_screen.dart';
 
-import '../../utilities/material_design_factory.dart';
-import '../admin/generator_4000/generator_4000_provider.dart';
-import 'my_data_widget.dart';
-import 'my_shifts_widget.dart';
+import 'package:trigon_scouting_app_2025/utilities/material_design_factory.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/home_screen/my_data_widget.dart';
+import 'package:trigon_scouting_app_2025/scouting_input/home_screen/my_shifts_widget.dart';
 
 class ScoutingHomeScreen extends StatelessWidget {
   static ScrollController scrollController = ScrollController();

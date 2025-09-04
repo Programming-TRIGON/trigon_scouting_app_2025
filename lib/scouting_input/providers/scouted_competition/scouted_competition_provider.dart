@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition.dart';
 import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
-import '../../../utilities/firebase_handler.dart';
+import 'package:trigon_scouting_app_2025/utilities/firebase_handler.dart';
 
 class ScoutedCompetitionProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
