@@ -29,7 +29,6 @@ linter:
     prefer_const_literals_to_create_immutables: true
     always_declare_return_types: true
     always_use_package_imports: true
-    avoid_positional_boolean_parameters: true
     camel_case_types: true
     constant_identifier_names: true
     close_sinks: true
