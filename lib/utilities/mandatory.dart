@@ -17,7 +17,7 @@ class Mandatory extends StatelessWidget {
       children: [
         child,
         if (show)
-          Positioned(
+          const Positioned(
             top: -11,   // move slightly above the border
             left: 5, // move slightly outside the border
             child: Text(

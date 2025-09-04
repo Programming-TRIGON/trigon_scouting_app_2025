@@ -46,14 +46,14 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
             reportProvider,
             scoutedCompetitionProvider,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           createRobotSelectionAndViewRow(
             reportProvider,
             scoutedCompetitionProvider,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           BoolToggleRow(
-            label: "Bet: will this robot win?",
+            label: 'Bet: will this robot win?',
             getter: () => reportProvider.report.pregameReport.bet,
             setter: (value) => reportProvider.updatePregame(
                   (pregameReport) => pregameReport.bet = value,
@@ -77,7 +77,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
         Mandatory(
           child: DropdownMenu<String>(
             width: 200,
-            label: Text('Match Type', style: TextStyle(color: Colors.grey)),
+            label: const Text('Match Type', style: TextStyle(color: Colors.grey)),
             controller: matchTypeController,
             initialSelection: reportProvider.report.pregameReport.matchType,
             dropdownMenuEntries: buildMatchTypeSelectionOptions(),
@@ -90,11 +90,11 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
             onSelected: (value) => onMatchTypeSelection(reportProvider, value),
           ),
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         Mandatory(
           child: DropdownMenu<int>(
             width: 200,
-            label: Text('Match Number', style: TextStyle(color: Colors.grey)),
+            label: const Text('Match Number', style: TextStyle(color: Colors.grey)),
             controller: matchNumberController,
             initialSelection: reportProvider.report.pregameReport.matchNumber,
             dropdownMenuEntries: buildMatchNumberSelectionOptions(
@@ -127,7 +127,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
     return Row(
       children: [
         createRobotSelectionColumn(reportProvider, scoutedCompetitionProvider),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         createRobotPictureWidget(),
       ],
     );
@@ -144,7 +144,7 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
         Mandatory(
           child: DropdownMenu<int?>(
             width: 200,
-            label: Text('Robot Number', style: TextStyle(color: Colors.grey)),
+            label: const Text('Robot Number', style: TextStyle(color: Colors.grey)),
             controller: robotNumberController,
             initialSelection: reportProvider.report.pregameReport.robotNumber,
             dropdownMenuEntries: buildRobotSelectionOptions(
@@ -163,8 +163,8 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
             onSelected: (value) => onRobotNumberSelection(reportProvider, value),
           ),
         ),
-        SizedBox(height: 5),
-        Text("Override Selection"),
+        const SizedBox(height: 5),
+        const Text('Override Selection'),
         Switch(
           value: reportProvider.report.pregameReport.didOverrideSelection,
           onChanged: (value) => {
@@ -180,14 +180,14 @@ class _RobotSelectionFormState extends State<RobotSelectionForm> {
   }
 
   Widget createRobotPictureWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       child: SizedBox.square(dimension: 200, child: Placeholder()),
     );
   }
 
   List<DropdownMenuEntry<String>> buildMatchTypeSelectionOptions() {
-    return ["Practice", "Qualification", "Playoffs", "Finals"].map((matchType) {
+    return ['Practice', 'Qualification', 'Playoffs', 'Finals'].map((matchType) {
       return DropdownMenuEntry(value: matchType, label: matchType);
     }).toList();
   }

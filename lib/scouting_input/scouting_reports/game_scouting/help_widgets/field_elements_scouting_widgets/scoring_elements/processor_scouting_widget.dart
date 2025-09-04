@@ -8,7 +8,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import '../../../game_scouting_report_provider.dart';
 
 class ProcessorScoutingWidget extends StatelessWidget {
-  static final Image processorImage = Image.asset("assets/processor.png");
+  static final Image processorImage = Image.asset('assets/processor.png');
   static const double processorImageWidth = 471;
   static const double processorImageHeight = 434;
   static const double buttonWidth = 135;
@@ -47,15 +47,15 @@ class ProcessorScoutingWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 200),
+                        const SizedBox(height: 200),
                         FittedBox(
                           child: OutlinedText(
-                            text: "Success",
+                            text: 'Success',
                             strokeColor: Colors.black,
                             strokeWidth: 20,
                             style: Theme.of(context).textTheme.displayLarge!
@@ -65,7 +65,7 @@ class ProcessorScoutingWidget extends StatelessWidget {
                                 ),
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         ChangeCountWidget(
                           color: Colors.green,
                           buttonWidth: buttonWidth,
@@ -88,7 +88,7 @@ class ProcessorScoutingWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: OutlinedText(
-                    text: "Processor",
+                    text: 'Processor',
                     style: Theme.of(context).textTheme.displayLarge,
                     strokeColor: Colors.black,
                     strokeWidth: 15,

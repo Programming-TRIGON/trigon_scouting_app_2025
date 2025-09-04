@@ -23,7 +23,7 @@ class ForgotPasswordWidget extends StatelessWidget {
           return const TextStyle(decoration: TextDecoration.none);
         }),
       ),
-      child: const Text("Forgot password?"),
+      child: const Text('Forgot password?'),
     );
   }
 

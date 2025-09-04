@@ -37,28 +37,28 @@ class GameScoutingReportScreen extends StatelessWidget {
     final scoutedCompetitionProvider = context.watch<ScoutedCompetitionProvider>();
 
     if (scoutedCompetitionProvider.scoutedCompetition == null) {
-      return MaterialDesignFactory.createLoadingPage("Scouted Competition Loading...");
+      return MaterialDesignFactory.createLoadingPage('Scouted Competition Loading...');
     }
 
     switch (reportProvider.page) {
       case GameScoutingPage.pregame:
-        return PregameReportScreen();
+        return const PregameReportScreen();
       case GameScoutingPage.auto:
-        return AutoReportScreen();
+        return const AutoReportScreen();
       case GameScoutingPage.teleop:
-        return TeleopReportScreen();
+        return const TeleopReportScreen();
       case GameScoutingPage.endgame:
-        return EndgameReportScreen();
+        return const EndgameReportScreen();
       case GameScoutingPage.review:
-        return PostgameReviewReportScreen();
+        return const PostgameReviewReportScreen();
       case GameScoutingPage.questions:
-        return PostgameQuestionsReportScreen();
+        return const PostgameQuestionsReportScreen();
       default:
-        return PregameReportScreen();
+        return const PregameReportScreen();
     }
   }
 
   Future<bool> onPopInvoked(BuildContext context) async {
-    return await DiscardChangesDialogWidget().showOnScreen(context);
+    return await const DiscardChangesDialogWidget().showOnScreen(context);
   }
 }

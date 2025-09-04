@@ -15,7 +15,7 @@ class TeleopReportScreen extends StatelessWidget {
     return ScoringElementsScoutingWidget(
       forAuto: false,
       boolToggleRow: BoolToggleRow(
-        label: "Did defend?",
+        label: 'Did defend?',
         getter: () => reportProvider.report.teleopReport.didDefend,
         setter: (value) => reportProvider.updateTeleop(
           (teleopReport) => teleopReport.didDefend = value,

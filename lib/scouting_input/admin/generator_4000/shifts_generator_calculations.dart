@@ -145,7 +145,7 @@ class ShiftsGeneratorCalculations {
     Map<String, List<GameScoutingShift>> uidToGameScoutingShifts,
     Map<String, List<SuperScoutingShift>> uidToSuperScoutingShifts,
   ) {
-    List<FRCTeam> scoutedAlliance = isScoutingBlue
+    final List<FRCTeam> scoutedAlliance = isScoutingBlue
         ? match.blueTeams
         : match.redTeams;
     uidToGameScoutingShifts[unit.scouter1UID]?.add(

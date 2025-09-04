@@ -15,7 +15,7 @@ class Generator4000Screen extends StatelessWidget {
       appBar: MaterialDesignFactory.createAppBar(
         context,
         Colors.green,
-        "המחלל 4000",
+        'המחלל 4000',
         generatorProvider.currentPage.title,
       ),
       body: PageView(

@@ -10,8 +10,8 @@ import '../../../utilities/firebase_handler.dart';
 class ScoutedCompetitionProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late DocumentReference<Map<String, dynamic>> scoutedCompetitionDoc = _firestore
-      .collection("competitions")
-      .doc("scoutedCompetition"); 
+      .collection('competitions')
+      .doc('scoutedCompetition'); 
 
   ScoutedCompetition? scoutedCompetition;
   StreamSubscription<DocumentSnapshot>? _scoutedCompetitionSubscriber;

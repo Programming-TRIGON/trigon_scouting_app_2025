@@ -30,7 +30,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     GameScoutingPage targetPage
   ) async {
     if (targetPage == GameScoutingPage.discard) {
-      await DiscardChangesDialogWidget().showOnScreen(context);
+      await const DiscardChangesDialogWidget().showOnScreen(context);
       return;
     }
 
@@ -39,7 +39,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
       return;
     }
 
-    String? canMoveToPage = targetPage.canMoveToPage(this);
+    final String? canMoveToPage = targetPage.canMoveToPage(this);
 
     if (canMoveToPage == null) {
       _page = targetPage;
@@ -53,15 +53,15 @@ class GameScoutingReportProvider extends ChangeNotifier {
     final userDataProvider = context.read<UserDataProvider>();
     if (userDataProvider.role!.hasViewerAccess) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialDesignFactory.createNoAnimationRoute(AuthenticationHandler()),
+        MaterialDesignFactory.createNoAnimationRoute(const AuthenticationHandler()),
         (route) => false,
       );
       Navigator.of(
         context,
-      ).push(MaterialDesignFactory.createModernRoute(ScoutingHomeScreen()));
+      ).push(MaterialDesignFactory.createModernRoute(const ScoutingHomeScreen()));
     } else {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialDesignFactory.createModernRoute(AuthenticationHandler()),
+        MaterialDesignFactory.createModernRoute(const AuthenticationHandler()),
         (route) => false,
       );
     }
@@ -128,7 +128,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
     if (context.mounted) {
       goToHomeScreen(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Scouting form submitted successfully!'),
           backgroundColor: Colors.green,
         ),

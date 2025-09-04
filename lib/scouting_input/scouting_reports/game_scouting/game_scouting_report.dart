@@ -106,12 +106,12 @@ class PregameScoutingReport {
   }
 
   String? validate() {
-    if (matchType == null) return "Please select match type";
-    if (matchNumber == null) return "Please select match number";
-    if (robotNumber == null) return "Please select robot number";
-    if (showedUp == null) return "Please select whether the team showed up";
+    if (matchType == null) return 'Please select match type';
+    if (matchNumber == null) return 'Please select match number';
+    if (robotNumber == null) return 'Please select robot number';
+    if (showedUp == null) return 'Please select whether the team showed up';
     if (showedUp == true && startingPosition == null) {
-      return "Please select a starting position";
+      return 'Please select a starting position';
     }
     return null;
   }
@@ -168,7 +168,7 @@ class AutoScoutingReport {
 
   String? validate() {
     if (crossedAutoLine == null) {
-      return "Please select whether the robot crossed the auto line";
+      return 'Please select whether the robot crossed the auto line';
     }
     return null;
   }
@@ -267,18 +267,18 @@ class EndgameScoutingReport {
 
   String? validate() {
     if (didTryToClimb == null) {
-      return "Please select whether the robot tried to climb";
+      return 'Please select whether the robot tried to climb';
     }
     if (didTryToClimb == false) {
-      if (didPark == null) return "Please select whether the robot parked";
+      if (didPark == null) return 'Please select whether the robot parked';
       return null;
     } else {
-      if (deepCage == null) return "Please select the cage type";
+      if (deepCage == null) return 'Please select the cage type';
       if (didManageToClimb == null) {
-        return "Please select whether the robot managed to climb";
+        return 'Please select whether the robot managed to climb';
       }
       if (didManageToClimb == false && climbFailureReason == null) {
-        return "Please select a climb failure reason";
+        return 'Please select a climb failure reason';
       }
       return null;
     }
@@ -301,7 +301,7 @@ class PostgameReport {
 
   String? validate() {
     if (didCollectAlgaeFromGround == null) {
-      return "Please select whether the team collected algae from the ground";
+      return 'Please select whether the team collected algae from the ground';
     }
     return null;
   }

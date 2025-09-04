@@ -9,11 +9,11 @@ import 'package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/
 class ScoutersDataProvider extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late DocumentReference<Map<String, dynamic>> scoutersDoc = firestore
-      .collection("scouters_data")
-      .doc("scouters");
+      .collection('scouters_data')
+      .doc('scouters');
   late DocumentReference<Map<String, dynamic>> unitsDoc = firestore
-      .collection("scouters_data")
-      .doc("units");
+      .collection('scouters_data')
+      .doc('units');
 
   List<Scouter>? scouters;
   List<ScoutingUnit>? day1Units;
@@ -147,8 +147,8 @@ class ScoutersDataProvider extends ChangeNotifier {
 
   void sendUnitsToFirebase() async {
     await unitsDoc.set({
-      "day1Units": ScoutingUnit.scoutingUnitsListToMap(day1Units),
-      "day2Units": ScoutingUnit.scoutingUnitsListToMap(day2Units),
+      'day1Units': ScoutingUnit.scoutingUnitsListToMap(day1Units),
+      'day2Units': ScoutingUnit.scoutingUnitsListToMap(day2Units),
     });
     doesHaveUnsavedUnitsChanges = false;
     notifyListeners();
@@ -189,10 +189,10 @@ class ScoutersDataProvider extends ChangeNotifier {
     }
     final data = unitsSnapshot.data()!;
     day1Units = ScoutingUnit.scoutingUnitsListFromMap(
-      List.of(data["day1Units"]),
+      List.of(data['day1Units']),
     );
     day2Units = ScoutingUnit.scoutingUnitsListFromMap(
-      List.of(data["day2Units"]),
+      List.of(data['day2Units']),
     );
   }
 
@@ -215,10 +215,10 @@ class ScoutersDataProvider extends ChangeNotifier {
     if (doc.exists && doc.data() != null) {
       final data = doc.data()!;
       day1Units = ScoutingUnit.scoutingUnitsListFromMap(
-        List.of(data["day1Units"]),
+        List.of(data['day1Units']),
       );
       day2Units = ScoutingUnit.scoutingUnitsListFromMap(
-        List.of(data["day2Units"]),
+        List.of(data['day2Units']),
       );
     } else {
       day1Units = null;

@@ -17,7 +17,7 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Stack(
           children: [
             Center(
@@ -29,13 +29,13 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
                       child: createQuestionsColumn(context, reportProvider),
                     ),
                   ),
-                  Spacer(
+                  const Spacer(
                     flex: 2,
                   )
                 ],
               ),
             ),
-            Align(
+            const Align(
               alignment: Alignment.bottomRight,
               child: Column(
                 children: [
@@ -65,10 +65,10 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "Postgame Questions",
+          'Postgame Questions',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(decoration: TextDecoration.underline),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         SizedBox(
           width: 400,
           child: TextField(
@@ -83,10 +83,10 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Mandatory(
           child: BoolToggleRow(
-            label: "Did collect algae from ground?",
+            label: 'Did collect algae from ground?',
             getter: () =>
                 reportProvider.report.postgameReport.didCollectAlgaeFromGround,
             setter: (value) => reportProvider.updatePostgame(
@@ -97,9 +97,9 @@ class PostgameQuestionsReportScreen extends StatelessWidget {
             width: 400,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         BoolToggleRow(
-          label: "Did defend?",
+          label: 'Did defend?',
           getter: () => reportProvider.report.teleopReport.didDefend,
           setter: (value) => reportProvider.updateTeleop(
             (teleopReport) => teleopReport.didDefend = value,

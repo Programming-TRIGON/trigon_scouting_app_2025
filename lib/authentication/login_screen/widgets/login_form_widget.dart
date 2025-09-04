@@ -20,7 +20,7 @@ class LoginFormWidget extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.email),
-                labelText: "E-Mail",
+                labelText: 'E-Mail',
                 border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
               validator: provider.validateEmail,
@@ -35,7 +35,7 @@ class LoginFormWidget extends StatelessWidget {
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.password),
-                labelText: "Password",
+                labelText: 'Password',
                 suffixIcon: IconButton(
                   icon: Icon(provider.hidePassword ? Icons.visibility_off : Icons.visibility),
                   onPressed: provider.togglePasswordVisibility,

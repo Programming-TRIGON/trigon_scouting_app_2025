@@ -10,7 +10,7 @@ class MyDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userDataProvider = context.watch<UserDataProvider>();
     final ScoutersDataProvider scoutersDataProvider = context.watch<ScoutersDataProvider>();
-    final String? unitName = scoutersDataProvider.getUnitOfUser(userDataProvider.user?.uid ?? "")?.name;
+    final String? unitName = scoutersDataProvider.getUnitOfUser(userDataProvider.user?.uid ?? '')?.name;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -30,13 +30,13 @@ class MyDataWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Score
-          Expanded(
+          const Expanded(
             flex: 20,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Text(
-                  "10",
+                  '10',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -45,13 +45,13 @@ class MyDataWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  "Score",
+                  'Score',
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 20,
             child: Column(
@@ -67,29 +67,29 @@ class MyDataWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  "Role",
+                  'Role',
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 20,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  unitName ?? "---",
-                  style: TextStyle(
+                  unitName ?? '---',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.cyanAccent,
                   ),
                 ),
-                SizedBox(height: 2),
-                Text(
-                  "פלוגה",
+                const SizedBox(height: 2),
+                const Text(
+                  'פלוגה',
                   style: TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],

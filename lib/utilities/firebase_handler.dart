@@ -18,13 +18,13 @@ class FirebaseHandler {
     if (kIsWeb) {
       await Firebase.initializeApp(
         options: const FirebaseOptions(
-          apiKey: "AIzaSyDH2yUwQJG0UsR7riCz2aQ9lRcWU3PzOME",
-          authDomain: "trigon-scouting-app.firebaseapp.com",
-          projectId: "trigon-scouting-app",
-          storageBucket: "trigon-scouting-app.firebasestorage.app",
-          messagingSenderId: "682214703186",
-          appId: "1:682214703186:web:f3006ab8a0be69bd859f8b",
-          measurementId: "G-CVCRZMR25N",
+          apiKey: 'AIzaSyDH2yUwQJG0UsR7riCz2aQ9lRcWU3PzOME',
+          authDomain: 'trigon-scouting-app.firebaseapp.com',
+          projectId: 'trigon-scouting-app',
+          storageBucket: 'trigon-scouting-app.firebasestorage.app',
+          messagingSenderId: '682214703186',
+          appId: '1:682214703186:web:f3006ab8a0be69bd859f8b',
+          measurementId: 'G-CVCRZMR25N',
         ),
       );
     } else {
@@ -44,14 +44,14 @@ class FirebaseHandler {
         password: password.trim(),
       );
       await cred.user!.updateDisplayName(name);
-      await firestore.collection("users").doc(cred.user!.uid).set({
-        "name": name,
-        "email": email.trim(),
-        "role": role.name,
+      await firestore.collection('users').doc(cred.user!.uid).set({
+        'name': name,
+        'email': email.trim(),
+        'role': role.name,
       });
       return cred.user;
     } catch (e) {
-      log("Something went wrong.");
+      log('Something went wrong.');
     }
 
     return null;
@@ -68,7 +68,7 @@ class FirebaseHandler {
       );
       return cred.user;
     } catch (e) {
-      log("Something went wrong.");
+      log('Something went wrong.');
     }
 
     return null;
@@ -78,7 +78,7 @@ class FirebaseHandler {
     try {
       await authInstance.signOut();
     } catch (e) {
-      log("Something went wrong.");
+      log('Something went wrong.');
     }
   }
 
@@ -96,10 +96,10 @@ class FirebaseHandler {
         ),
       );
     } catch (e) {
-      log("Something went wrong while resetting password. Stack trace:\n $e");
+      log('Something went wrong while resetting password. Stack trace:\n $e');
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'Something went wrong while resetting password.',
           ),
@@ -111,15 +111,15 @@ class FirebaseHandler {
 
   static Future<void> setScoutedCompetition(FRCCompetition competition) async {
     final scoutedCompetitionDoc = firestore
-        .collection("competitions")
-        .doc("scoutedCompetition");
+        .collection('competitions')
+        .doc('scoutedCompetition');
     await scoutedCompetitionDoc.set(competition.toMap());
   }
 
   static Future<ScoutedCompetition?> getScoutedCompetition() async {
     final docSnapshot = await firestore
-        .collection("competitions")
-        .doc("scoutedCompetition")
+        .collection('competitions')
+        .doc('scoutedCompetition')
         .get();
 
     if (!docSnapshot.exists) return null;
@@ -137,11 +137,11 @@ class FirebaseHandler {
     if (competitionKey == null) return;
 
     final matchDocument = FirebaseFirestore.instance
-        .collection("competitions")
+        .collection('competitions')
         .doc(competitionKey)
-        .collection("teams")
+        .collection('teams')
         .doc(report.pregameReport.robotNumber!.toString())
-        .collection("games")
+        .collection('games')
         .doc(report.pregameReport.getMatchKey());
     await matchDocument.set(report.toMap());
   }

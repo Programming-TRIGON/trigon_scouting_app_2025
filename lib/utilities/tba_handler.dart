@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TBAHandler {
-  static String apiKey = "4tkqQPrngugTm7YMAf5FjqDaz14cEDScelswSxhzR1SKnl42NugabiqP7LPdPnw4";
+  static String apiKey = '4tkqQPrngugTm7YMAf5FjqDaz14cEDScelswSxhzR1SKnl42NugabiqP7LPdPnw4';
 
   static Future<FRCCompetition> getCompetition(String competitionKey) async {
     try {
@@ -57,12 +57,12 @@ class TBAHandler {
 
     final List<dynamic> jsonData = jsonDecode(response.body);
 
-    List<FRCMatch> matches = jsonData.map((matchData) {
-      List<FRCTeam> blueTeams = [];
-      List<FRCTeam> redTeams = [];
+    final List<FRCMatch> matches = jsonData.map((matchData) {
+      final List<FRCTeam> blueTeams = [];
+      final List<FRCTeam> redTeams = [];
 
       for (var teamKey in matchData['alliances']['blue']['team_keys']) {
-        int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
+        final int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
         final team = allTeams.firstWhere(
               (t) => t.teamID == teamNumber,
           orElse: () => FRCTeam(teamID: teamNumber, name: 'Unknown'),
@@ -71,7 +71,7 @@ class TBAHandler {
       }
 
       for (var teamKey in matchData['alliances']['red']['team_keys']) {
-        int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
+        final int teamNumber = int.parse(teamKey.replaceAll('frc', ''));
         final team = allTeams.firstWhere(
               (t) => t.teamID == teamNumber,
           orElse: () => FRCTeam(teamID: teamNumber, name: 'Unknown'),
@@ -108,7 +108,7 @@ class FRCTeam {
 
   FRCTeam({required this.teamID, required this.name});
 
-  String get teamText => "$teamID $name";
+  String get teamText => '$teamID $name';
 
   Map<String, dynamic> toMap() {
     return {
@@ -142,28 +142,28 @@ class FRCMatch {
     if (matchType == null|| matchNumber == null) return null;
 
     switch (matchType.toLowerCase()) {
-      case "practice":
-        return "p$matchNumber";
-      case "qualification":
-        return "qm$matchNumber";
-      case "playoffs":
-        return "sf${matchNumber}m1";
-      case "finals":
-        return "f1m$matchNumber";
+      case 'practice':
+        return 'p$matchNumber';
+      case 'qualification':
+        return 'qm$matchNumber';
+      case 'playoffs':
+        return 'sf${matchNumber}m1';
+      case 'finals':
+        return 'f1m$matchNumber';
       default:
         return null;
     }
   }
 
   static String toMatchName(String matchKey) {
-    return "${toMatchType(matchKey)} ${toMatchNumber(matchKey)}";
+    return '${toMatchType(matchKey)} ${toMatchNumber(matchKey)}';
   }
 
   static int toMatchNumber(String? matchKey) {
     if (matchKey == null) return 0;
 
     final matchType = toMatchType(matchKey);
-    if (matchType == "Playoffs") {
+    if (matchType == 'Playoffs') {
       return toSetNumber(matchKey);
     }
     final match = RegExp(r'\d+$').firstMatch(matchKey);
@@ -182,13 +182,13 @@ class FRCMatch {
 
   static int toMatchTypeOrder(String? matchType) {
     switch (matchType) {
-      case "Practice":
+      case 'Practice':
         return 0;
-      case "Qualification":
+      case 'Qualification':
         return 1;
-      case "Playoffs":
+      case 'Playoffs':
         return 2;
-      case "Finals":
+      case 'Finals':
         return 3;
       default:
         return -1;
@@ -198,18 +198,18 @@ class FRCMatch {
   static String? toMatchType(String? matchKey) {
     if (matchKey == null) return null;
 
-    if (matchKey.startsWith('p')) return "Practice";
-    if (matchKey.startsWith('qm')) return "Qualification";
-    if (matchKey.startsWith('sf')) return "Playoffs";
-    if (matchKey.startsWith('f')) return "Finals";
+    if (matchKey.startsWith('p')) return 'Practice';
+    if (matchKey.startsWith('qm')) return 'Qualification';
+    if (matchKey.startsWith('sf')) return 'Playoffs';
+    if (matchKey.startsWith('f')) return 'Finals';
 
-    return "Unknown";
+    return 'Unknown';
   }
 
   int get matchNumber => toMatchNumber(matchKey);
   int get setNumber => toSetNumber(matchKey);
   int get matchTypeOrder => toMatchTypeOrder(toMatchType(matchKey));
-  String get matchType => toMatchType(matchKey) ?? "Unknown";
+  String get matchType => toMatchType(matchKey) ?? 'Unknown';
   String get matchName => toMatchName(matchKey);
 
   Map<String, dynamic> toMap() {

@@ -85,15 +85,15 @@ class RobotScoreSpeedometer extends StatelessWidget {
               ),
             ),
           ],
-          annotations: <GaugeAnnotation>[
+          annotations: const <GaugeAnnotation>[
             GaugeAnnotation(
-              widget: const Text("Elyouzoom",
+              widget: Text('Elyouzoom',
                   style: TextStyle(fontWeight: FontWeight.w600)),
               angle: 175,
               positionFactor: 0.85,
             ),
             GaugeAnnotation(
-              widget: const Text("Legendog",
+              widget: Text('Legendog',
                   style: TextStyle(fontWeight: FontWeight.w600)),
               angle: 5,
               positionFactor: 0.85,

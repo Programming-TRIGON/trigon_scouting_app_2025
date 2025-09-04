@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/scouters_generator_page.dart';
 import 'package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/shifts_generator_page.dart';
@@ -11,7 +10,7 @@ import 'package:trigon_scouting_app_2025/utilities/tba_handler.dart';
 
 class Generator4000Provider extends ChangeNotifier {
   final TextEditingController scoutersGeneratorSearchController =
-      TextEditingController();
+  TextEditingController();
   PageController pageController = PageController(initialPage: 0);
   int currentIndex = 0;
   bool isDay1UnitsSelected = true;
@@ -44,11 +43,9 @@ class Generator4000Provider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void generateShifts(
-    ScoutersDataProvider scoutersDataProvider,
-    String competitionKey,
-    int maxConsecutiveMatches,
-  ) async {
+  void generateShifts(ScoutersDataProvider scoutersDataProvider,
+      String competitionKey,
+      int maxConsecutiveMatches,) async {
     final FRCCompetition frcCompetition = await TBAHandler.getCompetition(
       competitionKey,
     );
@@ -56,16 +53,16 @@ class Generator4000Provider extends ChangeNotifier {
       competitionKey: competitionKey,
       teams: frcCompetition.teams,
       matches: frcCompetition.matches,
-      allScoutingShifts: AllScoutingShifts(),
+      allScoutingShifts: const AllScoutingShifts(),
       maximumScore: 100,
       minimumScore: 20,
     );
     final AllScoutingShifts allScoutingShifts =
-        ShiftsGeneratorCalculations.generateShiftsSchedule(
-          scoutedCompetition,
-          scoutersDataProvider,
-          maxConsecutiveMatches,
-        );
+    ShiftsGeneratorCalculations.generateShiftsSchedule(
+      scoutedCompetition,
+      scoutersDataProvider,
+      maxConsecutiveMatches,
+    );
     scoutedCompetition.allScoutingShifts = allScoutingShifts;
     await FirebaseHandler.setScoutedCompetition(scoutedCompetition);
     notifyListeners();
@@ -81,14 +78,14 @@ class Generator4000Provider extends ChangeNotifier {
 
 enum Generator4000Page {
   scoutersGenerator(
-    title: "מחלל הסקאוטרים",
+    title: 'מחלל הסקאוטרים',
     icon: Icon(CupertinoIcons.person_2_fill),
   ),
   unitsGenerator(
-    title: "מחלל הפלוגות",
+    title: 'מחלל הפלוגות',
     icon: Icon(CupertinoIcons.building_2_fill),
   ),
-  shiftsGenerator(title: "מחלל המשמרות", icon: Icon(CupertinoIcons.clock_fill));
+  shiftsGenerator(title: 'מחלל המשמרות', icon: Icon(CupertinoIcons.clock_fill));
 
   final String title;
   final Icon icon;
@@ -99,14 +96,14 @@ enum Generator4000Page {
     final Widget page;
     switch (this) {
       case Generator4000Page.scoutersGenerator:
-        page = ScoutersGeneratorPage();
+        page = const ScoutersGeneratorPage(key: ValueKey('scoutersGeneratorPage'));
       case Generator4000Page.unitsGenerator:
-        page =UnitsGeneratorPage();
+        page = const UnitsGeneratorPage(key: ValueKey('unitsGeneratorPage'));
       case Generator4000Page.shiftsGenerator:
-        page = ShiftsGeneratorPage();
+        page = const ShiftsGeneratorPage(key: ValueKey('shiftsGeneratorPage'));
     }
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: page,
     );
   }

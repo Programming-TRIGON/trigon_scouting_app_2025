@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 class FolderToggleRow extends StatefulWidget {
@@ -9,8 +8,8 @@ class FolderToggleRow extends StatefulWidget {
   const FolderToggleRow({
     super.key,
     required this.tabs,
-    this.noDataTitle = "No Data",
-    this.noDataContainerText = "No data available.",
+    this.noDataTitle = 'No Data',
+    this.noDataContainerText = 'No data available.',
   });
 
   @override
@@ -23,12 +22,13 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   static final Color borderColor = Colors.grey[700]!;
 
   int _selectedIndex = 0;
-  int _previousIndex = 0;
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController tabsScrollController = ScrollController();
+  final PageController pageController = PageController();
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    tabsScrollController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -50,38 +50,42 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
               Flexible(child: Divider(color: borderColor, height: 1)),
           ],
         ),
-        PageTransitionSwitcher(
-          duration: const Duration(milliseconds: 300),
-          reverse: _selectedIndex < _previousIndex,
-          transitionBuilder: (Widget child, Animation<double> animation,
-              Animation<double> secondaryAnimation) {
-            return SharedAxisTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.horizontal,
-              fillColor: Colors.transparent, // keeps background consistent
-              child: child,
-            );
-          },
-          child: createFolderContainer(
-            widget.tabs[optionKeys.elementAtOrNull(_selectedIndex)] ??
-                Center(
-                  child: Text(
-                    widget.noDataContainerText,
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ),
+        createFolderContainer(
+          PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            physics: const NeverScrollableScrollPhysics(),
+            children: buildPages(),
           ),
         ),
       ],
     );
   }
 
+  List<Widget> buildPages() {
+    if (widget.tabs.isEmpty) {
+      return [
+        Center(
+          child: Text(
+            widget.noDataContainerText,
+            style: const TextStyle(color: Colors.white70),
+          ),
+        ),
+      ];
+    }
+
+    return widget.tabs.values.toList();
+  }
+
   Widget createTabsRow(List<String> optionKeys) {
     return ScrollConfiguration(
       behavior: const ScrollBehavior().copyWith(overscroll: false),
       child: Scrollbar(
-        controller: _scrollController,
+        controller: tabsScrollController,
         thumbVisibility: true,
         trackVisibility: false,
         thickness: 4,
@@ -91,7 +95,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
           height: 40,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            controller: _scrollController,
+            controller: tabsScrollController,
             shrinkWrap: true,
             children: optionKeys.isEmpty
                 ? [buildTab(widget.noDataTitle, true, null)]
@@ -101,7 +105,11 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
                       _selectedIndex == index,
                       () {
                         setState(() {
-                          _previousIndex = _selectedIndex;
+                          pageController.animateToPage(
+                            index,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
                           _selectedIndex = index;
                         });
                       },
@@ -131,8 +139,8 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
       ),
       child: Material(
         color: selected ? selectedColor : unselectedColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
         ),
         child: InkWell(
           splashFactory: InkRipple.splashFactory,

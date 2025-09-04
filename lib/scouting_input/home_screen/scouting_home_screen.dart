@@ -25,8 +25,8 @@ class ScoutingHomeScreen extends StatelessWidget {
       appBar: MaterialDesignFactory.createAppBar(
         context,
         Colors.green,
-        "Scouting Input",
-        "Main Menu",
+        'Scouting Input',
+        'Main Menu',
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
@@ -35,8 +35,8 @@ class ScoutingHomeScreen extends StatelessWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   MyDataWidget(),
                   SizedBox(height: 20),
                   Divider(thickness: 2, color: Colors.grey),
@@ -50,7 +50,7 @@ class ScoutingHomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: SpeedDial(
-        childrenButtonSize: Size(300, 56),
+        childrenButtonSize: const Size(300, 56),
         icon: Icons.add,
         activeIcon: Icons.close,
         spacing: 12,
@@ -61,7 +61,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.sports_esports, color: Colors.green),
                 SizedBox(width: 10),
-                Text("New Game Scouting Report"),
+                Text('New Game Scouting Report'),
               ],
             ),
             onTap: () {
@@ -74,7 +74,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.star, color: Colors.amber),
                 SizedBox(width: 10),
-                Text("New Super Scouting Report"),
+                Text('New Super Scouting Report'),
               ],
             ),
             onTap: () {
@@ -87,7 +87,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               children: [
                 Icon(Icons.camera_alt, color: Colors.blue),
                 SizedBox(width: 10),
-                Text("New Picture Scouting Report"),
+                Text('New Picture Scouting Report'),
               ],
             ),
             onTap: () {
@@ -107,7 +107,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               Expanded(
                 child: _NavButton(
                   icon: Icons.analytics_outlined,
-                  label: "המלשן 3000",
+                  label: 'המלשן 3000',
                   onTap: () {
                     // TODO: Navigate to page
                   },
@@ -117,13 +117,13 @@ class ScoutingHomeScreen extends StatelessWidget {
               Expanded(
                 child: _NavButton(
                   icon: Icons.schedule_outlined,
-                  label: "המחלל 4000",
+                  label: 'המחלל 4000',
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialDesignFactory.createModernRoute(
                         ChangeNotifierProvider(
                           create: (_) => Generator4000Provider(),
-                          child: Generator4000Screen(),
+                          child: const Generator4000Screen(),
                         ),
                       ),
                     );
@@ -149,7 +149,7 @@ class ScoutingHomeScreen extends StatelessWidget {
           create: (_) => GameScoutingReportProvider(
             context.read<UserDataProvider>().user!.uid,
           ),
-          child: GameScoutingReportScreen(),
+          child: const GameScoutingReportScreen(),
         ),
       ),
     );

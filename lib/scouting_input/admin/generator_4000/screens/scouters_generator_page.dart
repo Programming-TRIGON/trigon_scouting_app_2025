@@ -31,7 +31,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
                 scoutersDataProvider,
                 generator4000Provider,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               createScoutersDataTable(
                 scoutersDataProvider,
                 generator4000Provider,
@@ -58,15 +58,16 @@ class ScoutersGeneratorPage extends StatelessWidget {
           Flexible(
             child: SearchBar(
               onChanged: (_) => generator4000Provider.updateControllerValue(),
-              hintText: "Search Users",
+              hintText: 'Search Users',
               controller:
                   generator4000Provider.scoutersGeneratorSearchController,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           createAddUserWidget(userDataProvider, scoutersDataProvider),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           UpdateChangesWidget(
+            keyString: 'update_scouters_changes',
             onUpdate: () => scoutersDataProvider.sendScoutersToFirebase(),
             onDiscard: () => scoutersDataProvider.discardScoutersChanges(),
             isUpdateAvailable: scoutersDataProvider.doesHaveUnsavedScoutersChanges,
@@ -78,11 +79,13 @@ class ScoutersGeneratorPage extends StatelessWidget {
 
   Widget createUploadingDataWidget(ScoutersDataProvider scoutersDataProvider) {
     return FloatingActionButton(
+      key: const ValueKey('upload_scouters_fab'),
+      heroTag: 'upload_scouters_fab',
       onPressed: () {
         scoutersDataProvider.sendScoutersToFirebase();
       },
-      shape: CircleBorder(),
-      tooltip: "חלל אותי",
+      shape: const CircleBorder(),
+      tooltip: 'חלל אותי',
       child: const Icon(Icons.upload),
     );
   }
@@ -117,7 +120,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
             controller.open();
           },
           shape: const CircleBorder(),
-          tooltip: "Add Scouter",
+          tooltip: 'Add Scouter',
           child: const Icon(Icons.add),
         );
       },
@@ -125,11 +128,11 @@ class ScoutersGeneratorPage extends StatelessWidget {
         if (items.isEmpty)
           const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("No users available"),
+            child: Text('No users available'),
           )
         else
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 200), // 👈 maximum height for the dropdown
+            constraints: const BoxConstraints(maxHeight: 200), // 👈 maximum height for the dropdown
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -157,47 +160,47 @@ class ScoutersGeneratorPage extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: DataTable(
           columnSpacing: 0,
-          columns: [
+          columns: const [
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text("Action"),
+                padding: EdgeInsets.only(right: 8.0),
+                child: Text('Action'),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Center(child: Text("Name")),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Center(child: Text('Name')),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text("Game"),
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text('Game'),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text("Super"),
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text('Super'),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text("Picture"),
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text('Picture'),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text("Day 1"),
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text('Day 1'),
               ),
             ),
             DataColumn(
               label: Padding(
-                padding: const EdgeInsets.only(left: 6),
-                child: Text("Day 2"),
+                padding: EdgeInsets.only(left: 6),
+                child: Text('Day 2'),
               ),
             ),
           ],
@@ -230,8 +233,8 @@ class ScoutersGeneratorPage extends StatelessWidget {
         DataCell(
           Center(
             child: IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              tooltip: "Remove Scouter",
+              icon: const Icon(Icons.delete, color: Colors.red),
+              tooltip: 'Remove Scouter',
               onPressed: () {
                 scoutersDataProvider.removeScouterWithoutSending(scouter);
               },
@@ -242,7 +245,7 @@ class ScoutersGeneratorPage extends StatelessWidget {
           Center(
             child: Text(
               scouter.name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
         ),

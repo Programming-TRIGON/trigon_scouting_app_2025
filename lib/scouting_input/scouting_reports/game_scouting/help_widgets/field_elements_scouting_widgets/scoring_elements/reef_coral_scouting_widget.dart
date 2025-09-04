@@ -5,12 +5,12 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
 
 class ReefCoralScoutingWidget extends StatelessWidget {
-  static final Image reefImage = Image.asset("assets/reef_coral.png");
+  static final Image reefImage = Image.asset('assets/reef_coral.png');
   static const double l1Padding = 108;
   static const double l1PaddingToL2DifferenceRatio = 100 / 92;
   static const double l2DifferenceToL4DifferenceRatio = 3.5 / 3.1;
   static const double buttonWidth = 80;
-  static final double buttonHeight =
+  static const double buttonHeight =
       buttonWidth * ChangeCountWidget.placementsButtonWidthToHeightRatio;
 
   final bool forAuto;
@@ -52,9 +52,9 @@ class ReefCoralScoutingWidget extends StatelessWidget {
                       false,
                       forAuto,
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     reefImage,
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     createReefPlacementsColumn(
                       context,
                       reportProvider,
@@ -66,7 +66,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child: OutlinedText(
-                    text: "Reef Coral",
+                    text: 'Reef Coral',
                     style: Theme.of(context).textTheme.displayMedium,
                     strokeColor: Colors.black,
                     strokeWidth: 15,
@@ -92,7 +92,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
       children: [
         FittedBox(
           child: OutlinedText(
-            text: forSuccess ? "Success" : "Miss",
+            text: forSuccess ? 'Success' : 'Miss',
             strokeColor: Colors.black,
             strokeWidth: 10,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
@@ -107,7 +107,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
           forSuccess,
           4,
         ),
-        SizedBox(
+        const SizedBox(
           height:
               (l1Padding *
                   l1PaddingToL2DifferenceRatio *
@@ -120,7 +120,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
           forSuccess,
           3,
         ),
-        SizedBox(
+        const SizedBox(
           height: (l1Padding * l1PaddingToL2DifferenceRatio) - (buttonHeight),
         ),
         createChangeCoralLevelPlacementsButton(
@@ -129,7 +129,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
           forSuccess,
           2,
         ),
-        SizedBox(
+        const SizedBox(
           height: (l1Padding * l1PaddingToL2DifferenceRatio) - (buttonHeight),
         ),
         createChangeCoralLevelPlacementsButton(
@@ -138,7 +138,7 @@ class ReefCoralScoutingWidget extends StatelessWidget {
           forSuccess,
           1,
         ),
-        SizedBox(height: l1Padding - (buttonHeight / 2)),
+        const SizedBox(height: l1Padding - (buttonHeight / 2)),
       ],
     );
   }

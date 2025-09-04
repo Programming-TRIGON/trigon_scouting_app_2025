@@ -20,7 +20,7 @@ class SignInWidget extends StatelessWidget {
           ),
           backgroundColor: Colors.green,
         ),
-        child: const Text("Sign in", style: TextStyle(color: Colors.black)),
+        child: const Text('Sign in', style: TextStyle(color: Colors.black)),
       ),
     );
   }

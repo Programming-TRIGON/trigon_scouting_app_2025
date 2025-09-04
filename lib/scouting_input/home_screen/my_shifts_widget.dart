@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trigon_scouting_app_2025/authentication/user_data_provider.dart';
@@ -39,7 +40,7 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "My Shifts",
+          'My Shifts',
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -70,15 +71,15 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
       children: const [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text("Game"),
+          child: Text('Game'),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text("Super"),
+          child: Text('Super'),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text("Picture"),
+          child: Text('Picture'),
         ),
       ],
     );
@@ -87,27 +88,27 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
   Widget createSchedulePanel(List<ScoutingShift>? selectedShifts) {
     if (selectedShifts?.isEmpty ?? true) {
       return Text(
-        "No shifts available",
+        'No shifts available',
         style: TextStyle(color: Colors.grey[400], fontStyle: FontStyle.italic),
       );
     }
     selectedShifts!;
 
     final quals = selectedShifts
-        .where((s) => s.getMatchType() == "Qualification")
+        .where((s) => s.getMatchType() == 'Qualification')
         .toList();
     final playoffs = selectedShifts
-        .where((s) => s.getMatchType() == "Playoffs")
+        .where((s) => s.getMatchType() == 'Playoffs')
         .toList();
     final finals = selectedShifts
-        .where((s) => s.getMatchType() == "Finals")
+        .where((s) => s.getMatchType() == 'Finals')
         .toList();
     final notOrdered = selectedShifts
         .where((s) => s.getMatchType() == null)
         .toList();
 
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 450),
+      constraints: const BoxConstraints(maxHeight: 450),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
@@ -118,19 +119,22 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
           controller: _scrollController,
           thumbVisibility: true,
           interactive: true,
-          child: ListView(
+          child: SingleChildScrollView(
             controller: _scrollController,
             padding: const EdgeInsets.symmetric(vertical: 8),
-            shrinkWrap: true,
-            children: [
-              if (notOrdered.isNotEmpty)
-                ...notOrdered.map((s) => s.buildScheduleWidget()),
-              if (quals.isNotEmpty)
-                buildSection("Qualification Matches", quals),
-              if (playoffs.isNotEmpty)
-                buildSection("Playoff Matches", playoffs),
-              if (finals.isNotEmpty) buildSection("Finals", finals),
-            ],
+            // shrinkWrap: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (notOrdered.isNotEmpty)
+                  ...notOrdered.map((s) => s.buildScheduleWidget()),
+                if (quals.isNotEmpty)
+                  ...buildSection('Qualification Matches', quals),
+                if (playoffs.isNotEmpty)
+                  ...buildSection('Playoff Matches', playoffs),
+                if (finals.isNotEmpty) ...buildSection('Finals', finals),
+              ],
+            ),
           ),
         ),
       ),
@@ -162,44 +166,39 @@ class _MyShiftsWidgetState extends State<MyShiftsWidget> {
     }
   }
 
-  Widget buildSection(String title, List<ScoutingShift> scoutingShifts) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+  List<Widget> buildSection(String title, List<ScoutingShift> scoutingShifts) {
+    return [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        ...scoutingShifts.map((s) => s.buildScheduleWidget()),
-      ],
-    );
+      ),
+      ...scoutingShifts.map((s) => s.buildScheduleWidget()),
+    ];
   }
 
   void ensureJumpsToShift(List<ScoutingShift>? shifts) {
+    if (shifts == null) return;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (shifts != null) {
-        final firstDidntScout = shifts.where(
-          (s) => !s.didScout,
-        ).firstOrNull;
-        if (firstDidntScout != null) {
-          final ctx = firstDidntScout.globalKey.currentContext;
-          if (ctx != null) {
-            Scrollable.ensureVisible(
-              ctx,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-            ScoutingHomeScreen.scrollController.jumpTo(0);
-          }
-        }
-      }
+      final firstDidntScout = shifts.where((s) => !s.didScout).firstOrNull;
+      if (firstDidntScout == null) return;
+
+      final ctx = firstDidntScout.globalKey.currentContext;
+      if (ctx == null) return;
+
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+      ScoutingHomeScreen.scrollController.jumpTo(0);
     });
   }
 }

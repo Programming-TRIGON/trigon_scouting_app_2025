@@ -40,13 +40,13 @@ class NavigationButtonsWidget extends StatelessWidget {
               NavigationButtonWidget(
                 width: width,
                 targetPage: previousPage,
-                text: "← ${previousPage.capitalizedName()}",
+                text: '← ${previousPage.capitalizedName()}',
               ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               NavigationButtonWidget(
                 width: width,
                 targetPage: nextPage,
-                text: "${nextPage.capitalizedName()} →",
+                text: '${nextPage.capitalizedName()} →',
               ),
             ],
           ),

@@ -15,7 +15,7 @@ class AuthenticationHandler extends StatelessWidget {
     final userDataProvider = context.watch<UserDataProvider>();
 
     if (userDataProvider.isDataLoading) {
-      return MaterialDesignFactory.createLoadingPage("User Data Loading...");
+      return MaterialDesignFactory.createLoadingPage('User Data Loading...');
     }
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

@@ -75,7 +75,7 @@ class _TopRightWarningState extends State<TopRightWarning>
     final backgroundColor = widget.isError
         ? Colors.red.shade400
         : Colors.green.shade400;
-    final iconColor = Colors.white;
+    const iconColor = Colors.white;
     final icon = widget.isError
         ? Icons.warning_amber
         : Icons.check_circle_outline;

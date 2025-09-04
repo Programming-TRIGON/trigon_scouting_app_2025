@@ -7,7 +7,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
 
 class ReefAlgaeScoutingWidget extends StatelessWidget {
-  static final Image reefAlgaeImage = Image.asset("assets/reef_algae.png");
+  static final Image reefAlgaeImage = Image.asset('assets/reef_algae.png');
   static const double buttonWidth = 60;
 
   final bool forAuto;
@@ -48,10 +48,10 @@ class ReefAlgaeScoutingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 60),
+                          const SizedBox(height: 60),
                           FittedBox(
                             child: OutlinedText(
-                              text: "Removes",
+                              text: 'Removes',
                               strokeColor: Colors.black,
                               strokeWidth: 10,
                               style: Theme.of(context).textTheme.headlineMedium!
@@ -81,7 +81,7 @@ class ReefAlgaeScoutingWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: OutlinedText(
-                          text: "Reef Algae",
+                          text: 'Reef Algae',
                           style: Theme.of(context).textTheme.headlineMedium,
                           strokeColor: Colors.black,
                           strokeWidth: 5,

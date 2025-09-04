@@ -34,8 +34,8 @@ class BoolToggleRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              SizedBox(width: 15,),
+              Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              const SizedBox(width: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,7 @@ class BoolToggleRow extends StatelessWidget {
                     fillColor: Colors.red,
                     onTap: () => setter(false),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   buildToggleButton(
                     context: context,
                     icon: Icons.check,

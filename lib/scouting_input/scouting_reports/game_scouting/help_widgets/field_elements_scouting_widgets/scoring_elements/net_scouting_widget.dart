@@ -5,7 +5,7 @@ import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_sc
 import 'package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/help_widgets/outlined_text.dart';
 
 class NetScoutingWidget extends StatelessWidget {
-  static final Image netImage = Image.asset("assets/net.png");
+  static final Image netImage = Image.asset('assets/net.png');
   static const double netImageWidth = 973;
   static const double netImageHeight = 256;
   static const double buttonWidth = 140;
@@ -47,10 +47,10 @@ class NetScoutingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           FittedBox(
                             child: OutlinedText(
-                              text: "Miss",
+                              text: 'Miss',
                               strokeColor: Colors.black,
                               strokeWidth: 20,
                               style: Theme.of(context).textTheme.displayLarge!
@@ -79,10 +79,10 @@ class NetScoutingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           FittedBox(
                             child: OutlinedText(
-                              text: "Success",
+                              text: 'Success',
                               strokeColor: Colors.black,
                               strokeWidth: 20,
                               style: Theme.of(context).textTheme.displayLarge!
@@ -113,7 +113,7 @@ class NetScoutingWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: OutlinedText(
-                    text: "Net",
+                    text: 'Net',
                     style: Theme.of(context).textTheme.displayLarge,
                     strokeColor: Colors.black,
                     strokeWidth: 15,

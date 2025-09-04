@@ -18,7 +18,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Stack(
           children: [
             Column(
@@ -27,7 +27,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                   child: createVisualTextBox(
                     context,
                     Text(
-                      "Match Data Review",
+                      'Match Data Review',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(decoration: TextDecoration.underline),
                     ),
                     Text(
@@ -43,13 +43,13 @@ class PostgameReviewReportScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Expanded(
                         flex: 2,
                         child: createVisualTextBox(
                           context,
                           Text(
-                            "Cycles In Game",
+                            'Cycles In Game',
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(
@@ -60,13 +60,13 @@ class PostgameReviewReportScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(flex: 2),
+                      const Spacer(flex: 2),
                       Expanded(
                         flex: 2,
                         child: createVisualTextBox(
                           context,
                           Text(
-                            "Points In Game",
+                            'Points In Game',
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(
@@ -77,7 +77,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                     ],
                   ),
                 ),
@@ -93,7 +93,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Align(
+            const Align(
               alignment: Alignment.bottomRight,
               child: Column(
                 children: [

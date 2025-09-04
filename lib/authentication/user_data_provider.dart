@@ -37,14 +37,14 @@ class TRIGONUser {
   factory TRIGONUser.fromMap(String uid, Map<String, dynamic> data) {
     return TRIGONUser(
       uid: uid,
-      name: data["name"] as String,
-      email: data["email"] as String,
-      role: UserRole.values.byName(data["role"] as String),
+      name: data['name'] as String,
+      email: data['email'] as String,
+      role: UserRole.values.byName(data['role'] as String),
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {"name": name, "email": email, "role": role.name};
+    return {'name': name, 'email': email, 'role': role.name};
   }
 }
 
@@ -52,7 +52,7 @@ class UserDataProvider extends ChangeNotifier {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference<Map<String, dynamic>> usersCollection = firestore
-      .collection("users");
+      .collection('users');
 
   bool isDataLoading = true;
   User? user;
@@ -113,7 +113,7 @@ class UserDataProvider extends ChangeNotifier {
 
   void onUserRoleData(DocumentSnapshot<Map<String, dynamic>> doc) {
     if (doc.exists && doc.data() != null) {
-      role = UserRole.values.byName(doc.data()!["role"]);
+      role = UserRole.values.byName(doc.data()!['role']);
     } else {
       role = null;
     }

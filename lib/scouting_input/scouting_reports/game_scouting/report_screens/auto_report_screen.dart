@@ -17,7 +17,7 @@ class AutoReportScreen extends StatelessWidget {
       forAuto: true,
       boolToggleRow: Mandatory(
         child: BoolToggleRow(
-          label: "Auto line?",
+          label: 'Auto line?',
           getter: () => reportProvider.report.autoReport.crossedAutoLine,
           setter: (value) => reportProvider.updateAuto(
             (autoReport) => autoReport.crossedAutoLine = value,

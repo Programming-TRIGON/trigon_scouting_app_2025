@@ -8,9 +8,9 @@ class LoginHeaderWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("Welcome back,", style: Theme.of(context).textTheme.headlineMedium),
+        Text('Welcome back,', style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 4),
-        Text("sign in to continue", style: Theme.of(context).textTheme.bodyMedium),
+        Text('sign in to continue', style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }

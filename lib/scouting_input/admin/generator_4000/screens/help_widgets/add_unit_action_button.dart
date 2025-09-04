@@ -13,6 +13,8 @@ class AddUnitFAB extends StatelessWidget {
     final scoutersDataProvider = context.watch<ScoutersDataProvider>();
 
     return FloatingActionButton(
+      key: ValueKey('addUnitFAB_day${isDay1Unit ? 1 : 2}'),
+      heroTag: 'addUnitFAB_day${isDay1Unit ? 1 : 2}',
       onPressed: () => showAddUnitDialog(context, scoutersDataProvider),
       shape: const CircleBorder(),
       tooltip: 'Add Unit',

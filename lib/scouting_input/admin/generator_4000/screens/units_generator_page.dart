@@ -77,13 +77,13 @@ class UnitsGeneratorPage extends StatelessWidget {
       onPressed: (int index) {
         generator4000Provider.setIsDay1UnitsSelected(index == 0);
       },
-      children: [
+      children: const [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text('Day 1'),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text('Day 2'),
         ),
       ],
@@ -109,6 +109,7 @@ class UnitsGeneratorPage extends StatelessWidget {
         AddUnitFAB(isDay1Unit: generator4000Provider.isDay1UnitsSelected),
         const SizedBox(width: 10),
         UpdateChangesWidget(
+          keyString: 'update_units_changes',
           onUpdate: () => scoutersDataProvider.sendUnitsToFirebase(),
           onDiscard: () => scoutersDataProvider.discardUnitsChanges(),
           isUpdateAvailable: scoutersDataProvider.doesHaveUnsavedUnitsChanges,

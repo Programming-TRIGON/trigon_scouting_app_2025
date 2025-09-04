@@ -20,7 +20,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
   @override
   void initState() {
     super.initState();
-    consecutiveScoutingMatchesController.text = "6";
+    consecutiveScoutingMatchesController.text = '6';
   }
 
   @override
@@ -37,7 +37,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
     final scoutersDataProvider = context.watch<ScoutersDataProvider>();
     final generator4000Provider = context.watch<Generator4000Provider>();
     competitionKeyController.text =
-        scoutedCompetitionProvider.scoutedCompetition?.competitionKey ?? "";
+        scoutedCompetitionProvider.scoutedCompetition?.competitionKey ?? '';
 
     return Column(
       children: [
@@ -83,7 +83,7 @@ class _ShiftsGeneratorPageState extends State<ShiftsGeneratorPage> {
               return;
             }
           },
-          child: const Text("חלל אותי!!"),
+          child: const Text('חלל אותי!!'),
         ),
       ],
     );

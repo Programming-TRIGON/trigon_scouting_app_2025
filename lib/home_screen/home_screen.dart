@@ -26,19 +26,19 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Choose your desired app:",
+                  'Choose your desired app:',
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                SizedBox(height: 30),
-                AppChoiceButton(
-                  buttonName: "Scouting Input",
-                  imagePath: "assets/data_input.png",
+                const SizedBox(height: 30),
+                const AppChoiceButton(
+                  buttonName: 'Scouting Input',
+                  imagePath: 'assets/data_input.png',
                   targetScreen: ScoutingHomeScreen(),
                 ),
-                SizedBox(height: 10),
-                AppChoiceButton(
-                  buttonName: "Viewer",
-                  imagePath: "assets/viewer.png",
+                const SizedBox(height: 10),
+                const AppChoiceButton(
+                  buttonName: 'Viewer',
+                  imagePath: 'assets/viewer.png',
                   targetScreen: ViewerHomeScreen(),
                 ),
               ],

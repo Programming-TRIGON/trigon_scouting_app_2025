@@ -18,15 +18,15 @@ class StartingPositionScoutingWidget extends StatelessWidget {
       child: FittedBox(
         child: Column(
           children: [
-            Text("Select a starting position:", style: Theme.of(context).textTheme.bodyLarge),
+            Text('Select a starting position:', style: Theme.of(context).textTheme.bodyLarge),
             Container(
               width: 390 * 0.8,
               height: 340 * 0.8,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage("assets/starting_positions_image.png"),
+                image: const DecorationImage(
+                  image: AssetImage('assets/starting_positions_image.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -65,7 +65,7 @@ class StartingPositionScoutingWidget extends StatelessWidget {
     final bool isSelected = reportProvider.report.pregameReport.startingPosition == index;
 
     final Color baseBorderColor = isRed ? Colors.red : Colors.blue;
-    final Color selectedColor = Colors.green;
+    const Color selectedColor = Colors.green;
     final Color textColor = isSelected ? Colors.white : baseBorderColor;
 
     return InkWell(

@@ -54,7 +54,7 @@ class SuperScoutingShift extends ScoutingShift {
           style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          isBlueAlliance ? "Blue Alliance" : "Red Alliance",
+          isBlueAlliance ? 'Blue Alliance' : 'Red Alliance',
           style: const TextStyle(color: Colors.white, fontSize: 14),
         ),
       ),

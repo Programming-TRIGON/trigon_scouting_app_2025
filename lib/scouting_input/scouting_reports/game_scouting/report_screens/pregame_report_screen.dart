@@ -16,12 +16,12 @@ class PregameReportScreen extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(flex: 6, child: RobotSelectionForm()),
+            const Expanded(flex: 6, child: RobotSelectionForm()),
             Expanded(flex: 6, child: createRightSideColumnWidget(context)),
           ],
         ),
@@ -47,7 +47,7 @@ class PregameReportScreen extends StatelessWidget {
                 child: FittedBox(
                   child: Mandatory(
                     child: BoolToggleRow(
-                      label: "Did Team Show Up?",
+                      label: 'Did Team Show Up?',
                       getter: () => reportProvider.report.pregameReport.showedUp,
                       setter: (value) => reportProvider.updatePregame(
                         (pregameReport) => pregameReport.showedUp = value,
@@ -57,11 +57,11 @@ class PregameReportScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(flex: 12, child: StartingPositionScoutingWidget()),
+              const Expanded(flex: 12, child: StartingPositionScoutingWidget()),
             ],
           ),
         ),
-        Expanded(
+        const Expanded(
           flex: 1,
           child: NavigationButtonsWidget(
             currentPage: GameScoutingPage.pregame,

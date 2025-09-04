@@ -11,9 +11,9 @@ class MaterialDesignFactory {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(label, style: TextStyle(fontSize: 20),),
-                SizedBox(height: 20,),
-                CircularProgressIndicator()
+                Text(label, style: const TextStyle(fontSize: 20),),
+                const SizedBox(height: 20,),
+                const CircularProgressIndicator()
               ]
           ),
         )
@@ -35,24 +35,24 @@ class MaterialDesignFactory {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title ?? "TRIGON Scouting App",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            title ?? 'TRIGON Scouting App',
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           if (subtitle != null)
             Text(subtitle, style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
-      actionsPadding: EdgeInsets.symmetric(horizontal: 10),
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 10),
       actions: [
         PopupMenuButton<String>(
           enabled: userDataProvider.user != null,
-          tooltip: "Account Settings",
+          tooltip: 'Account Settings',
           onSelected: (value) async {
             if (value == 'logout') {
               userDataProvider.signOut();
               Navigator.pushAndRemoveUntil(
                 context,
-                createModernRoute(AuthenticationHandler()),
+                createModernRoute(const AuthenticationHandler()),
                 (route) => false,
               );
             } else if (value == 'reset') {
@@ -60,12 +60,12 @@ class MaterialDesignFactory {
             }
           },
           itemBuilder: (context) => [
-            PopupMenuItem(value: 'logout', child: Text('Logout')),
-            PopupMenuItem(value: 'reset', child: Text('Reset Password')),
+            const PopupMenuItem(value: 'logout', child: Text('Logout')),
+            const PopupMenuItem(value: 'reset', child: Text('Reset Password')),
           ],
           child: Row(
             children: [
-              Icon(Icons.person),
+              const Icon(Icons.person),
               if (userDataProvider.user?.displayName != null)
                 Text(
                   userDataProvider.user!.displayName!,
@@ -76,7 +76,7 @@ class MaterialDesignFactory {
         ),
       ],
       backgroundColor: color,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
       ),
     );

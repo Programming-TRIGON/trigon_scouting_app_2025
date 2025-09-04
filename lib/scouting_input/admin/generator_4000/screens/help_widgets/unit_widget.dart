@@ -9,7 +9,7 @@ class ScoutingUnitWidget extends StatefulWidget {
   final bool isDay1Unit;
 
   ScoutingUnitWidget({required this.unit, required this.isDay1Unit})
-    : super(key: ValueKey("${unit.name}day${isDay1Unit ? 1 : 2}"));
+    : super(key: ValueKey('${unit.name}day${isDay1Unit ? 1 : 2}'));
 
   @override
   State<ScoutingUnitWidget> createState() => _ScoutingUnitWidgetState();
@@ -41,16 +41,16 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
 
     headScouterController.text =
         scoutersDataProvider.getScouterByUid(widget.unit.unitHeadUID)?.name ??
-        "";
+        '';
     scouter1Controller.text =
         scoutersDataProvider.getScouterByUid(widget.unit.scouter1UID)?.name ??
-        "";
+        '';
     scouter2Controller.text =
         scoutersDataProvider.getScouterByUid(widget.unit.scouter2UID)?.name ??
-        "";
+        '';
     scouter3Controller.text =
         scoutersDataProvider.getScouterByUid(widget.unit.scouter3UID)?.name ??
-        "";
+        '';
 
     final availableScouters = scoutersDataProvider.scouters?.where(
         (scouter) {
@@ -70,8 +70,8 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red, size: 40),
-                  tooltip: "Remove Unit",
+                  icon: const Icon(Icons.delete, color: Colors.red, size: 40),
+                  tooltip: 'Remove Unit',
                   onPressed: () {
                     scoutersDataProvider.removeUnitWithoutSending(
                       widget.unit,
@@ -80,17 +80,17 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.clear, color: Colors.orange, size: 40),
-                  tooltip: "Clear",
+                  icon: const Icon(Icons.clear, color: Colors.orange, size: 40),
+                  tooltip: 'Clear',
                   onPressed: () => clearUnit(scoutersDataProvider),
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.format_color_fill,
                     color: Colors.green,
                     size: 40,
                   ),
-                  tooltip: "Auto Fill",
+                  tooltip: 'Auto Fill',
                   onPressed: () =>
                       autoFillUnit(scoutersDataProvider, availableScouters),
                 ),
@@ -103,7 +103,7 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
             children: [
               buildScouterDropdown(
                 scoutersDataProvider,
-                "Head Scouter",
+                'Head Scouter',
                 headScouterController,
                 (scouter) {
                   widget.unit.unitHeadUID = scouter?.uid;
@@ -111,10 +111,10 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
                 },
                 availableScouters,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               buildScouterDropdown(
                 scoutersDataProvider,
-                "Scouter 1",
+                'Scouter 1',
                 scouter1Controller,
                 (scouter) {
                   widget.unit.scouter1UID = scouter?.uid;
@@ -122,14 +122,14 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
                 },
                 availableScouters,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildScouterDropdown(
                     scoutersDataProvider,
-                    "Scouter 2",
+                    'Scouter 2',
                     scouter2Controller,
                     (scouter) {
                       widget.unit.scouter2UID = scouter?.uid;
@@ -137,10 +137,10 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
                     },
                     availableScouters,
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   buildScouterDropdown(
                     scoutersDataProvider,
-                    "Scouter 3",
+                    'Scouter 3',
                     scouter3Controller,
                     (scouter) {
                       widget.unit.scouter3UID = scouter?.uid;
@@ -213,8 +213,8 @@ class _ScoutingUnitWidgetState extends State<ScoutingUnitWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(size: 100, Icons.person),
-        SizedBox(height: 5),
+        const Icon(size: 100, Icons.person),
+        const SizedBox(height: 5),
         DropdownMenu<Scouter>(
           label: Text(label),
           controller: controller,
