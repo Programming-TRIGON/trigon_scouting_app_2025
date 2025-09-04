@@ -35,7 +35,7 @@ class UnitsGeneratorPage extends StatelessWidget {
               const SizedBox(height: 10),
               PageTransitionSwitcher(
                 duration: const Duration(milliseconds: 300),
-                reverse: !generator4000Provider.isDay1UnitsSelected,
+                reverse: generator4000Provider.isDay1UnitsSelected,
                 transitionBuilder: (Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
                   return SharedAxisTransition(
                     animation: primaryAnimation,

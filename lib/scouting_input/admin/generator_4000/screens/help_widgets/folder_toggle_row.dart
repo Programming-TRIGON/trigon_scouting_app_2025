@@ -84,15 +84,15 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
   Widget createTabsRow(List<String> optionKeys) {
     return ScrollConfiguration(
       behavior: const ScrollBehavior().copyWith(overscroll: false),
-      child: Scrollbar(
-        controller: tabsScrollController,
-        thumbVisibility: true,
-        trackVisibility: false,
-        thickness: 4,
-        radius: const Radius.circular(3),
-        scrollbarOrientation: ScrollbarOrientation.top,
-        child: SizedBox(
-          height: 40,
+      child: SizedBox(
+        height: 40,
+        child: Scrollbar(
+          controller: tabsScrollController,
+          thumbVisibility: true,
+          trackVisibility: false,
+          thickness: 4,
+          radius: const Radius.circular(3),
+          scrollbarOrientation: ScrollbarOrientation.top,
           child: ListView(
             scrollDirection: Axis.horizontal,
             controller: tabsScrollController,
@@ -162,7 +162,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
 
   Widget createFolderContainer(Widget child) {
     return Container(
-      key: ValueKey<int>(_selectedIndex),
+      height: 500,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: selectedColor,
