@@ -42,8 +42,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    UpdateService.checkForUpdate(context);
-
     return MaterialApp(
       theme: const MaterialTheme(TextTheme()).dark(),
       darkTheme: const MaterialTheme(TextTheme()).darkHighContrast(),
