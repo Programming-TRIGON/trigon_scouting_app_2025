@@ -15,7 +15,7 @@ class NavigationButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reportProvider = context.read<GameScoutingReportProvider>();
+    final reportProvider = context.watch<GameScoutingReportProvider>();
     final GameScoutingPage previousPage = currentPage.getPrevious();
     final GameScoutingPage nextPage;
     if (currentPage == GameScoutingPage.pregame && reportProvider.report.pregameReport.showedUp == false) {
