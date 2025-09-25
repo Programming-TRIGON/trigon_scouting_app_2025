@@ -6,6 +6,7 @@ import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_compet
 import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 import "package:trigon_scouting_app_2025/utilities/theme.dart";
+import "package:trigon_scouting_app_2025/utilities/update_service.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UpdateService.checkForUpdate(context);
+
     return MaterialApp(
       theme: const MaterialTheme(TextTheme()).dark(),
       darkTheme: const MaterialTheme(TextTheme()).darkHighContrast(),
