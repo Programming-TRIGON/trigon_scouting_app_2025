@@ -25,15 +25,13 @@ jobs:
       # Fetch latest GitHub release and update pubspec.yaml
       - name: Set pubspec version to latest release + PR number
         env:
-          GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
           echo "Fetching latest release from GitHub..."
           LATEST=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest | jq -r '.tag_name' | sed 's/v//')
           echo "Latest release version: $LATEST"
-          BUILD_NUMBER="${GITHUB_PR_NUMBER}${GITHUB_RUN_NUMBER}"
-          echo "Setting version: $LATEST+$BUILD_NUMBER"
-          sed -i "s/^version:.*/version: $LATEST+$BUILD_NUMBER/" pubspec.yaml
+          echo "Setting version: $LATEST+GITHUB_RUN_NUMBER"
+          sed -i "s/^version:.*/version: $LATEST+GITHUB_RUN_NUMBER/" pubspec.yaml
           cat pubspec.yaml | grep version:
 
       # Analyze code
