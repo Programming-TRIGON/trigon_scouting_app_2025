@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
-import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/units_shift_schedules_widget.dart";
 import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition_provider.dart";
 import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 
