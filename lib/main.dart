@@ -19,7 +19,13 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ScoutedCompetitionProvider()),
         ChangeNotifierProvider(create: (_) => ScoutersDataProvider()),
       ],
-      child: const MyApp(),
+      child: MaterialApp(
+        theme: const MaterialTheme(TextTheme()).darkHighContrast(),
+        darkTheme: const MaterialTheme(TextTheme()).darkHighContrast(),
+        themeMode: ThemeMode.dark,
+        debugShowCheckedModeBanner: false,
+        home: const MyApp(),
+      ),
     ),
   );
 }
@@ -42,12 +48,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: const MaterialTheme(TextTheme()).dark(),
-      darkTheme: const MaterialTheme(TextTheme()).darkHighContrast(),
-      themeMode: ThemeMode.dark,
-      debugShowCheckedModeBanner: false,
-      home: const AuthenticationHandler(),
-    );
+    return const AuthenticationHandler();
   }
 }

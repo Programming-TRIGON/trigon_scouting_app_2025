@@ -14,6 +14,7 @@ class UpdateService {
   static void checkForUpdate(BuildContext context) async {
     if (!Platform.isAndroid) return;
     if (!await UpdateService.isUpdateAvailable()) return;
+    await Future.delayed(const Duration(seconds: 3));
     if (!context.mounted) return;
 
     showDialog(

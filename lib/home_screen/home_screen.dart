@@ -3,6 +3,7 @@ import "package:trigon_scouting_app_2025/data_viewer/viewer_home_screen.dart";
 import "package:trigon_scouting_app_2025/home_screen/app_choice_button.dart";
 import "package:trigon_scouting_app_2025/scouting_input/home_screen/scouting_home_screen.dart";
 import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
+import "package:trigon_scouting_app_2025/utilities/update_service.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,6 +41,36 @@ class HomeScreen extends StatelessWidget {
                   buttonName: "Viewer",
                   imagePath: "assets/viewer.png",
                   targetScreen: ViewerHomeScreen(),
+                ),
+                FutureBuilder(
+                  future: UpdateService.getCurrentVersion(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Text("App Version: ${snapshot.data}");
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+                FutureBuilder(
+                  future: UpdateService.getLatestVersion(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Text("Latest Version: ${snapshot.data}");
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+                FutureBuilder(
+                  future: UpdateService.isUpdateAvailable(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Text("Has Update: ${snapshot.data}");
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
                 ),
               ],
             ),
