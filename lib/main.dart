@@ -6,6 +6,7 @@ import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_compet
 import "package:trigon_scouting_app_2025/scouting_input/providers/scouters_data/scouters_data_provider.dart";
 import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
 import "package:trigon_scouting_app_2025/utilities/theme.dart";
+import "package:trigon_scouting_app_2025/utilities/update_service.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +17,28 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserDataProvider()),
         ChangeNotifierProvider(create: (_) => ScoutedCompetitionProvider()),
-        ChangeNotifierProvider(create: (_) => ScoutersDataProvider())
+        ChangeNotifierProvider(create: (_) => ScoutersDataProvider()),
       ],
       child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      UpdateService.checkForUpdate(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

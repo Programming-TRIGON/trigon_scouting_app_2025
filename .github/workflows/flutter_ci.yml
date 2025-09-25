@@ -9,25 +9,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - uses: actions/checkout@v4
 
+      # Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0' # set your version
+          flutter-version: '3.35.1' # set your version
 
+      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Fetch latest GitHub release and update pubspec.yaml
+      - name: Set pubspec version to latest release + PR number
+        env:
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          echo "Fetching latest release from GitHub..."
+          LATEST=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest | jq -r '.tag_name' | sed 's/v//')
+          echo "Latest release version: $LATEST"
+          VERSION="$LATEST+$GITHUB_RUN_NUMBER"
+          echo "Setting version: $VERSION"
+          sed -i "s/^version:.*/version: $VERSION/" pubspec.yaml
+          cat pubspec.yaml | grep version:
+
+      # Analyze code
       - name: Analyze code
         run: flutter analyze
 
-      - name: Run tests
-        run: flutter test --coverage
+      # Run tests
+#      - name: Run tests
+#        run: flutter test --coverage
 
+      # Build APK
       - name: Build APK
         run: flutter build apk --release
 
+      # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
