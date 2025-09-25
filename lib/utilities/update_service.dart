@@ -13,33 +13,31 @@ class UpdateService {
 
   static void checkForUpdate(BuildContext context) async {
     if (!Platform.isAndroid) return;
+    if (!await UpdateService.isUpdateAvailable()) return;
+    if (!context.mounted) return;
 
-    if (await UpdateService.isUpdateAvailable()) {
-      if (!context.mounted) return;
-
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Update Available"),
-          content: const Text(
-            "A new version is available. Do you want to update?",
-          ),
-          actions: [
-            TextButton(
-              child: const Text("Later"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const Text("Update"),
-              onPressed: () {
-                Navigator.pop(context);
-                UpdateService.downloadAndInstallApk(context);
-              },
-            ),
-          ],
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Update Available"),
+        content: const Text(
+          "A new version is available. Do you want to update?",
         ),
-      );
-    }
+        actions: [
+          TextButton(
+            child: const Text("Later"),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: const Text("Update"),
+            onPressed: () {
+              Navigator.pop(context);
+              UpdateService.downloadAndInstallApk(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   /// Get the current app version from pubspec.yaml
