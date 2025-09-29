@@ -1,4 +1,4 @@
-name: Release (Tag Driven)
+name: Release
 
 on:
   push:
@@ -20,19 +20,64 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Setup release keystore
+      # Setup release keystore with checks
       - name: Setup release keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/key.jks
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/app/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/app/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/app/key.properties
-          echo "storeFile=key.jks" >> android/app/key.properties
+          echo "Decoding keystore..."
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | tr -d '\n' | base64 --decode > android/app/key.jks
 
-      # Build release APK (signed)
+          if [ ! -f android/app/key.jks ]; then
+            echo "ERROR: key.jks was not created!"
+            exit 1
+          fi
+
+          echo "key.jks size:"
+          ls -lh android/app/key.jks
+
+          echo "Writing key.properties..."
+          cat <<EOL > android/app/key.properties
+storeFile=key.jks
+storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+keyPassword=${{ secrets.KEY_PASSWORD }}
+keyAlias=${{ secrets.KEY_ALIAS }}
+EOL
+
+          if [ ! -f android/app/key.properties ]; then
+            echo "ERROR: key.properties was not created!"
+            exit 1
+          fi
+
+          echo "key.properties content:"
+          cat android/app/key.properties
+
+          # Check that storeFile exists
+          STORE_FILE=$(grep 'storeFile' android/app/key.properties | cut -d'=' -f2)
+          if [ ! -f android/app/$STORE_FILE ]; then
+            echo "ERROR: storeFile path in key.properties does not exist: $STORE_FILE"
+            exit 1
+          fi
+          echo "Keystore setup looks good."
+
+      # Build release APK
       - name: Build release APK
         run: flutter build apk --release
 
+      # Verify APK signing
+      - name: Verify APK signing
+        run: |
+          APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+          if [ ! -f $APK_PATH ]; then
+            echo "ERROR: APK not found at $APK_PATH"
+            exit 1
+          fi
+
+          echo "APK size:"
+          ls -lh $APK_PATH
+
+          echo "Checking APK signing..."
+          jarsigner -verify -verbose -certs $APK_PATH || echo "WARNING: APK may not be signed properly!"
+
+      # Create GitHub release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
