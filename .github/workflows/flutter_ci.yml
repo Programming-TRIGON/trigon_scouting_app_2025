@@ -24,12 +24,13 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
           # Get last release versionCode from pubspec.yaml in main
-          LAST_CODE=$(curl -s https://raw.githubusercontent.com/Programming-TRIGON/trigon_scouting_app_2025/main/pubspec.yaml \
-                      | grep '^version:' | sed -E 's/.*\+([0-9]+)/\1/')
-          echo "Last release versionCode: $LAST_CODE"
-
-          # Compute PR versionCode
-          NEW_CODE=$((LAST_CODE + GITHUB_RUN_NUMBER))
+            LAST_CODE="$(curl -s https://raw.githubusercontent.com/Programming-TRIGON/trigon_scouting_app_2025/main/pubspec.yaml \
+                          | sed -nE 's/^version:\s*[0-9.]+\+([0-9]+)/\1/p')"
+            if ! [[ "$LAST_CODE" =~ ^[0-9]+$ ]]; then
+            echo "WARN: Could not parse versionCode from main; defaulting to 1000"
+              LAST_CODE=1000
+            fi
+            NEW_CODE=$((LAST_CODE + GITHUB_RUN_NUMBER))
           
           # VersionName = last release tag (optional)
           VERSION_NAME=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest \

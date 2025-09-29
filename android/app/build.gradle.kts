@@ -44,10 +44,12 @@ android {
         create("release") {
             // Only assign properties if file exists
             if (keystorePropertiesFile.exists()) {
-                keyAlias = keystoreProperties["keyAlias"] as String?
-                keyPassword = keystoreProperties["keyPassword"] as String?
-                storeFile = file(keystoreProperties["storeFile"] as String)
-                storePassword = keystoreProperties["storePassword"] as String?
+                (keystoreProperties.getProperty("keyAlias") ?: "").takeIf { it.isNotEmpty() }?.let { keyAlias = it }
+                (keystoreProperties.getProperty("keyPassword") ?: "").takeIf { it.isNotEmpty() }
+                    ?.let { keyPassword = it }
+                keystoreProperties.getProperty("storeFile")?.takeIf { it.isNotEmpty() }?.let { storeFile = file(it) }
+                (keystoreProperties.getProperty("storePassword") ?: "").takeIf { it.isNotEmpty() }
+                    ?.let { storePassword = it }
             } else {
                 storeFile = null
             }
