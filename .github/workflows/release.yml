@@ -1,14 +1,13 @@
-name: Release (Tag Driven)
+name: Release
 
 on:
   push:
     tags:
-      - 'v*.*.*'   # e.g. v1.2.3
+      - 'v*.*.*'   # e.g., v2025.0.3
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -20,12 +19,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Set pubspec.yaml version from tag
+      - name: Setup release keystore
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "Setting pubspec.yaml version to $VERSION"
-          sed -i "s/^version:.*/version: $VERSION+1/" pubspec.yaml
-          cat pubspec.yaml | grep version:
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/key.jks
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/app/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/app/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/app/key.properties
+          echo "storeFile=key.jks" >> android/app/key.properties
 
       - name: Build APK
         run: flutter build apk --release
