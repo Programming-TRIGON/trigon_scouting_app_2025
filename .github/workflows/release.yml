@@ -29,23 +29,23 @@ jobs:
           ls -lh android/app/key.jks
 
           echo "Writing key.properties..."
-          cat <<EOL > android/app/key.properties
+          cat <<EOL > android/key.properties
           storeFile=key.jks
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
           keyAlias=${{ secrets.KEY_ALIAS }}
           EOL
 
-          if [ ! -f android/app/key.properties ]; then
+          if [ ! -f android/key.properties ]; then
             echo "ERROR: key.properties was not created!"
             exit 1
           fi
 
           echo "key.properties content:"
-          cat android/app/key.properties
+          cat android/key.properties
 
           # Check that storeFile exists
-          STORE_FILE=$(grep 'storeFile' android/app/key.properties | cut -d'=' -f2)
+          STORE_FILE=$(grep 'storeFile' android/key.properties | cut -d'=' -f2)
           if [ ! -f android/app/$STORE_FILE ]; then
             echo "ERROR: storeFile path in key.properties does not exist: $STORE_FILE"
             exit 1
