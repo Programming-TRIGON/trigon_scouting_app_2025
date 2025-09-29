@@ -43,6 +43,7 @@ android {
     signingConfigs {
         create("release") {
             // Only assign properties if file exists
+            print("Keystore file exists: ${keystorePropertiesFile.exists()}")
             if (keystorePropertiesFile.exists()) {
                 (keystoreProperties.getProperty("keyAlias") ?: "").takeIf { it.isNotEmpty() }?.let { keyAlias = it }
                 (keystoreProperties.getProperty("keyPassword") ?: "").takeIf { it.isNotEmpty() }
@@ -51,6 +52,7 @@ android {
                 (keystoreProperties.getProperty("storePassword") ?: "").takeIf { it.isNotEmpty() }
                     ?.let { storePassword = it }
             } else {
+                print("Keystore properties file not found, skipping signing config.")
                 storeFile = null
             }
         }
