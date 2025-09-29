@@ -16,8 +16,8 @@ jobs:
       - name: Setup release keystore
         run: |
           echo "Decoding keystore..."
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | wc -c
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/key.jks
+          echo "key.jks size (bytes): $(stat -c%s android/app/key.jks)"
           ls -lh android/app/key.jks 
 
           if [ ! -f android/app/key.jks ]; then
