@@ -42,10 +42,15 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String?
-            keyPassword = keystoreProperties["keyPassword"] as String?
-            storeFile = keystorePropertiesFile.takeIf { it.exists() }?.let { file(keystoreProperties["storeFile"] as String) }
-            storePassword = keystoreProperties["storePassword"] as String?
+            // Only assign properties if file exists
+            if (keystorePropertiesFile.exists()) {
+                keyAlias = keystoreProperties["keyAlias"] as String?
+                keyPassword = keystoreProperties["keyPassword"] as String?
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String?
+            } else {
+                storeFile = null
+            }
         }
     }
 
@@ -53,13 +58,13 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             isShrinkResources = false
-            signingConfig = signingConfigs.getByName("release")
+            if (keystorePropertiesFile.exists()) signingConfig = signingConfigs.getByName("release")
         }
         create("pr") {
             isMinifyEnabled = false
             isShrinkResources = false
             isDebuggable = true
-            signingConfig = null // unsigned or debug signed
+            signingConfig = null
         }
     }
 }

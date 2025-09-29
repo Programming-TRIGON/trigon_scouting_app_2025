@@ -1,13 +1,14 @@
-name: Release
+name: Release (Tag Driven)
 
 on:
   push:
     tags:
-      - 'v*.*.*'   # e.g., v2025.0.3
+      - 'v*.*.*'
 
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -19,6 +20,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Setup release keystore
       - name: Setup release keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/key.jks
@@ -27,7 +29,8 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/app/key.properties
           echo "storeFile=key.jks" >> android/app/key.properties
 
-      - name: Build APK
+      # Build release APK (signed)
+      - name: Build release APK
         run: flutter build apk --release
 
       - name: Create GitHub Release

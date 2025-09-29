@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,35 +19,31 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Fetch last release versionCode from pubspec.yaml
+      # Set PR version based on last release + run number
       - name: Set PR version
         env:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
-          # Get last release versionCode from pubspec.yaml in main
           LAST_CODE=$(curl -s https://raw.githubusercontent.com/Programming-TRIGON/trigon_scouting_app_2025/main/pubspec.yaml \
                       | grep '^version:' | sed -E 's/.*\+([0-9]+)/\1/')
-          echo "Last release versionCode: $LAST_CODE"
-
-          # Compute PR versionCode
           NEW_CODE=$((LAST_CODE + GITHUB_RUN_NUMBER))
-          
-          # VersionName = last release tag (optional)
+
           VERSION_NAME=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest \
                           | jq -r '.tag_name' | sed 's/v//')
 
-          echo "Setting PR version: $VERSION_NAME+$NEW_CODE"
+          echo "version: $VERSION_NAME+$NEW_CODE"
           sed -i "s/^version:.*/version: $VERSION_NAME+$NEW_CODE/" pubspec.yaml
           grep version: pubspec.yaml
 
       - name: Analyze code
         run: flutter analyze
 
-      - name: Build APK
-        run: flutter build apk --release
+      # Build APK using 'pr' build type (unsigned)
+      - name: Build PR APK
+        run: flutter build apk --release --flavor pr
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: pr-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-pr-release.apk
