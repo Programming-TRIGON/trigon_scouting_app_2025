@@ -1,4 +1,4 @@
-name: Flutter CI
+name: Flutter CI (PR Builds)
 
 on:
   pull_request:
@@ -7,47 +7,45 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout code
       - uses: actions/checkout@v4
 
-      # Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.1' # set your version
+          flutter-version: '3.35.1'
 
-      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Fetch latest GitHub release and update pubspec.yaml
-      - name: Set pubspec version to latest release + PR number
+      # Fetch last release versionCode from pubspec.yaml
+      - name: Set PR version
         env:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
-          echo "Fetching latest release from GitHub..."
-          LATEST=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest | jq -r '.tag_name' | sed 's/v//')
-          echo "Latest release version: $LATEST"
-          VERSION="$LATEST+$GITHUB_RUN_NUMBER"
-          echo "Setting version: $VERSION"
-          sed -i "s/^version:.*/version: $VERSION/" pubspec.yaml
-          cat pubspec.yaml | grep version:
+          # Get last release versionCode from pubspec.yaml in main
+            LAST_CODE="$(curl -s https://raw.githubusercontent.com/Programming-TRIGON/trigon_scouting_app_2025/main/pubspec.yaml \
+                          | sed -nE 's/^version:\s*[0-9.]+\+([0-9]+)/\1/p')"
+            if ! [[ "$LAST_CODE" =~ ^[0-9]+$ ]]; then
+            echo "WARN: Could not parse versionCode from main; defaulting to 1000"
+              LAST_CODE=1000
+            fi
+            NEW_CODE=$((LAST_CODE + GITHUB_RUN_NUMBER))
+          
+          # VersionName = last release tag (optional)
+          VERSION_NAME=$(curl -s https://api.github.com/repos/Programming-TRIGON/trigon_scouting_app_2025/releases/latest \
+                          | jq -r '.tag_name' | sed 's/v//')
 
-      # Analyze code
+          echo "Setting PR version: $VERSION_NAME+$NEW_CODE"
+          sed -i "s/^version:.*/version: $VERSION_NAME+$NEW_CODE/" pubspec.yaml
+          grep version: pubspec.yaml
+
       - name: Analyze code
         run: flutter analyze
 
-      # Run tests
-#      - name: Run tests
-#        run: flutter test --coverage
-
-      # Build APK
       - name: Build APK
         run: flutter build apk --release
 
-      # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
