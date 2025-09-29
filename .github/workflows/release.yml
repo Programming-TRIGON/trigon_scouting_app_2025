@@ -18,6 +18,7 @@ jobs:
           echo "Decoding keystore..."
           echo "${{ secrets.KEYSTORE_BASE64 }}" | tr -d '\n' | base64 --decode > android/app/key.jks
           ls -lh android/app/key.jks
+          echo android/app/key.jks
 
           if [ ! -f android/app/key.jks ]; then
             echo "ERROR: key.jks was not created!"
