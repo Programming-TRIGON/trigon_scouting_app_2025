@@ -36,11 +36,11 @@ jobs:
 
           echo "Writing key.properties..."
           cat <<EOL > android/app/key.properties
-storeFile=key.jks
-storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-keyPassword=${{ secrets.KEY_PASSWORD }}
-keyAlias=${{ secrets.KEY_ALIAS }}
-EOL
+          storeFile=key.jks
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          EOL
 
           if [ ! -f android/app/key.properties ]; then
             echo "ERROR: key.properties was not created!"
