@@ -70,7 +70,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(
-                            reportProvider.report.calculateTotalPoint().toString(),
+                            reportProvider.report.calculateTotalPoints().toString(),
                             style: Theme.of(
                               context,
                             ).textTheme.displayLarge?.copyWith(color: Colors.orange),
@@ -85,7 +85,7 @@ class PostgameReviewReportScreen extends StatelessWidget {
                   flex: 3,
                   child: FittedBox(
                     child: RobotScoreSpeedometer(
-                      robotScore: reportProvider.report.calculateTotalPoint().toDouble(),
+                      robotScore: reportProvider.report.calculateTotalPoints().toDouble(),
                       highestScore: scoutedCompetitionProvider.scoutedCompetition!.maximumScore,
                       lowestScore: scoutedCompetitionProvider.scoutedCompetition!.minimumScore,
                     ),
