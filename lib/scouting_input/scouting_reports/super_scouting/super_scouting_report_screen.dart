@@ -14,52 +14,63 @@ class SuperScoutingReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reportProvider = context.watch<SuperScoutingReportProvider>();
-    reportProvider.report.robotReports;
 
     return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) return;
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
 
-          final shouldPop = await const DiscardChangesDialogWidget().showOnScreen(context);
-          if (shouldPop && context.mounted) {
-            Navigator.of(context).pop();
-          }
-        },child: buildScreen(context, reportProvider)
+        final shouldPop = await const DiscardChangesDialogWidget().showOnScreen(
+          context,
+        );
+        if (shouldPop && context.mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: buildScreen(context, reportProvider),
     );
   }
 
-  Scaffold buildScreen(BuildContext context, SuperScoutingReportProvider reportProvider) {
+  Scaffold buildScreen(
+    BuildContext context,
+    SuperScoutingReportProvider reportProvider,
+  ) {
     return Scaffold(
-    appBar: MaterialDesignFactory.createAppBar(
-        context, Colors.green, "Scouting Input", "Super Scouting Report"),
-    body: SingleChildScrollView(
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: Column(
-              children: [
-                const AllianceSelectionForm(),
-                const SizedBox(height: 20),
-                FolderToggleRow(
+      appBar: MaterialDesignFactory.createAppBar(
+        context,
+        Colors.green,
+        "Scouting Input",
+        "Super Scouting Report",
+      ),
+      body: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Column(
+                children: [
+                  const AllianceSelectionForm(),
+                  const SizedBox(height: 20),
+                  FolderToggleRow(
                     tabs: mapRobotReports(reportProvider),
-                  folderHeight: 400,
-                ),
-                const SizedBox(height: 20),
-                const DiscardAndSubmitButtons()
-              ],
+                    folderHeight: 400,
+                  ),
+                  const SizedBox(height: 20),
+                  const DiscardAndSubmitButtons(),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    )
-  );
+    );
   }
 
-  Map<String, Widget> mapRobotReports(SuperScoutingReportProvider reportProvider) {
+  Map<String, Widget> mapRobotReports(
+    SuperScoutingReportProvider reportProvider,
+  ) {
     final robotReports = reportProvider.report.robotReports;
     final Map<String, Widget> tabs = {};
 
@@ -68,7 +79,9 @@ class SuperScoutingReportScreen extends StatelessWidget {
       if (robotReport.robotNumber == null) {
         continue;
       }
-      tabs[robotReport.robotNumber.toString()] = RobotSuperScoutingReportScreen(robotAllianceIndex: i);
+      tabs[robotReport.robotNumber.toString()] = RobotSuperScoutingReportScreen(
+        robotAllianceIndex: i,
+      );
     }
 
     return tabs;

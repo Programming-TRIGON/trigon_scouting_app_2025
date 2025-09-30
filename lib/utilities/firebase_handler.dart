@@ -154,6 +154,7 @@ class FirebaseHandler {
     if (competitionKey == null) return;
 
     for (RobotSuperScoutingReport robotReport in report.robotReports) {
+      if (robotReport.robotNumber == null) continue;
       final matchDocument = FirebaseFirestore.instance
           .collection("competitions")
           .doc(competitionKey)
