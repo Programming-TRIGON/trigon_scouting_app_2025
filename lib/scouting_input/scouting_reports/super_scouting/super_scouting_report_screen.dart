@@ -1,4 +1,3 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/screens/help_widgets/folder_toggle_row.dart";

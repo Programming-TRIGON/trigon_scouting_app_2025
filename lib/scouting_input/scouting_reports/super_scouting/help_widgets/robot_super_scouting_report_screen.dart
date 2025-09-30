@@ -77,7 +77,7 @@ class _RobotSuperScoutingReportScreenState extends State<RobotSuperScoutingRepor
               style: TextStyle(fontSize: 16.0),
             ),
             CupertinoSlider(
-              value: reportProvider.report.robotReports[widget.robotAllianceIndex].defenceRate?.toDouble() ?? 1,
+              value: reportProvider.report.robotReports[widget.robotAllianceIndex].defenceRate.toDouble(),
               min: 1,
               max: 7,
               divisions: 7,

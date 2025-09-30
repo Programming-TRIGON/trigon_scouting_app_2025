@@ -141,7 +141,7 @@ class _AllianceSelectionFormState extends State<AllianceSelectionForm> {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(8)),
+            borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
             border: Border.all(color: Colors.white38, width: 2),
             color: reportProvider.isBlueAlliance == true
                 ? Colors.blue[700]
@@ -152,7 +152,7 @@ class _AllianceSelectionFormState extends State<AllianceSelectionForm> {
         ),
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.horizontal(right: Radius.circular(8)),
+            borderRadius: const BorderRadius.horizontal(right: Radius.circular(8)),
             border: Border.all(color: Colors.white38, width: 2),
             color: reportProvider.isBlueAlliance == false
                 ? Colors.red[700]
