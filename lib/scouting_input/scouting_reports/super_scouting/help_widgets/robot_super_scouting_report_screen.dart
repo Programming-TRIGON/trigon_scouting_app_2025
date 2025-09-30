@@ -15,6 +15,19 @@ class _RobotSuperScoutingReportScreenState extends State<RobotSuperScoutingRepor
   final TextEditingController notesController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final reportProvider = context.read<SuperScoutingReportProvider>();
+    notesController.text = reportProvider.report.robotReports[widget.robotAllianceIndex].notes ?? "";
+  }
+
+  @override
+  void dispose() {
+    notesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final reportProvider = context.watch<SuperScoutingReportProvider>();
 
