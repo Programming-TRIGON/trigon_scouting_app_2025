@@ -119,6 +119,7 @@ class GameScoutingReportProvider extends ChangeNotifier {
       TopRightWarning.showOnScreen(context, error);
       return;
     }
+    report.processReport();
 
     final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
     FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionProvider.scoutedCompetition?.competitionKey);

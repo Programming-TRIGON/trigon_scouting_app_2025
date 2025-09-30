@@ -18,23 +18,12 @@ class GameScoutingReport {
     required this.postgameReport,
   });
 
-  int calculateTotalPoint() {
-    return autoReport.calculateTotalPoints() +
-        teleopReport.calculateTotalPoints() +
-        endgameReport.calculateTotalPoints();
-  }
-
-  int calculateCycles() {
-    return autoReport.calculateCycles() +
-        teleopReport.calculateCycles();
-  }
-
   GameScoutingReport.withUID(this.scouterUID)
-    : pregameReport = PregameScoutingReport(),
-      autoReport = AutoScoutingReport(),
-      teleopReport = TeleopScoutingReport(),
-      endgameReport = EndgameScoutingReport(),
-      postgameReport = PostgameReport();
+      : pregameReport = PregameScoutingReport(),
+        autoReport = AutoScoutingReport(),
+        teleopReport = TeleopScoutingReport(),
+        endgameReport = EndgameScoutingReport(),
+        postgameReport = PostgameReport();
 
   GameScoutingReport copyWith({
     PregameScoutingReport? pregameReport,
@@ -53,6 +42,45 @@ class GameScoutingReport {
     );
   }
 
+  int calculateTotalPoint() {
+    return autoReport.calculateTotalPoints() +
+        teleopReport.calculateTotalPoints() +
+        endgameReport.calculateTotalPoints();
+  }
+
+  int calculateCycles() {
+    return autoReport.calculateCycles() +
+        teleopReport.calculateCycles();
+  }
+
+  void processReport() {
+    if (pregameReport.showedUp == false) {
+      pregameReport.startingPosition = null;
+      pregameReport.bet = null;
+      autoReport.reset();
+      teleopReport.reset();
+      endgameReport.reset();
+      postgameReport.reset();
+      return;
+    }
+
+    if (autoReport.crossedAutoLine != true) {
+      autoReport.reset();
+    }
+
+    if (endgameReport.didTryToClimb != true) {
+      endgameReport.deepCage = null;
+      endgameReport.didManageToClimb = null;
+      endgameReport.climbFailureReason = null;
+    } else {
+      if (endgameReport.didManageToClimb == true) {
+        endgameReport.climbFailureReason = null;
+      } else {
+        endgameReport.didPark = true;
+      }
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "GameScouting": {
@@ -60,6 +88,7 @@ class GameScoutingReport {
         "Auto": autoReport.toMap(),
         "Teleop": teleopReport.toMap(),
         "Endgame": endgameReport.toMap(),
+        "Postgame": postgameReport.toMap(),
       },
     };
   }
@@ -120,7 +149,7 @@ class PregameScoutingReport {
     return {
       "showedUp": showedUp,
       "startingPosition": startingPosition,
-      "didOverrideSelection" : didOverrideSelection
+      "didOverrideSelection": didOverrideSelection
     };
   }
 }
@@ -143,6 +172,22 @@ class AutoScoutingReport {
   int processorAlgaeCount = 0;
   int algaeOutOfReefCount = 0;
 
+  void reset() {
+    crossedAutoLine = null;
+    l4CoralPlacements.successes = 0;
+    l4CoralPlacements.misses = 0;
+    l3CoralPlacements.successes = 0;
+    l3CoralPlacements.misses = 0;
+    l2CoralPlacements.successes = 0;
+    l2CoralPlacements.misses = 0;
+    l1CoralPlacements.successes = 0;
+    l1CoralPlacements.misses = 0;
+    netAlgaePlacements.successes = 0;
+    netAlgaePlacements.misses = 0;
+    processorAlgaeCount = 0;
+    algaeOutOfReefCount = 0;
+  }
+
   int calculateTotalPoints() {
     final l4Points = l4CoralPlacements.successes * 7;
     final l3Points = l3CoralPlacements.successes * 6;
@@ -152,7 +197,8 @@ class AutoScoutingReport {
     final processorPoints = processorAlgaeCount * 2;
     final leavePoints = (crossedAutoLine == true) ? 3 : 0;
 
-    return l4Points + l3Points + l2Points + l1Points + netPoints + processorPoints + leavePoints;
+    return l4Points + l3Points + l2Points + l1Points + netPoints +
+        processorPoints + leavePoints;
   }
 
   int calculateCycles() {
@@ -163,7 +209,8 @@ class AutoScoutingReport {
     final netCycles = netAlgaePlacements.successes;
     final processorCycles = processorAlgaeCount;
 
-    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles + processorCycles;
+    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles +
+        processorCycles;
   }
 
   String? validate() {
@@ -206,6 +253,22 @@ class TeleopScoutingReport {
   int processorAlgaeCount = 0;
   int algaeOutOfReefCount = 0;
 
+  void reset() {
+    didDefend = false;
+    l4CoralPlacements.successes = 0;
+    l4CoralPlacements.misses = 0;
+    l3CoralPlacements.successes = 0;
+    l3CoralPlacements.misses = 0;
+    l2CoralPlacements.successes = 0;
+    l2CoralPlacements.misses = 0;
+    l1CoralPlacements.successes = 0;
+    l1CoralPlacements.misses = 0;
+    netAlgaePlacements.successes = 0;
+    netAlgaePlacements.misses = 0;
+    processorAlgaeCount = 0;
+    algaeOutOfReefCount = 0;
+  }
+
   int calculateTotalPoints() {
     final l4Points = l4CoralPlacements.successes * 5;
     final l3Points = l3CoralPlacements.successes * 4;
@@ -214,7 +277,8 @@ class TeleopScoutingReport {
     final netPoints = netAlgaePlacements.successes * 4;
     final processorPoints = processorAlgaeCount * 2;
 
-    return l4Points + l3Points + l2Points + l1Points + netPoints + processorPoints;
+    return l4Points + l3Points + l2Points + l1Points + netPoints +
+        processorPoints;
   }
 
   int calculateCycles() {
@@ -225,7 +289,8 @@ class TeleopScoutingReport {
     final netCycles = netAlgaePlacements.successes;
     final processorCycles = processorAlgaeCount;
 
-    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles + processorCycles;
+    return l4Cycles + l3Cycles + l2Cycles + l1Cycles + netCycles +
+        processorCycles;
   }
 
   String? validate() {
@@ -241,6 +306,7 @@ class TeleopScoutingReport {
       "netAlgaePlacements": netAlgaePlacements.toMap(),
       "processorAlgaeCount": processorAlgaeCount,
       "algaeOutOfReefCount": algaeOutOfReefCount,
+      "didDefend": didDefend,
     };
   }
 }
@@ -251,6 +317,14 @@ class EndgameScoutingReport {
   bool? deepCage;
   bool? didManageToClimb;
   ClimbFailureReason? climbFailureReason;
+
+  void reset() {
+    didTryToClimb = null;
+    didPark = null;
+    deepCage = null;
+    didManageToClimb = null;
+    climbFailureReason = null;
+  }
 
   int calculateTotalPoints() {
     if (didTryToClimb == true) {
@@ -298,6 +372,11 @@ class EndgameScoutingReport {
 class PostgameReport {
   bool? didCollectAlgaeFromGround;
   String? comments;
+
+  void reset() {
+    didCollectAlgaeFromGround = null;
+    comments = null;
+  }
 
   String? validate() {
     if (didCollectAlgaeFromGround == null) {
