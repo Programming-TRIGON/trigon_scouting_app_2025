@@ -32,6 +32,7 @@ class UpdateService {
             child: const Text("Update"),
             onPressed: () {
               Navigator.pop(context);
+              if (!context.mounted) return;
               showDialog(
                 context: context,
                 builder: (context) => const AlertDialog(
@@ -39,7 +40,9 @@ class UpdateService {
                   content: CircularProgressIndicator(),
                 ),
               );
-              UpdateService.downloadAndInstallApk(context);
+              UpdateService.downloadAndInstallApk(context).then((_) {
+                if (context.mounted) Navigator.pop(context);
+              });
             },
           ),
         ],
