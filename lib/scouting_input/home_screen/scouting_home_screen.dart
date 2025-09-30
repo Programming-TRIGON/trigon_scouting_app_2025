@@ -6,6 +6,8 @@ import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart"
 import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_screen.dart";
 import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report_provider.dart";
 import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/report_screens/game_scouting_report_screen.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_scouting/super_scouting_report_provider.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_scouting/super_scouting_report_screen.dart";
 
 import "package:trigon_scouting_app_2025/utilities/material_design_factory.dart";
 import "package:trigon_scouting_app_2025/scouting_input/admin/generator_4000/generator_4000_provider.dart";
@@ -78,7 +80,7 @@ class ScoutingHomeScreen extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // TODO: navigate to super scouting page
+              navigateToSuperScoutingPage(context);
             },
           ),
           SpeedDialChild(
@@ -150,6 +152,19 @@ class ScoutingHomeScreen extends StatelessWidget {
             context.read<UserDataProvider>().user!.uid,
           ),
           child: const GameScoutingReportScreen(),
+        ),
+      ),
+    );
+  }
+
+  void navigateToSuperScoutingPage(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+      MaterialDesignFactory.createModernRoute(
+        ChangeNotifierProvider(
+          create: (_) => SuperScoutingReportProvider(
+            context.read<UserDataProvider>().user!.uid,
+          ),
+          child: const SuperScoutingReportScreen(),
         ),
       ),
     );

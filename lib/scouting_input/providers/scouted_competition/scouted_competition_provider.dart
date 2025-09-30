@@ -28,12 +28,30 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
         ?.firstWhere((shift) => shift.matchKey == matchKey).scoutedTeam;
   }
 
+  bool? getScoutedAllianceColorInSuperScoutingMatch(String uid, String matchKey) {
+    return scoutedCompetition?.allScoutingShifts.superScoutingShifts?[uid]
+        ?.firstWhere((shift) => shift.matchKey == matchKey).isBlueAlliance;
+  }
+
+  List<FRCTeam>? getTeamsInMatchAlliance(String? matchKey, bool? isBlueAlliance) {
+    if (matchKey == null || isBlueAlliance == null) return null;
+    final match = scoutedCompetition?.matches.firstWhere((match) => match.matchKey == matchKey);
+    if (match == null) return null;
+    return isBlueAlliance ? match.blueTeams : match.redTeams;
+  }
+
   String? getTeamNameFromNumber(int? teamNumber) {
     return scoutedCompetition?.teams.where((team) => team.teamID == teamNumber).firstOrNull?.name;
   }
 
   List<int>? getAvailableGameScoutingMatchNumbers(String uid, String matchType) {
     return scoutedCompetition?.allScoutingShifts.gameScoutingShifts?[uid]
+        ?.where((shift) => shift.getMatchType() == matchType)
+        .map((shift) => shift.getMatchNumber()).toList();
+  }
+
+  List<int>? getAvailableSuperScoutingMatchNumbers(String uid, String matchType) {
+    return scoutedCompetition?.allScoutingShifts.superScoutingShifts?[uid]
         ?.where((shift) => shift.getMatchType() == matchType)
         .map((shift) => shift.getMatchNumber()).toList();
   }
@@ -55,6 +73,13 @@ class ScoutedCompetitionProvider extends ChangeNotifier {
     if (scoutedCompetition == null) return;
 
     scoutedCompetition!.allScoutingShifts.gameScoutingShifts?[uid]?.firstWhere((shift) => shift.matchKey == matchKey).didScout = true;
+    scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
+  }
+
+  void markSuperScoutingShiftScouted(String? uid, String? matchKey) {
+    if (scoutedCompetition == null) return;
+
+    scoutedCompetition!.allScoutingShifts.superScoutingShifts?[uid]?.firstWhere((shift) => shift.matchKey == matchKey).didScout = true;
     scoutedCompetitionDoc.set(scoutedCompetition!.toMap());
   }
 
