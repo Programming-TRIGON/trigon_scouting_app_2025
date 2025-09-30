@@ -4,12 +4,14 @@ class FolderToggleRow extends StatefulWidget {
   final Map<String, Widget> tabs;
   final String noDataTitle;
   final String noDataContainerText;
+  final double folderHeight;
 
   const FolderToggleRow({
     super.key,
     required this.tabs,
     this.noDataTitle = "No Data",
     this.noDataContainerText = "No data available.",
+    this.folderHeight = 500,
   });
 
   @override
@@ -162,7 +164,7 @@ class _FolderToggleRowState extends State<FolderToggleRow> {
 
   Widget createFolderContainer(Widget child) {
     return Container(
-      height: 500,
+      height: widget.folderHeight,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: selectedColor,

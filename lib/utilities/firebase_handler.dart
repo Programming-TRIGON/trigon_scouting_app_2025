@@ -8,6 +8,7 @@ import "package:flutter/material.dart";
 import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
 import "package:trigon_scouting_app_2025/scouting_input/providers/scouted_competition/scouted_competition.dart";
 import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/game_scouting/game_scouting_report.dart";
+import "package:trigon_scouting_app_2025/scouting_input/scouting_reports/super_scouting/super_scouting_report.dart";
 import "package:trigon_scouting_app_2025/utilities/tba_handler.dart";
 
 class FirebaseHandler {
@@ -143,6 +144,24 @@ class FirebaseHandler {
         .doc(report.pregameReport.robotNumber!.toString())
         .collection("games")
         .doc(report.pregameReport.getMatchKey());
-    await matchDocument.set(report.toMap());
+    await matchDocument.set(report.toMap(), SetOptions(merge: true));
+  }
+
+  static Future<void> uploadSuperScoutingReport(
+      SuperScoutingReport report,
+      String? competitionKey,
+      ) async {
+    if (competitionKey == null) return;
+
+    for (RobotSuperScoutingReport robotReport in report.robotReports) {
+      final matchDocument = FirebaseFirestore.instance
+          .collection("competitions")
+          .doc(competitionKey)
+          .collection("teams")
+          .doc(robotReport.robotNumber!.toString())
+          .collection("games")
+          .doc(report.matchKeyReport.getMatchKey());
+      await matchDocument.set(robotReport.toMap(), SetOptions(merge: true));
+    }
   }
 }
