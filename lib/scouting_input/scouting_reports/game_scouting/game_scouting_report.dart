@@ -42,7 +42,7 @@ class GameScoutingReport {
     );
   }
 
-  int calculateTotalPoint() {
+  int calculateTotalPoints() {
     return autoReport.calculateTotalPoints() +
         teleopReport.calculateTotalPoints() +
         endgameReport.calculateTotalPoints();
