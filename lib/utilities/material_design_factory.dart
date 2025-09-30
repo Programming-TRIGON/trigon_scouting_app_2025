@@ -3,20 +3,21 @@ import "package:provider/provider.dart";
 import "package:trigon_scouting_app_2025/authentication/authentication_handler.dart";
 import "package:trigon_scouting_app_2025/authentication/user_data_provider.dart";
 import "package:trigon_scouting_app_2025/utilities/firebase_handler.dart";
+import "package:trigon_scouting_app_2025/utilities/update_service.dart";
 
 class MaterialDesignFactory {
   static Widget createLoadingPage(String label) {
     return Scaffold(
-        body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(label, style: const TextStyle(fontSize: 20),),
-                const SizedBox(height: 20,),
-                const CircularProgressIndicator()
-              ]
-          ),
-        )
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(label, style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -40,6 +41,7 @@ class MaterialDesignFactory {
           ),
           if (subtitle != null)
             Text(subtitle, style: Theme.of(context).textTheme.labelSmall),
+          if (subtitle == null) createShowVersionWidget(),
         ],
       ),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -79,6 +81,19 @@ class MaterialDesignFactory {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
       ),
+    );
+  }
+
+  static Widget createShowVersionWidget() {
+    return FutureBuilder(
+      future: UpdateService.getCurrentVersion(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
+          return Text("${snapshot.data}", style: Theme.of(context).textTheme.labelSmall);
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 

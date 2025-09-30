@@ -14,7 +14,6 @@ class UpdateService {
   static void checkForUpdate(BuildContext context) async {
     if (!Platform.isAndroid) return;
     if (!await UpdateService.isUpdateAvailable()) return;
-    await Future.delayed(const Duration(seconds: 3));
     if (!context.mounted) return;
 
     showDialog(
@@ -33,7 +32,17 @@ class UpdateService {
             child: const Text("Update"),
             onPressed: () {
               Navigator.pop(context);
-              UpdateService.downloadAndInstallApk(context);
+              if (!context.mounted) return;
+              showDialog(
+                context: context,
+                builder: (context) => const AlertDialog(
+                  title: Text("Downloading Apk..."),
+                  content: CircularProgressIndicator(),
+                ),
+              );
+              UpdateService.downloadAndInstallApk(context).then((_) {
+                if (context.mounted) Navigator.pop(context);
+              });
             },
           ),
         ],

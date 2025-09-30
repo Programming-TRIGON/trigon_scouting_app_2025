@@ -30,7 +30,12 @@ class AuthenticationHandler extends StatelessWidget {
       return const LoginScreen();
     }
 
-    if (userDataProvider.role == null || !userDataProvider.role!.hasViewerAccess) {
+
+    if (userDataProvider.role == null) {
+      return MaterialDesignFactory.createLoadingPage("User Data Loading...");
+    }
+
+    if (!userDataProvider.role!.hasViewerAccess) {
       return const ScoutingHomeScreen();
     }
 
