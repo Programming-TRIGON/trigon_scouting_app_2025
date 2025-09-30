@@ -26,7 +26,7 @@ class ScoutingHomeScreen extends StatelessWidget {
         context,
         Colors.green,
         "Scouting Input",
-        "Main Menu",
+        null
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 0),
