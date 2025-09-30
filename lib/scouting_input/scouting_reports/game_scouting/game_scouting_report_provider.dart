@@ -119,12 +119,13 @@ class GameScoutingReportProvider extends ChangeNotifier {
       TopRightWarning.showOnScreen(context, error);
       return;
     }
+    report.processReport();
 
     final scoutedCompetitionProvider = context.read<ScoutedCompetitionProvider>();
     FirebaseHandler.uploadGameScoutingReport(report, scoutedCompetitionProvider.scoutedCompetition?.competitionKey);
     scoutedCompetitionProvider.markGameScoutingShiftScouted(_report.scouterUID, _report.pregameReport.getMatchKey());
     if (report.pregameReport.showedUp == true) {
-      scoutedCompetitionProvider.updateBoundingScores(report.calculateTotalPoint());
+      scoutedCompetitionProvider.updateBoundingScores(report.calculateTotalPoints());
     }
 
     if (context.mounted) {
